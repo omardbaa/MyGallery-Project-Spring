@@ -1,3 +1,6 @@
+<div class="container" style="width:600px, " style="margin-top: 90px;">
+  <h5 style="margin-bottom: 30px">Upload File</h5>
+
 <div class="row">
   <div class="col-8">
     <label class="btn btn-default p-0">
@@ -34,11 +37,4 @@
 
 <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
 
-<div class="card mt-3">
-  <div class="card-header">List of Files</div>
-  <ul class="list-group list-group-flush" *ngFor="let file of fileInfos | async">
-    <li class="list-group-item">
-      <a href="{{ file.url }}">{{ file.name }}</a>
-    </li>
-  </ul>
 </div>

@@ -17,14 +17,14 @@ export class UploadFileComponent  implements OnInit{
   progress = 0;
   message = '';
 
-  fileInfos?: Observable<any>
+ 
 
 
   file: FileModule = new FileModule();
   constructor(private fileSrvice: FileService, 
     private router: Router) { }
     ngOnInit(): void {
-      this.fileInfos = this.fileSrvice.getFiles();
+      
     }
 
     selectFile(event: any): void {
@@ -46,7 +46,7 @@ export class UploadFileComponent  implements OnInit{
                 this.progress = Math.round(100 * event.loaded / event.total);
               } else if (event instanceof HttpResponse) {
                 this.message = event.body.message;
-                this.fileInfos = this.fileSrvice.getFiles();
+                
               }
             },
             error: (err: any) => {
