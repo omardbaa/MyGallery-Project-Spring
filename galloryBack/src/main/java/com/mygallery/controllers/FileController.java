@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("v1/file")
 public class FileController {
 
