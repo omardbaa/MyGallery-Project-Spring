@@ -49,10 +49,11 @@ body{
 
 .file_manager .file .icon i {
     display: table-cell;
-    font-size: 30px;
+    font-size: 100px;
     vertical-align: middle;
     color: #777;
-    line-height: 100px
+    line-height: 100px;
+    
 }
 
 .file_manager .file .file-name {
