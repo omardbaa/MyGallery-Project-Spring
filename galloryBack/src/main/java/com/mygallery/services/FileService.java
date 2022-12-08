@@ -22,30 +22,33 @@ import java.util.stream.Stream;
 @Service
 public class FileService {
 
+    //Create path to upload file in local storage
+    private final Path rootPath = Paths.get("uploads");
     @Autowired
-    private FileRepository fileRepository;
+    private final FileRepository fileRepository;
+
 
     public FileService(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
     }
 
-    private final Path rootPath = Paths.get("uploads");
-//changed
 
+    //with this methode we can upload a file using MultipartFile interface
 
     public File Upload(MultipartFile file) throws IOException {
 
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
-        File formFile = new File(fileName, file.getContentType(),file.getSize());
+        File formFile = new File(fileName, file.getContentType(), file.getSize());
 
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
-        try{ if (Files.notExists(rootPath, linkOptions)) {
+        try {
+            if (Files.notExists(rootPath, linkOptions)) {
 
-            Files.createDirectory(rootPath);
+                Files.createDirectory(rootPath);
 
-        }
+            }
         } catch (IOException e) {
             throw new RuntimeException("Could not initialize folder for upload!");
         }
@@ -57,8 +60,10 @@ public class FileService {
         return fileRepository.save(formFile);
 
 
-
     }
+
+
+    //Load a file by id
 
     public Resource getFile(String id) {
 
@@ -79,9 +84,20 @@ public class FileService {
     }
 
 
-
+    //Load all files
     public Stream<File> getAllFiles() {
         return fileRepository.findAll().stream();
+    }
+
+
+    //Delete file by id
+    public boolean delete(String filename) {
+        try {
+            Path file = rootPath.resolve(filename);
+            return Files.deleteIfExists(file);
+        } catch (IOException e) {
+            throw new RuntimeException("Error: " + e.getMessage());
+        }
     }
 }
 
