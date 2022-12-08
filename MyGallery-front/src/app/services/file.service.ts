@@ -16,33 +16,36 @@ export class FileService {
 
   upload(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
-  
+
     formData.append('file', file);
-  
+
     const req = new HttpRequest('POST', `${this.baseURL}/upload`, formData, {
       reportProgress: true,
       responseType: 'json'
     });
-  
+
     return this.httpClient.request(req);
   }
 
 
-  getFiles(): Observable<any> {
-    return this.httpClient.get(`${this.baseURL}/files`);
+  getFiles(): Observable<FileModule[]> {
+    return this.httpClient.get<FileModule[]>(`${this.baseURL}/files`);
   }
 
 
 
-getFileById(id: number): Observable<FileModule>{
+filec!:FileModule;
+
+
+getFileById(id: string): Observable<FileModule>{
   return this.httpClient.get<FileModule>(`${this.baseURL}/${id}`);
 }
 
-updateFile(id:number, file: FileModule): Observable<Object>{
+updateFile(id:string, file: FileModule): Observable<Object>{
   return this.httpClient.put(`${this.baseURL}/${id}`,file);
 }
 
-deleteFile(id: number):Observable<Object>{
+deleteFile(id: string):Observable<Object>{
   return this.httpClient.delete(`${this.baseURL}/${id}`);
 
 }

@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class FileModule {
 
-  id!: number;
+  id!: string;
   name!: string ;
   type!: string;
   url!: string;
