@@ -14,7 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 
-//@Table(name = "files")
+@Table(name = "files")
 
 public class File {
 

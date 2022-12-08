@@ -77,7 +77,7 @@ public class FileService {
     public Resource getFile(String id) {
 
         try {
-            Path file = rootPath.resolve(id);
+            Path file = rootPath.resolve(id+"."+fileRepository.getType(id).split("/",2)[1]);
             Resource resource = new UrlResource(file.toUri());
 
             if (resource.exists() || resource.isReadable()) {
