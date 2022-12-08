@@ -17,6 +17,7 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
@@ -43,7 +44,14 @@ public class FileService {
 
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
-        try {
+        String exetention= Optional.ofNullable(fileName)
+                .filter(f -> f.contains("."))
+                .map(f -> f.substring(fileName.lastIndexOf(".") + 1))
+                .get()
+                .toLowerCase();
+        System.out.println(exetention);
+
+      try {
             if (Files.notExists(rootPath, linkOptions)) {
 
                 Files.createDirectory(rootPath);
@@ -53,7 +61,8 @@ public class FileService {
             throw new RuntimeException("Could not initialize folder for upload!");
         }
         try {
-            Files.copy(file.getInputStream(), this.rootPath.resolve(file.getOriginalFilename()));
+            fileRepository.save(formFile);
+            Files.copy(file.getInputStream(), this.rootPath.resolve(formFile.getId()+"."+exetention));
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
@@ -66,7 +75,6 @@ public class FileService {
     //Load a file by id
 
     public Resource getFile(String id) {
-
 
         try {
             Path file = rootPath.resolve(id);
@@ -91,15 +99,35 @@ public class FileService {
 
 
     //Delete file by id
-    public boolean delete(String filename) {
+    public boolean delete(String id) {
+
+
         try {
-            Path file = rootPath.resolve(filename);
-            return Files.deleteIfExists(file);
+         /*   File file= new File(id);
+
+            String exetention= Optional.ofNullable(file.getName())
+                    .filter(f -> f.contains("."))
+                    .map(f -> f.substring(file.getName().lastIndexOf(".") + 1))
+                    .get()
+                    .toLowerCase();
+            System.out.println(exetention);*/
+//            System.out.println(fileRepository.selectFileName(id));
+//            fileRepository.deleteById(id);
+
+//            Path file = rootPath.resolve(fileRepository.selectFileName(id));
+            Path filepath = rootPath.resolve(id+"."+fileRepository.getType(id).split("/",2)[1]);
+                System.out.println(filepath);
+            Files.deleteIfExists(filepath);
+            fileRepository.deleteById(id);
+            return Files.deleteIfExists(filepath);
+
+
+
         } catch (IOException e) {
             throw new RuntimeException("Error: " + e.getMessage());
         }
-    }
-}
+
+    }}
 
 
 

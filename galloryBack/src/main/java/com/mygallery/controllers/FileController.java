@@ -69,22 +69,19 @@ public class FileController {
 
 
 
-    @DeleteMapping("/files/{filename:.+}")
-    public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String filename) {
+    @DeleteMapping("/files/{id:.+}")
+    public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String id) {
         String message = "";
 
         try {
-            boolean existed = fileService.delete(filename);
+           fileService.delete(id);
 
-            if (existed) {
-                message = "Delete the file successfully: " + filename;
+
+                message = "Delete the file successfully: " + id;
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-            }
 
-            message = "The file does not exist!";
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage(message));
         } catch (Exception e) {
-            message = "Could not delete the file: " + filename + ". Error: " + e.getMessage();
+            message = "Could not delete the file: " + id + ". Error: " + e.getMessage();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message));
         }
     }
