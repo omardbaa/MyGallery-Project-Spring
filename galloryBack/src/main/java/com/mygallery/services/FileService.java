@@ -29,7 +29,7 @@ public class FileService {
         this.fileRepository = fileRepository;
     }
 
-    private final Path root = Paths.get("uploads");
+    private final Path rootPath = Paths.get("uploads");
 //changed
 
 
@@ -41,16 +41,16 @@ public class FileService {
 
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
-        try{ if (Files.notExists(root, linkOptions)) {
+        try{ if (Files.notExists(rootPath, linkOptions)) {
 
-            Files.createDirectory(root);
+            Files.createDirectory(rootPath);
 
         }
         } catch (IOException e) {
             throw new RuntimeException("Could not initialize folder for upload!");
         }
         try {
-            Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), this.rootPath.resolve(file.getOriginalFilename()));
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
@@ -64,7 +64,7 @@ public class FileService {
 
 
         try {
-            Path file = root.resolve(id);
+            Path file = rootPath.resolve(id);
             Resource resource = new UrlResource(file.toUri());
 
             if (resource.exists() || resource.isReadable()) {
