@@ -3,15 +3,18 @@ package com.mygallery.controllers;
 
 import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
+import com.mygallery.response.ResponseMessage;
 import com.mygallery.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
@@ -62,4 +65,29 @@ public class FileController {
         Resource file = fileService.getFile(filename);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
+
+
+
+
+    @DeleteMapping("/files/{filename:.+}")
+    public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String filename) {
+        String message = "";
+
+        try {
+            boolean existed = fileService.delete(filename);
+
+            if (existed) {
+                message = "Delete the file successfully: " + filename;
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+            }
+
+            message = "The file does not exist!";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage(message));
+        } catch (Exception e) {
+            message = "Could not delete the file: " + filename + ". Error: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message));
+        }
+    }
+
+
 }
