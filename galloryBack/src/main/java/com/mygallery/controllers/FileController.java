@@ -11,19 +11,14 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -56,22 +51,22 @@ public class FileController {
     @GetMapping("/files")
     public ResponseEntity<List<FileDto>> getListFiles() {
         List<FileDto> fileInfos = fileService.getAllFiles().map(path -> {
-            String id = path.getName();
+            String id = path.getId();
+            String name = path.getName();
             String type = path.getType();
             long size = path.getSize();
 
 
-
-            String exetention= Optional.ofNullable(id)
+            String exetention = Optional.ofNullable(name)
                     .filter(f -> f.contains("."))
-                    .map(f -> f.substring(id.lastIndexOf(".") + 1))
+                    .map(f -> f.substring(name.lastIndexOf(".") + 1))
                     .get()
                     .toLowerCase();
             System.out.println(exetention);
 
 
-            String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", path.getId()+"."+exetention).build().toString();
-            return new FileDto(id, type, url, size);
+            String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", path.getId() + "." + exetention).build().toString();
+            return new FileDto(id,name, type, url, size);
 
 
         }).collect(Collectors.toList());
@@ -85,7 +80,6 @@ public class FileController {
 
 
         Resource file = fileService.getFile(filename);
-
 
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
