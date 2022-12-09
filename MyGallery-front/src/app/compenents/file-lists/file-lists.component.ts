@@ -15,7 +15,8 @@ export class FileListsComponent implements OnInit {
   id = '';
 
 
-  files!: Observable <FileModule[]> ;
+  files: FileModule[] = [];
+
 
 
   constructor(private fileSrvice: FileService,
@@ -23,22 +24,24 @@ export class FileListsComponent implements OnInit {
 
 
   ngOnInit(): void {
-   // this.getFiles();
-   this.files = this.fileSrvice.getFiles();
+   this.getFiles();
+  
   }
 
 
 
- /* private getFiles(){
+  private getFiles(){
     this.fileSrvice.getFiles().subscribe(data =>{
       this.files = data;
-    });
-  }*/
+      console.log("data ", this.files)
+    });}
+
   deleteFile (id: string){
     this.fileSrvice.deleteFile(id).subscribe(data =>{
    console.log(data);
-      this.fileSrvice.getFiles();
+      this.getFiles();
     })
   }
+
 
 }

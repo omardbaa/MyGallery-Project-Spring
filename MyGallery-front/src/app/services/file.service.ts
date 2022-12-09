@@ -55,6 +55,8 @@ deleteFile(id: string):Observable<Object>{
 
 
 
+
+
 /*getAllFilesOfFolder(id: number): Observable<FileModule>{
   return this.httpClient.get<FileModule>(`${this.baseURL}/${id}`+'/files');
 }*/

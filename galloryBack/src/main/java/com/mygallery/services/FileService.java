@@ -3,6 +3,7 @@ package com.mygallery.services;
 
 import com.mygallery.enities.File;
 import com.mygallery.repositories.FileRepository;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -44,14 +45,14 @@ public class FileService {
 
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
-        String exetention= Optional.ofNullable(fileName)
+        String exetention = Optional.ofNullable(fileName)
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(fileName.lastIndexOf(".") + 1))
                 .get()
                 .toLowerCase();
         System.out.println(exetention);
 
-      try {
+        try {
             if (Files.notExists(rootPath, linkOptions)) {
 
                 Files.createDirectory(rootPath);
@@ -62,7 +63,7 @@ public class FileService {
         }
         try {
             fileRepository.save(formFile);
-            Files.copy(file.getInputStream(), this.rootPath.resolve(formFile.getId()+"."+exetention));
+            Files.copy(file.getInputStream(), this.rootPath.resolve(formFile.getId() + "." + exetention));
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
@@ -97,6 +98,12 @@ public class FileService {
         return fileRepository.findAll().stream();
     }
 
+    public String Extension(String filename) {
+        File file = new File();
+        return FilenameUtils.getExtension(file.getName());
+    }
+
+
 
     //Delete file by id
     public boolean delete(String id) {
@@ -115,19 +122,23 @@ public class FileService {
 //            fileRepository.deleteById(id);
 
 //            Path file = rootPath.resolve(fileRepository.selectFileName(id));
-            Path filepath = rootPath.resolve(id+"."+fileRepository.getType(id).split("/",2)[1]);
-                System.out.println(filepath);
+
+            String exten= FilenameUtils.getExtension(fileRepository.getType(id));
+            Path filepath = rootPath.resolve(id + "." +exten);
+
+            // Path filepath = rootPath.resolve(id + "." +fileRepository.getType(id).split("/", 2)[1]);
+            System.out.println(filepath);
             Files.deleteIfExists(filepath);
             fileRepository.deleteById(id);
             return Files.deleteIfExists(filepath);
-
 
 
         } catch (IOException e) {
             throw new RuntimeException("Error: " + e.getMessage());
         }
 
-    }}
+    }
+}
 
 
 
