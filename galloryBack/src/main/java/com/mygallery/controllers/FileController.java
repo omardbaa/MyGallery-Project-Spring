@@ -62,8 +62,15 @@ public class FileController {
 
 
 
-            String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", path.getId()).build().toString();
+            String exetention= Optional.ofNullable(id)
+                    .filter(f -> f.contains("."))
+                    .map(f -> f.substring(id.lastIndexOf(".") + 1))
+                    .get()
+                    .toLowerCase();
+            System.out.println(exetention);
 
+
+            String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", path.getId()+"."+exetention).build().toString();
             return new FileDto(id, type, url, size);
 
 
@@ -85,7 +92,7 @@ public class FileController {
     }
 
 
-    @DeleteMapping("/{id:.+}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String id) {
         String message = "";
 

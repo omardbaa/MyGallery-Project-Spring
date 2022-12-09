@@ -1,5 +1,6 @@
 package com.mygallery;
 
+import com.mygallery.response.ResponseMessage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
