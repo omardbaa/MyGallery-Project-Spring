@@ -5,15 +5,20 @@ import { Observable } from 'rxjs';
 import { FileModule } from 'src/app/modules/file/file.module';
 import { FileService } from 'src/app/services/file.service';
 
+import { FileCardComponent } from '../file-card/file-card.component';
+
 @Component({
   selector: 'app-file-lists',
   templateUrl: './file-lists.component.html',
   styleUrls: ['./file-lists.component.css']
 })
+
+
 export class FileListsComponent implements OnInit {
 
   id = '';
 
+ 
 
   files: FileModule[] = [];
 

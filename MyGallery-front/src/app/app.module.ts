@@ -7,13 +7,15 @@ import { UploadFileComponent } from './compenents/upload-file/upload-file.compon
 import { FileDetailsComponent } from './compenents/file-details/file-details.component';
 import { FileListsComponent } from './compenents/file-lists/file-lists.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FileCardComponent } from './compenents/file-card/file-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadFileComponent,
     FileDetailsComponent,
-    FileListsComponent
+    FileListsComponent,
+    FileCardComponent
   ],
   imports: [
     BrowserModule,
