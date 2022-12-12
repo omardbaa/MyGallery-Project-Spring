@@ -46,7 +46,10 @@ updateFile(id:string, file: FileModule): Observable<Object>{
 }
 
 deleteFile(id: string):Observable<Object>{
-  return this.httpClient.delete(`${this.baseURL}/${id}`);
+  
+  
+    return this.httpClient.delete(`${this.baseURL}/${id}`);
+
 
 }
 
