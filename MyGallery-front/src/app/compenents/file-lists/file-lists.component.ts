@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { FILE_TYPES } from 'src/app/Constants';
 
 import { FileModule } from 'src/app/modules/file/file.module';
 import { FileService } from 'src/app/services/file.service';
@@ -15,12 +16,28 @@ import { FileCardComponent } from '../file-card/file-card.component';
 
 
 export class FileListsComponent implements OnInit {
-
-  id = '';
-
- 
-
   files: FileModule[] = [];
+  id = ''
+ types = {
+    'text/plain':{
+      color:'#0ec8a2',
+      icon:'fa-file-excel-o'
+    },
+   png: {
+      color:'#0ec8a2',
+      icon:'fa-file-excel-o'
+    },
+    'pdf':{
+      color:'#0ec8a2',
+      icon:'fa-file-excel-o'
+    },
+      
+   
+   }
+
+
+
+  
 
 
 

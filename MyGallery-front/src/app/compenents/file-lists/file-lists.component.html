@@ -18,12 +18,12 @@
                                     </button>
                                 </div>
                                 <div class="icon">
-                                    <img src="assets/Images/Logo.PNG" >
+                                    <i  class="{{ file.type| rename }}"></i>
                                    <!-- <i class="fa fa-file text-info" ></i>-->
                                 </div>
                                 <div class="file-name">
                                    <small>{{ file.name }}</small>
-                                    <small>Size: 1.8 MB <span class="date text-muted">Dec 07, 2022  </span></small>
+                                    <small>Size: 1.8 MB <span class="date text-muted">{{ file.type }}</span></small>
 
                                     <small>{{ file.description }} <span class="date text-muted">description </span></small>
 
@@ -45,7 +45,7 @@
 
 
 
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
             <div class="row">
                 <div class="col-sm-4">
@@ -137,11 +137,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-8 tab-content no-bg no-border">
+                <div class="col-sm-8 tab-content no-bg no-border" *ngFor="let file of files ">
                     <div class="tab-pane active documents documents-panel">
                         <div class="document success">
                             <div class="document-body">
-                                <i class="fa fa-file-excel-o text-success"></i>
+                                <i class="fa  text-success"></i>
                             </div>
                             <div class="document-footer">
                                 <span class="document-name"> Excel database 2017 </span>
@@ -152,7 +152,7 @@
                     </div> 
                 </div>
             </div>
-        </div> -->
+        </div> 
 
 
 

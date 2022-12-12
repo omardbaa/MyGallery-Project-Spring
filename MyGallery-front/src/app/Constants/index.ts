@@ -10,7 +10,7 @@ export const FILE_TYPES =  {
     },
     'pdf':{
       color:'#0ec8a2',
-      icon:'fa-light fa-file-lines'
+      icon:'fa-light fa-file-pdf'
     },
       
    

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RenamePipe } from './compenents/file-lists/rename.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +16,8 @@ import { FileCardComponent } from './compenents/file-card/file-card.component';
     UploadFileComponent,
     FileDetailsComponent,
     FileListsComponent,
-    FileCardComponent
+    FileCardComponent,
+    RenamePipe
   ],
   imports: [
     BrowserModule,
