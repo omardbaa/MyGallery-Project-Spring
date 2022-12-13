@@ -125,10 +125,9 @@
                             <div class="document success" *ngFor="let file of files ">
                                 <div class="document-body">
                                     
-                                    <i class="{{ file.type| rename }}"></i>
+                                    <i class="{{ file.name.split('.')[1].toLowerCase()| rename }}"></i>
                                 </div>
 
-                               
                                 <div class="document-footer">
                                     <span class="document-name"> {{ file.name}} </span>
                                     <span class="document-description"> {{ file.size}} </span>
