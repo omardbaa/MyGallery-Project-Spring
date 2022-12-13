@@ -29,35 +29,35 @@ export class RenamePipe implements PipeTransform {
   transform(typeString: string): string {
 
 
-    if (typeString === 'text/csv') {
+    if (typeString === 'csv') {
       return 'fa fa-file-excel-o text-success';
 
       
     } 
     
     
-    else if (typeString === 'image/png' || typeString === 'image/jpeg' ) {
+    else if (typeString === 'png' || typeString === 'jpeg' ) {
       return 'fa fa-light fa-image text-primary';
     } 
 
     
 
-    else if (typeString === 'video/mp4') {
+    else if (typeString === 'mp4') {
       return 'fa fa-file-video-o text-dark';
     }
     
     
     
-    else if (typeString === 'application/pdf') {
+    else if (typeString === 'pdf') {
       return 'fa fa-file-pdf-o text-danger';
     }
     
-    else if (typeString === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') {
+    else if (typeString === 'pptx') {
         return 'fa fa-file-powerpoint-o text-warning';
 
 
 
-    } else if (typeString === 'text/plain') {
+    } else if (typeString === 'txt') {
       return 'fa fa-file-text-o text-dark';
 
 
