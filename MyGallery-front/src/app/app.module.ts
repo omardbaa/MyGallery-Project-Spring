@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RenamePipe } from './compenents/file-lists/rename.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -7,13 +8,16 @@ import { UploadFileComponent } from './compenents/upload-file/upload-file.compon
 import { FileDetailsComponent } from './compenents/file-details/file-details.component';
 import { FileListsComponent } from './compenents/file-lists/file-lists.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FileCardComponent } from './compenents/file-card/file-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadFileComponent,
     FileDetailsComponent,
-    FileListsComponent
+    FileListsComponent,
+    FileCardComponent,
+    RenamePipe
   ],
   imports: [
     BrowserModule,
