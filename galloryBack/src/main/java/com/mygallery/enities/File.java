@@ -35,6 +35,9 @@ public class File {
     private long size;
     private String description;
 
+    private String extension;
+
+
 
     public File(String name, String type, long size) {
         this.name = name;

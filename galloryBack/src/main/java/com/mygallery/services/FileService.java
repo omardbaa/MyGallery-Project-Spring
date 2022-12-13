@@ -43,14 +43,16 @@ public class FileService {
 
         File formFile = new File(fileName, file.getContentType(), file.getSize());
 
+
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
-        String exetention = Optional.ofNullable(fileName)
+        String extension = Optional.ofNullable(fileName)
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(fileName.lastIndexOf(".") + 1))
                 .get()
                 .toLowerCase();
-        System.out.println(exetention);
+
+//        System.out.println(exetention);
 
         try {
             if (Files.notExists(rootPath, linkOptions)) {
@@ -63,7 +65,8 @@ public class FileService {
         }
         try {
             fileRepository.save(formFile);
-            Files.copy(file.getInputStream(), this.rootPath.resolve(formFile.getId() + "." + exetention));
+            Files.copy(file.getInputStream(), this.rootPath.resolve(formFile.getId() + "." + extension));
+            formFile.setExtension(extension);
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
@@ -123,8 +126,8 @@ public class FileService {
 
 //            Path file = rootPath.resolve(fileRepository.selectFileName(id));
 
-            String exten= FilenameUtils.getExtension(fileRepository.getType(id));
-            Path filepath = rootPath.resolve(id + "." +exten);
+            String extension= FilenameUtils.getExtension(fileRepository.getName(id));
+            Path filepath = rootPath.resolve(id + "." +extension);
 
             // Path filepath = rootPath.resolve(id + "." +fileRepository.getType(id).split("/", 2)[1]);
             System.out.println(filepath);
