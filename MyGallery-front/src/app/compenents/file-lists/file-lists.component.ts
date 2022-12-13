@@ -18,28 +18,48 @@ import { FileCardComponent } from '../file-card/file-card.component';
 
 export class FileListsComponent implements OnInit {
   files: FileModule[] = [];
+
+  // name=this.file.extension;
   id = ''
- types = {
-    'text/plain':{
-      color:'#0ec8a2',
-      icon:'fa-file-excel-o'
+  types: any = {
+    png: {
+
+      icon: 'fa fa-light fa-image text-info',
+      class: 'info'
     },
-   png: {
-      color:'#0ec8a2',
-      icon:'fa-file-excel-o'
+    pdf: {
+
+      icon: 'fa fa-file-pdf-o text-danger',
+      class: 'danger'
     },
-    'pdf':{
-      color:'#0ec8a2',
-      icon:'fa-file-excel-o'
+    csv: {
+
+      icon: 'fa fa-file-excel-o text-success',
+      class: 'success'
     },
-      
-   
-   }
+    txt: {
+
+      icon: 'fa fa-file-text-o text-secondary',
+      class: 'gold'
+    },
+    pptx: {
+
+      icon: 'fa fa-file-powerpoint-o text-warning',
+      class: 'warning'
+    }
+    ,
+    mp4: {
+
+      icon: 'fa fa-file-video-o text-dark',
+      class: 'dark'
+    }
+
+  }
 
 
 
   file: FileModule = new FileModule();
- 
+
   selectedFiles?: FileList;
   currentFile?: File;
   progress = 0;
@@ -53,21 +73,22 @@ export class FileListsComponent implements OnInit {
 
 
   ngOnInit(): void {
-   this.getFiles();
-  
+    this.getFiles();
+
   }
 
 
 
-  private getFiles(){
-    this.fileSrvice.getFiles().subscribe(data =>{
+  private getFiles() {
+    this.fileSrvice.getFiles().subscribe(data => {
       this.files = data;
       console.log("data ", this.files)
-    });}
+    });
+  }
 
-  deleteFile (id: string){
-    this.fileSrvice.deleteFile(id).subscribe(data =>{
-   console.log(data);
+  deleteFile(id: string) {
+    this.fileSrvice.deleteFile(id).subscribe(data => {
+      console.log(data);
       this.getFiles();
     })
   }
@@ -84,52 +105,52 @@ export class FileListsComponent implements OnInit {
 
 
 
-  
-  
- 
 
 
 
-    selectFile(event: any): void {
-      this.selectedFiles = event.target.files;
-    }
-  
-    upload(): void {
-      this.progress = 0;
-  
-      if (this.selectedFiles) {
-        const file: File | null = this.selectedFiles.item(0);
-  
-        if (file) {
-          this.currentFile = file;
-  
-          this.fileSrvice.upload(this.currentFile).subscribe({
-            next: (event: any) => {
-              if (event.type === HttpEventType.UploadProgress) {
-                this.progress = Math.round(100 * event.loaded / event.total);
-              } else if (event instanceof HttpResponse) {
-                this.message = event.body.message;
-                
-              }
-            },
-            error: (err: any) => {
-              console.log(err);
-              this.progress = 0;
-  
-              if (err.error && err.error.message) {
-                this.message = err.error.message;
-              } else {
-                this.message = 'Could not upload the file!';
-              }
-  
-              this.currentFile = undefined;
+
+
+
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
+
+  upload(): void {
+    this.progress = 0;
+
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+
+      if (file) {
+        this.currentFile = file;
+
+        this.fileSrvice.upload(this.currentFile).subscribe({
+          next: (event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progress = Math.round(100 * event.loaded / event.total);
+            } else if (event instanceof HttpResponse) {
+              this.message = event.body.message;
+
             }
-          });
-        }
-  
-        this.selectedFiles = undefined;
+          },
+          error: (err: any) => {
+            console.log(err);
+            this.progress = 0;
+
+            if (err.error && err.error.message) {
+              this.message = err.error.message;
+            } else {
+              this.message = 'Could not upload the file!';
+            }
+
+            this.currentFile = undefined;
+          }
+        });
       }
+
+      this.selectedFiles = undefined;
     }
+  }
 
 
 }

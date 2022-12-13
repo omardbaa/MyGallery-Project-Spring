@@ -1,6 +1,6 @@
 
 export const FILE_TYPES =  {
-    'text/plain':{
+    'txt':{
       color:'#0ec8a2',
       icon:'fa-light fa-file-lines'
     },

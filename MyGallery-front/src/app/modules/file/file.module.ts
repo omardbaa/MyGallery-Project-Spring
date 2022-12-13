@@ -12,13 +12,14 @@ import { CommonModule } from '@angular/common';
 export class FileModule {
 
   id!: string;
-  name!: string ;
+  name!: string;
   type!: string;
   url!: string;
   size!: number;
+  extension!: string;
   description!: string;
 
 
 
 
- }
+}
