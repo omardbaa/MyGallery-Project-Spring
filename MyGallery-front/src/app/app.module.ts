@@ -9,6 +9,10 @@ import { FileDetailsComponent } from './compenents/file-details/file-details.com
 import { FileListsComponent } from './compenents/file-lists/file-lists.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FileCardComponent } from './compenents/file-card/file-card.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -22,11 +26,15 @@ import { FileCardComponent } from './compenents/file-card/file-card.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule,
+    FormsModule,
+    ReactiveFormsModule,
+    Ng2SearchPipeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 
-  
+
 })
 export class AppModule { }

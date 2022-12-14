@@ -1,9 +1,10 @@
 package com.mygallery.controllers;
 
 
-import com.mygallery.dtos.FolderFile;
+import com.mygallery.dtos.FileFolder;
 import com.mygallery.enities.File;
 import com.mygallery.enities.Folder;
+import com.mygallery.repositories.FileRepository;
 import com.mygallery.services.FileService;
 import com.mygallery.services.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,17 @@ public class FolderController {
     @Autowired
     private final FolderService service;
 
-    public FolderController(FolderService service,FileService fileService ) {
+
+
+    @Autowired
+    private  FileRepository fileRepository;
+
+
+
+    public FolderController(FolderService service,FileService fileService,FileRepository fileRepository ) {
         this.service = service;
         this.fileService= fileService;
+        this.fileRepository = fileRepository;
 
     }
 
@@ -83,13 +92,18 @@ public class FolderController {
     }
 
     // Assing Folder To file
-   /* @PostMapping(path = "/projectEmployee")	public Collection<Folder> AssignProject(@RequestBody FolderFile fileFolder) {
-    File file = (File) fileService.loadUserByFileName(fileFolder.getFileName());
-    Folder project = service.findByFolderName(fileFolder.getFolderName());
-    Collection<Folder> projects = employee.getProjects();
-    projects.add(project);
-   file.setFolder(projects);
-    fileService.save(file);
-		return file.getFolders();	}*/
+    @PostMapping("/fileFolder")
+    public Collection<Folder> AssignProject(@RequestBody FileFolder fileFolder) {
+
+        File file = (File) fileService.loadFileByName(fileFolder.getFileName());
+        Folder folder = service.findByName(fileFolder.getFolderName());
+
+        Collection<Folder> folders = file.getFolder();
+        folders.add(folder);
+        file.setFolder(folders);
+       fileRepository.save(file);
+
+        return file.getFolder();
+    }
 
 }

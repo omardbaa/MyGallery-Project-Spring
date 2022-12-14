@@ -1,6 +1,8 @@
 package com.mygallery.enities;
 
 import java.util.Collection;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,6 +50,7 @@ public class File {
             inverseJoinColumns = @JoinColumn(name ="folderId")
     )
     @Column(name = "_folders")
+    //@JsonIgnore
     private Collection <Folder> folder;
 
 

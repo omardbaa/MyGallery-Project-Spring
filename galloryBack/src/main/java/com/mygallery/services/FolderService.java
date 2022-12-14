@@ -43,4 +43,7 @@ public class FolderService {
         return folderRepository.findAll();
     }
 
+    public Folder findByName(String folderName) {
+        return folderRepository.findByFolderName(folderName);
+    }
 }

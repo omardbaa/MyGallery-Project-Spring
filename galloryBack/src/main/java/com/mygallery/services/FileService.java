@@ -157,7 +157,14 @@ public class FileService {
         return files;
 
     }
+
+    public File loadFileByName(String fileName) {
+        return fileRepository.findByName(fileName);
+    }
+
+
 }
+
 
 
 
