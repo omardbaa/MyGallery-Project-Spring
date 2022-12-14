@@ -93,7 +93,7 @@ public class FolderController {
 
     // Assing Folder To file
     @PostMapping("/fileFolder")
-    public Collection<Folder> AssignProject(@RequestBody FileFolder fileFolder) {
+    public Collection<Folder> AddFileToFolder(@RequestBody FileFolder fileFolder) {
 
         File file = (File) fileService.loadFileByName(fileFolder.getFileName());
         Folder folder = service.findByName(fileFolder.getFolderName());
