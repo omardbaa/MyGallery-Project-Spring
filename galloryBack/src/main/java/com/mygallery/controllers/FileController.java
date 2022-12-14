@@ -30,12 +30,13 @@ public class FileController {
     private final Path rootPath = Paths.get("uploads");
 
     @Autowired
-    private final FileService fileService;
+    private FileService fileService;
 
+    @Autowired
+    private  FileRepository fileRepository;
 
-    private FileRepository fileRepository;
-
-    public FileController(FileService fileService) {
+    public FileController(FileService fileService,FileRepository fileRepository) {
+        this.fileRepository= fileRepository;
         this.fileService = fileService;
     }
 

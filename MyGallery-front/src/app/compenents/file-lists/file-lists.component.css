@@ -350,9 +350,9 @@ body {
   max-width: 240px;
   margin: 0px 10px 20px;
   background-color: #fff;
-  border-radius: 3px;
+  border-radius: 6px;
   border: 1px solid #dce2e9;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
 }
 
 .document .document-body {

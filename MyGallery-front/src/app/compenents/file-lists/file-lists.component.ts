@@ -20,7 +20,16 @@ export class FileListsComponent implements OnInit {
   files: FileModule[] = [];
 
   // name=this.file.extension;
-  id = ''
+
+  pageSize = 0;
+  perPage = 6;
+  p: number = 1;
+  name = '';
+  size = '';
+  extension = '';
+  folderName = '';
+  id = '';
+
   types: any = {
     png: {
 
@@ -154,3 +163,5 @@ export class FileListsComponent implements OnInit {
 
 
 }
+
+

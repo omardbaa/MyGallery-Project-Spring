@@ -1,10 +1,18 @@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container" style="margin-bottom: 190px;">
 
-    <H4 style="margin-bottom: 30px;">File lsits</H4>
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" style="margin-bottom: 190px; margin-top: 90px;">
+
+    <H4 style="margin-bottom: 30px;">File lsit</H4>
+
+
+
     <div class="row">
+
         <div class="col-sm-4">
             <div class="panel panel-dark-outline tabs-panel">
+
                 <div class="panel-heading">
                     <ul class="nav nav-tabs pull-left type-document">
                         <li class="active"><a data-toggle="tab" href=".documents-panel" aria-expanded="true"> <i
@@ -121,8 +129,15 @@
             </div>
         </div>
         <div class="col-sm-8 tab-content no-bg no-border">
+
+            <div class="d-flex" style=" margin-left: 33px; margin-right: 60px; ">
+                <input [(ngModel)]="name" [(ngModel)]="size" [(ngModel)]="extension" [(ngModel)]="folderName" [(ngModel)]="id" class="form-control me-6" type="search"   placeholder="Search" aria-label="Search" >
+            </div>
+
             <div class="tab-pane active documents documents-panel">
-                <div class="document {{types[file.extension.toLowerCase()].class}}" *ngFor="let file of files ">
+
+                <div class="document {{types[file.extension.toLowerCase()].class}}" *ngFor="let file of files | filter : name | filter : id | filter : size | filter : extension | filter : folderName | paginate: { itemsPerPage: perPage, currentPage: p }">
+
                     <div class="document-body">
 
                         <i class="{{  types[file.extension.toLowerCase()].icon}}"></i>
@@ -130,8 +145,8 @@
 
                     <div class="document-footer">
                         <span class="document-name"> {{ file.name}} </span>
-                        <span class="document-size"> {{ file.size}} </span>
-                        <span class="document-size"> {{ file.type}} </span>
+                        <span class="document-size"> size: {{ file.size}}b </span>
+                        <span class="document-size"> {{ file.extension}} </span>
 
 
                         <div>
@@ -152,11 +167,18 @@
                         </div>
                     </div>
 
+
                 </div>
 
 
 
             </div>
+        </div >
+
+        <div style="margin-left: 100px;">
+            <pagination-controls class="myPagination" (pageChange)="p = $event"></pagination-controls>
         </div>
     </div>
+
+
 </div>
