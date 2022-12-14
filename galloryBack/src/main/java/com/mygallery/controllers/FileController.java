@@ -32,10 +32,11 @@ public class FileController {
     @Autowired
     private final FileService fileService;
 
+    @Autowired
+    private final FileRepository fileRepository;
 
-    private FileRepository fileRepository;
-
-    public FileController(FileService fileService) {
+    public FileController(FileService fileService,FileRepository fileRepository) {
+        this.fileRepository= fileRepository;
         this.fileService = fileService;
     }
 

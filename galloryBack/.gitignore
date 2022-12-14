@@ -8,7 +8,7 @@ target/
 .apt_generated
 .classpath
 .factorypath
-.project
+.folder
 .settings
 .springBeans
 .sts4-cache
@@ -20,7 +20,7 @@ target/
 *.ipr
 
 ### NetBeans ###
-/nbproject/private/
+/nbfolder/private/
 /nbbuild/
 /dist/
 /nbdist/

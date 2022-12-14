@@ -2,7 +2,9 @@ package com.mygallery.services;
 
 
 import com.mygallery.enities.File;
+import com.mygallery.enities.Folder;
 import com.mygallery.repositories.FileRepository;
+import com.mygallery.repositories.FolderRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -17,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -28,6 +31,9 @@ public class FileService {
     private final Path rootPath = Paths.get("uploads");
     @Autowired
     private final FileRepository fileRepository;
+    @Autowired
+    private FolderRepository folderRepository;
+
 
 
     public FileService(FileRepository fileRepository) {
@@ -139,6 +145,16 @@ public class FileService {
         } catch (IOException e) {
             throw new RuntimeException("Error: " + e.getMessage());
         }
+
+
+
+    }
+    public List<File> getAllFilesOfFolder(Long folderId){
+
+        Folder folder = this.folderRepository.findByFolderId(folderId);
+
+        List <File> files = (List <File>)folder.getFiles();
+        return files;
 
     }
 }
