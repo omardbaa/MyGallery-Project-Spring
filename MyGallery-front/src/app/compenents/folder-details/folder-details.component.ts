@@ -1,25 +1,25 @@
+import { Component } from '@angular/core';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { FILE_TYPES } from 'src/app/Constants';
-
+import { ActivatedRoute } from '@angular/router';
 import { FileModule } from 'src/app/modules/file/file.module';
+import { FolderModule } from 'src/app/modules/folder/folder.module';
 import { FileService } from 'src/app/services/file.service';
-
+import { FolderService } from 'src/app/services/folder.service';
 
 @Component({
-  selector: 'app-file-lists',
-  templateUrl: './file-lists.component.html',
-  styleUrls: ['./file-lists.component.css']
+  selector: 'app-folder-details',
+  templateUrl: './folder-details.component.html',
+  styleUrls: ['./folder-details.component.css']
 })
+export class FolderDetailsComponent {
 
 
-export class FileListsComponent implements OnInit {
-  files: FileModule[] = [];
 
-  // name=this.file.extension;
 
+
+
+
+  
   pageSize = 0;
   perPage = 6;
   p: number = 1;
@@ -27,7 +27,7 @@ export class FileListsComponent implements OnInit {
   size = '';
   extension = '';
   folderName = '';
-  id = '';
+  idFile = '';
 
   types: any = {
     png: {
@@ -74,71 +74,74 @@ export class FileListsComponent implements OnInit {
 
 
 
-  file: FileModule = new FileModule();
 
-  selectedFiles?: FileList;
-  currentFile?: File;
-  progress = 0;
-  message = '';
+  allFiles: any = [];
 
-
-
-
-  constructor(private fileSrvice: FileService,
-    private router: Router) { }
-
-
-  ngOnInit(): void {
-    this.getFiles();
-
-  }
-
-
-
-  private getFiles() {
-    this.fileSrvice.getFiles().subscribe(data => {
-      this.files = data;
-      console.log("data ", this.files)
-    });
-  }
-
-  deleteFile(id: string) {
-    this.fileSrvice.deleteFile(id).subscribe(data => {
-      console.log(data);
-      this.getFiles();
-    })
-  }
-
-
-
-
-
-
-
-
-
-
-
-
+  folderId!: number;
+  folder: FolderModule = new FolderModule;
+  
+  file: FileModule= new FileModule;
+  
+  id!:number;
+  
+  
+  
+    constructor(private folderService: FolderService , private fileService :FileService, private route: ActivatedRoute) { }
+  
+    
+  
+    ngOnInit(): void {
+      this.folderId = this.route.snapshot.params['id'];
+      this.folder = new FolderModule();
+      this.folderService.getFolderById(this.folderId).subscribe(data => {
+        this.folder = data;
+  
+        this.getFiles();
+      });
+  
+  
+  
+    }
+  
+  
+    private getFiles(){
+      this.folderService.getAllFiles(this.folderId).subscribe(data =>{
+     let files= [];
+     let datalist:any = data;
+        for (let a of datalist) {
+          if (a.id) {
+            files.push(a)
+  
+          }
+        }
+        this.allFiles = files;
+      });
+    }
+    
 
 
 
-
+    selectedFiles?: FileList;
+    currentFile?: File;
+    progress = 0;
+    message = '';
+    
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
   }
 
-  upload(): void {
+  upload(folderId:number , folderName: string): void {
     this.progress = 0;
-
+    console.log("folderId", folderId)
+    console.log("folderName", folderName)
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
 
       if (file) {
         this.currentFile = file;
 
-        this.fileSrvice.upload(this.currentFile).subscribe({
+        this.folderService.upload(this.currentFile).subscribe({
           next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round(100 * event.loaded / event.total);
@@ -164,10 +167,13 @@ export class FileListsComponent implements OnInit {
 
       this.selectedFiles = undefined;
     }
-    this.getFiles;
   }
 
 
 }
 
 
+
+  
+  
+  

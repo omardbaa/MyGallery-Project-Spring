@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FileCardComponent } from './file-card.component';
+import { UpdateFolderComponent } from './update-folder.component';
 
-describe('FileCardComponent', () => {
-  let component: FileCardComponent;
-  let fixture: ComponentFixture<FileCardComponent>;
+describe('UpdateFolderComponent', () => {
+  let component: UpdateFolderComponent;
+  let fixture: ComponentFixture<UpdateFolderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FileCardComponent ]
+      declarations: [ UpdateFolderComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FileCardComponent);
+    fixture = TestBed.createComponent(UpdateFolderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

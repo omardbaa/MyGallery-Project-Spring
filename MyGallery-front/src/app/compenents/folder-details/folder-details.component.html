@@ -1,0 +1,141 @@
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/svg-with-js.min.css" integrity="sha512-W3ZfgmZ5g1rCPFiCbOb+tn7g7sQWOQCB1AkDqrBG1Yp3iDjY9KYFh/k1AWxrt85LX5BRazEAuv+5DV2YZwghag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+    
+
+
+</head>
+
+<body style="margin-top: 100px; margin-bottom: 50px;">
+<div>
+<section class="bg-light">
+
+    <div class="container">
+        
+    <h3> Folder Details</h3>
+        <div class="row">
+            <div class="col-lg-12 mb-4 mb-sm-5" >
+                <div class="card-first card-style1 border-0">
+                    <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
+                        <div class="row align-items-left">
+                            
+                            <div class="col-lg-6   px-xl-10">
+                                <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
+                                    <h5 class="h2 text-white mb-0"> {{folder.folderName}} </h5>
+                                    <!-- <h6 class="text-primary"><label style="margin-right:10px ;color: aliceblue;"> Flder Id</label>{{folder.folderId}}</h6> -->
+                                </div>
+                               
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <div class="col-8">
+        <label class="btn btn-default p-0">
+            <input type="file" (change)="selectFile($event)" />
+        </label>
+    </div>
+
+    <div class="col-4">
+        <button class="btn btn-block btn-success" [disabled]="!selectedFiles" (click)="upload(folder.folderId, folder.folderName)"> <i
+                class="fa fa-plus"> </i> Upload</button>
+
+    </div>
+
+
+
+
+
+    <div *ngIf="currentFile" class="progress my-3">
+        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+            attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"
+            [ngStyle]="{ width: progress + '%' }">
+            {{ progress }}%
+        </div>
+    </div>
+
+    <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+
+
+
+  
+</section>
+
+
+
+<section >
+<h3 style="margin-left: 120px; margin-bottom: 30px;"> Files</h3>
+    
+   
+<div class="col-sm-8 tab-content no-bg no-border">
+
+    <div class="d-flex" style=" margin-left: 33px; margin-right: 60px; ">
+        <input [(ngModel)]="name" [(ngModel)]="size" [(ngModel)]="extension" [(ngModel)]="folderName" [(ngModel)]="id" class="form-control me-6" type="search"   placeholder="Search" aria-label="Search" >
+    </div>
+
+    <div class="tab-pane active documents documents-panel">
+
+        <div class="document {{types[file.extension.toLowerCase()].class}}" *ngFor="let file of allFiles | filter : name | filter : idFile | filter : size | filter : extension | filter : folderName | paginate: { itemsPerPage: perPage, currentPage: p }">
+
+            <div class="document-body">
+
+                <i class="{{  types[file.extension.toLowerCase()].icon}}"></i>
+            </div>
+
+            <div class="document-footer">
+                <span class="document-name"> {{ file.name}} </span>
+                <span class="document-size"> size: {{ file.size}}b </span>
+                <span class="document-size"> {{ file.extension}} </span>
+
+
+                <div>
+                    <a href="javascript:void(0);">
+                        <div class="hover">
+
+                            <!-- <button (click)="deleteFile(file.id)" type="button" class="btn btn-icon btn-danger"
+                            style="margin-TOP: 3%; height: 30px; width:30px ;">
+                            <i class="fa fa-trash"></i>
+                            </button> -->
+
+                            <!-- <a href="{{ file.url }}" class="file-download"><i class="fa fa-download"
+                                    style="margin-left: 70%; height: 30px; width:30px "> </i></a> -->
+                        </div>
+                    </a>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+</div >
+
+
+
+
+    </section>
+<div style="margin-left: 100px;">
+    <pagination-controls class="myPagination" (pageChange)="p = $event"></pagination-controls>
+</div>
+
+
+
+
+
+
+
