@@ -13,6 +13,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { CreateFolderComponent } from './compenents/create-folder/create-folder.component';
+import { UpdateFolderComponent } from './compenents/update-folder/update-folder.component';
+
 
 @NgModule({
   declarations: [
@@ -21,16 +24,21 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FileDetailsComponent,
     FileListsComponent,
     FileCardComponent,
-    RenamePipe
+    RenamePipe,
+    CreateFolderComponent,
+    UpdateFolderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    NgxPaginationModule,
-    FormsModule,
-    ReactiveFormsModule,
+    HttpClientModule, 
+    FormsModule, 
+    NgxPaginationModule, 
     Ng2SearchPipeModule,
+    ReactiveFormsModule,
+    
+    
+
   ],
   providers: [],
   bootstrap: [AppComponent]

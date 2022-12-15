@@ -1,0 +1,89 @@
+<head>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/svg-with-js.min.css" integrity="sha512-W3ZfgmZ5g1rCPFiCbOb+tn7g7sQWOQCB1AkDqrBG1Yp3iDjY9KYFh/k1AWxrt85LX5BRazEAuv+5DV2YZwghag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+    
+
+
+</head>
+
+<body style="margin-top: 100px; margin-bottom: 50px;">
+<div>
+<section class="bg-light">
+
+    <div class="container">
+        
+    <h3> Folder Details</h3>
+        <div class="row">
+            <div class="col-lg-12 mb-4 mb-sm-5" >
+                <div class="card-first card-style1 border-0">
+                    <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
+                        <div class="row align-items-left">
+                            
+                            <div class="col-lg-6   px-xl-10">
+                                <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
+                                    <h5 class="h2 text-white mb-0"> {{folder.folderName}} </h5>
+                                    <!-- <h6 class="text-primary"><label style="margin-right:10px ;color: aliceblue;"> Flder Id</label>{{folder.folderId}}</h6> -->
+                                </div>
+                               
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+
+  
+</section>
+
+
+
+<section >
+<h3 style="margin-left: 120px; margin-bottom: 30px;"> Files</h3>
+    
+    <div class="row" style="margin-left: 120px;">
+    *ngFor="let folder of folders"
+        <div class="col-xl-3 col-sm-6" *ngFor = "let file of allFiles" >
+            <div  class="card" >
+                <div  class="card-body">
+                
+                    <div class="d-flex align-items-center">
+                        
+                        <div class="flex-1 ms-3">
+                            <h6 class="font-size-16 mb-1">{{file.name}}  </h6>
+                            <h6 class="font-size-16 mb-1"><label style="margin-right:10px ;">size: </label>{{file.size}}b  </h6>
+                            <span class="badge badge-soft-success mb-0">{{file.extension}}</span>
+                        </div>
+                    </div>
+                   
+                    <div class="d-flex gap-2 pt-4">
+
+                       
+
+                       
+                        
+
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+</div>
+    
+    </section>
+
+
+
+</div>
+
+
+</body>

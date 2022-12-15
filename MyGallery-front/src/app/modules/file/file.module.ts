@@ -18,6 +18,7 @@ export class FileModule {
   size!: number;
   extension!: string;
   description!: string;
+  folder!:      number[];
 
 
 

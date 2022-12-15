@@ -63,6 +63,14 @@ export class FileListsComponent implements OnInit {
       class: 'dark'
     }
 
+    ,
+    rar: {
+
+      icon: 'fa fa-file-video-o text-dark',
+      class: 'dark'
+    }
+
+
   }
 
 
