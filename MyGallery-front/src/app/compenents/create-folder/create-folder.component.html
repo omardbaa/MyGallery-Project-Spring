@@ -23,9 +23,9 @@
                 <h4 class="no-margin-top"> Folders</h4>
                 <ul class="folders list-unstyled" *ngFor="let folder of folders">
                     <li>
-                        <button (click)="folderDetails(folder.folderId)">
+                        <a (click)="folderDetails(folder.folderId)">
                             <i class="fa fa-folder"></i> {{ folder.folderName}}
-                        </button>
+                        </a>
                     </li>
                     
                 </ul>

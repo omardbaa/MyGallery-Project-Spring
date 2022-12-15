@@ -40,8 +40,18 @@ export class FolderService {
   
   
   
-  
-  
+  upload(file: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+
+    const req = new HttpRequest('POST', `${this.baseURL}/upload`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this.httpClient.request(req);
+  }
   
   
   getAllFiles(id: number): Observable<FolderModule>{

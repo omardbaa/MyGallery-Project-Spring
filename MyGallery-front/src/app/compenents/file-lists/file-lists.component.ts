@@ -7,7 +7,6 @@ import { FILE_TYPES } from 'src/app/Constants';
 import { FileModule } from 'src/app/modules/file/file.module';
 import { FileService } from 'src/app/services/file.service';
 
-import { FileCardComponent } from '../file-card/file-card.component';
 
 @Component({
   selector: 'app-file-lists',
@@ -126,8 +125,6 @@ export class FileListsComponent implements OnInit {
 
 
 
-
-
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
   }
@@ -167,6 +164,7 @@ export class FileListsComponent implements OnInit {
 
       this.selectedFiles = undefined;
     }
+    this.getFiles;
   }
 
 
