@@ -1,54 +1,108 @@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="col-sm-4" style="margin-top: 100px;">
-    <div class="panel panel-dark-outline tabs-panel">
+<link
+  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+  rel="stylesheet"
+/>
 
-        <div class="panel-heading">
-            <ul class="nav nav-tabs pull-left type-document">
-                <li class="active"><a data-toggle="tab" href=".documents-panel" aria-expanded="true"> <i
-                            class="fa fa-file"></i> Documents</a></li>
-                <li class=""><a data-toggle="tab" href=".images-panel" aria-expanded="false"><i
-                            class="fa fa-file-image-o"></i> Images </a></li>
-            </ul>
-            <div class="clear"></div>
-        </div>
-        <div class="panel-body tab-content">
-            <div class="tab-pane active documents-panel">
-                <a class="label label-success  label-left" href="#">Excel</a>
-                <a class="label label-info label-left" href="#">Word</a>
-                <a class="label label-warning label-left" href="#">Powerpoint</a>
-                <a class="label label-danger label-left" href="#">PDF</a>
-                <a class="label label-dark label-left" href="#">Video</a>
-                <div class="clear"></div>
-                <div class="v-spacing-xs"></div>
-                <h4 class="no-margin-top"> Folders</h4>
-                <ul class="folders list-unstyled" *ngFor="let folder of folders">
-                    <li>
-                        <a (click)="folderDetails(folder.folderId)">
-                            <i class="fa fa-folder"></i> {{ folder.folderName}}
-                        </a>
-                    </li>
-                    
-                </ul>
-                <div class="v-spacing-xs"></div>
-
-
-                <!-- <a class="btn btn-block btn-success"> <i class="fa fa-plus"> </i> Upload</a> -->
-            </div>
-        </div>
+<div class="col-sm-12">
+  <form (ngSubmit)="onSubmit()">
+    <label> Folder Name </label>
+    <div class="file-wrap">
+      <input
+        type="text"
+        id="folderName"
+        [(ngModel)]="folder.folderName"
+        name="folderName"
+        placeholder="folder name"
+      />
+      <button class="btn btn-success" style="margin-left: 1.5em" type="submit">
+        <mat-icon>create_new_folder</mat-icon>
+      </button>
     </div>
+  </form>
 </div>
+<div class="wrap-section">
+  <div class="col-sm-4">
+    <div class="panel panel-dark-outline tabs-panel">
+      <div class="panel-body tab-content">
+        <div class="tab-pane active documents-panel">
+          <ul class="folders list-unstyled" *ngFor="let folder of folders">
+            <li>
+              <a (click)="folderDetails(folder.folderId)">
+                <i class="fa fa-folder"></i> {{ folder.folderName }}
+              </a>
+            </li>
+          </ul>
+          <div class="v-spacing-xs"></div>
 
-<div>
-    
-<form (ngSubmit) = "onSubmit()">
-        
-    <div class="form-group"> 
-        <label>Folfder Name </label>
-        <input type="text"  class="form-control" id ="folderName"
-            [(ngModel)] = "folder.folderName" name = "folderName">
+          <!-- <a class="btn btn-block btn-success"> <i class="fa fa-plus"> </i> Upload</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-8">
+    <h3 style="margin-left: 120px; margin-bottom: 30px">Files</h3>
+
+    <div class="col-sm-8 tab-content no-bg no-border">
+      <div class="d-flex" style="margin-left: 33px; margin-right: 60px">
+        <input
+          [(ngModel)]="name"
+          [(ngModel)]="size"
+          [(ngModel)]="extension"
+          [(ngModel)]="folderName"
+          [(ngModel)]="id"
+          class="form-control me-6"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+      </div>
+
+      <div class="tab-pane active documents documents-panel">
+        <div
+          class="document {{ types[file.extension.toLowerCase()].class }}"
+          *ngFor="
+            let file of allFiles
+              | filter : name
+              | filter : idFile
+              | filter : size
+              | filter : extension
+              | filter : folderName
+              | paginate : { itemsPerPage: perPage, currentPage: p }
+          "
+        >
+          <div class="document-body">
+            <i class="{{ types[file.extension.toLowerCase()].icon }}"></i>
+          </div>
+
+          <div class="document-footer">
+            <span class="document-name"> {{ file.name }} </span>
+            <span class="document-size"> size: {{ file.size }}b </span>
+            <span class="document-size"> {{ file.extension }} </span>
+
+            <div>
+              <a href="javascript:void(0);">
+                <div class="hover">
+                  <!-- <button (click)="deleteFile(file.id)" type="button" class="btn btn-icon btn-danger"
+                              style="margin-TOP: 3%; height: 30px; width:30px ;">
+                              <i class="fa fa-trash"></i>
+                              </button> -->
+
+                  <!-- <a href="{{ file.url }}" class="file-download"><i class="fa fa-download"
+                                      style="margin-left: 70%; height: 30px; width:30px "> </i></a> -->
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-        <button class="btn btn-success" type="submit" style="padding-left: 30px" >Submit </button>
-        
-</form>
+    <div style="margin-left: 100px">
+      <pagination-controls
+        class="myPagination"
+        (pageChange)="p = $event"
+      ></pagination-controls>
+    </div>
+  </div>
 </div>

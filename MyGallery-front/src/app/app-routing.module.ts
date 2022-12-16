@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'upload-file', component: UploadFileComponent },
   {path: 'files', component: FileListsComponent},
   {path: 'create-folder',component : CreateFolderComponent},
-  {path: 'folder-details/:id', component: FolderDetailsComponent},
+  {path: 'create-folder/:id', component:CreateFolderComponent},
 ];
 
 @NgModule({
