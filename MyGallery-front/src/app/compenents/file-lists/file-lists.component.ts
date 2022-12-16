@@ -97,32 +97,22 @@ export class FileListsComponent implements OnInit {
 
   private getFiles() {
     this.fileSrvice.getFiles().subscribe(data => {
+   
       this.files = data;
+      
       console.log("data ", this.files)
+      
     });
   }
 
   deleteFile(id: string) {
     this.fileSrvice.deleteFile(id).subscribe(data => {
+     
       console.log(data);
       this.getFiles();
+      
     })
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   selectFile(event: any): void {
@@ -131,20 +121,23 @@ export class FileListsComponent implements OnInit {
 
   upload(): void {
     this.progress = 0;
-
+    
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
 
       if (file) {
         this.currentFile = file;
-
         this.fileSrvice.upload(this.currentFile).subscribe({
           next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round(100 * event.loaded / event.total);
+              this.getFiles();
+            
             } else if (event instanceof HttpResponse) {
               this.message = event.body.message;
 
+            } else  {
+              this.progress =0
             }
           },
           error: (err: any) => {
@@ -156,16 +149,22 @@ export class FileListsComponent implements OnInit {
             } else {
               this.message = 'Could not upload the file!';
             }
-
+            this.progress=0;
             this.currentFile = undefined;
           }
         });
+       
       }
-
+    
+      
       this.selectedFiles = undefined;
     }
-    this.getFiles;
+
+    
+    
+  
   }
+  
 
 
 }
