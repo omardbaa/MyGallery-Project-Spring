@@ -40,24 +40,21 @@
     </div>
   </div>
 
-  <div class="col-sm-8">
-    <h3 style="margin-left: 120px; margin-bottom: 30px">Files</h3>
-
+  <div class="col-sm-8" style="width: 30wv">
+    <div>
+      <input
+        [(ngModel)]="name"
+        [(ngModel)]="size"
+        [(ngModel)]="extension"
+        [(ngModel)]="folderName"
+        [(ngModel)]="id"
+        class="form-control me-6"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+    </div>
     <div class="col-sm-8 tab-content no-bg no-border">
-      <div class="d-flex" style="margin-left: 33px; margin-right: 60px">
-        <input
-          [(ngModel)]="name"
-          [(ngModel)]="size"
-          [(ngModel)]="extension"
-          [(ngModel)]="folderName"
-          [(ngModel)]="id"
-          class="form-control me-6"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-      </div>
-
       <div class="tab-pane active documents documents-panel">
         <div
           class="document {{ types[file.extension.toLowerCase()].class }}"
@@ -96,9 +93,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div style="margin-left: 100px">
       <pagination-controls
         class="myPagination"
         (pageChange)="p = $event"
