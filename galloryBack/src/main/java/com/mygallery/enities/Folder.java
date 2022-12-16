@@ -25,9 +25,9 @@ public class Folder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "_folderId")
+
     private Long folderId;
-    @Column(name = "_folderName")
+
     private String folderName;
 
     @ManyToMany(mappedBy = "folder", targetEntity = File.class, fetch = FetchType.LAZY)
