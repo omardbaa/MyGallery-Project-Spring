@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FolderModule } from 'src/app/modules/folder/folder.module';
 import { FolderService } from 'src/app/services/folder.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { FileService } from 'src/app/services/file.service';
 import { FileModule } from 'src/app/modules/file/file.module';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatSidenav } from '@angular/material/sidenav';
+import { untilDestroyed } from '@ngneat/until-destroy';
+import { delay, filter } from 'rxjs';
 
 
 @Component({
@@ -31,8 +35,13 @@ export class CreateFolderComponent {
   folderName = '';
   idFile = '';
 
+  @ViewChild(MatSidenav)
+ details!: MatSidenav;
+
+  
+
   constructor(private folderService: FolderService, 
-    private router: Router,  private fileService :FileService, private route: ActivatedRoute) { }
+    private router: Router,  private fileService :FileService, private route: ActivatedRoute,private observer: BreakpointObserver) { }
 
   ngOnInit(): void {
     this.getFolders();
@@ -56,12 +65,17 @@ this.folderService.createFolder(this.folder).subscribe(data => {
 },
   error => console.log(error));
 }
-private getFolders() {
+ getFolders() {
   this.folderService.getFolderList().subscribe(data => {
     this.folders = data;
     this.getFolders;
+   
     console.log("data ", this.folders)
   });
+}
+returnFolders(){
+  this.router.navigate(['/create-folder']);
+
 }
 
 folderDetails(folderId:number){
@@ -191,6 +205,42 @@ folderDetails(folderId:number){
 
       this.selectedFiles = undefined;
     }
+  }
+
+
+
+
+
+
+  
+  
+  
+
+  ngAfterViewInit() {
+    this.observer
+      .observe(['(max-width: 100px; min-height: 100px)'])
+      .pipe(delay(1), untilDestroyed(this))
+      .subscribe((res) => {
+        if (res.matches) {
+          this.details.mode = 'over';
+          this.details.close();
+          
+        } else {
+          this.details.mode = 'side';
+          this.details.open();
+        }
+      });
+
+    this.router.events
+      .pipe(
+        untilDestroyed(this),
+        filter((e) => e instanceof NavigationEnd)
+      )
+      .subscribe(() => {
+        if (this.details.mode === 'over') {
+          this.details.close();
+        }
+      });
   }
 
 

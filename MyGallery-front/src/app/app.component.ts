@@ -4,6 +4,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { delay, filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { FolderDetailsComponent } from './compenents/folder-details/folder-details.component';
 
 
 
@@ -18,6 +19,7 @@ export class AppComponent {
 
 
 
+  
 
 
   
@@ -34,6 +36,7 @@ export class AppComponent {
         if (res.matches) {
           this.sidenav.mode = 'over';
           this.sidenav.close();
+          
         } else {
           this.sidenav.mode = 'side';
           this.sidenav.open();
