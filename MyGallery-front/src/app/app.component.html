@@ -1,73 +1,48 @@
+<head>
+  <meta charset="utf-8">
+  <title>MyGalleryFront</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+</head>
 
-<div class="container" style="width:600px">
-    <div class="my-3">
-      
-     
-    </div>
-  
-   
-  </div>
-
- 
-
-<div class="container">
-
-
-  <mat-toolbar class="mat-elevation-z8">
-    <button
-      mat-icon-button
-      *ngIf="sidenav.mode === 'over'"
-      (click)="sidenav.toggle()"
-    >
-      <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
-      <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
-    </button>
-    My Gallery
-  </mat-toolbar>
-  
-  <mat-sidenav-container>
-    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-      <img
-        class="avatar mat-elevation-z8"
-        src="https://source.unsplash.com/c_GmwfHBDzk/200x200"
-      />
-  
-      <h4 class="name">Abderrahim Omar</h4>
-      <p class="designation">Software Engineer</p>
-  
-      <mat-divider></mat-divider>
-
-  
-      <button mat-button class="menu-button" routerLink="files" routerLinkActive="active">
-        <mat-icon>note</mat-icon>
-        <span>Files</span>
+<body class="mat-typography">
+  <div class="container app">
+    <mat-toolbar>
+      <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+        <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
       </button>
-      
-  
-      <mat-divider></mat-divider>
-
-      <button mat-button class="menu-button" routerLink="create-folder" routerLinkActive="active">
-        <mat-icon>folder</mat-icon>
-        <span>Folders</span>
-      </button>
-
-
-
-
-
-
-  
-      <!-- <button mat-button class="menu-button" routerLink="/help">
-        <mat-icon>help</mat-icon>
-        <span>Help</span>
-      </button> -->
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <div class="content mat-elevation-z8">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-   
-    
+      My Gallery
+    </mat-toolbar>
+    <mat-sidenav-container>
+      <mat-sidenav #sidenav="matSidenav">
+        <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
+        <h4 class="name">Abderrahim Omar</h4>
+        <p class="designation">Software Engineer</p>
+        <mat-divider></mat-divider>
+        <button mat-button class="menu-button" routerLink="files" routerLinkActive="active">
+          <mat-icon>note</mat-icon>
+          <span>Files</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-button class="menu-button" routerLink="create-folder" routerLinkActive="active">
+          <mat-icon>folder</mat-icon>
+          <span>Folders</span>
+        </button>
+        <!-- <button mat-button class="menu-button" routerLink="/help">
+          <mat-icon>help</mat-icon>
+          <span>Help</span>
+        </button> -->
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <div class="content mat-elevation-z8">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>

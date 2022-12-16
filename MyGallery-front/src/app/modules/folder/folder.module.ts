@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ]
 })
-export class FolderModule { 
+export class FolderModule {
 
   folderId!:   number;
   folderName!: string;
