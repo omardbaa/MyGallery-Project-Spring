@@ -27,11 +27,11 @@ public class Folder {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private Long folderId;
-
+@Column( nullable = false , unique = true)
     private String folderName;
 
     @ManyToMany(mappedBy = "folder", targetEntity = File.class, fetch = FetchType.LAZY)
-//@JsonIgnore
+@JsonIgnore
     private Collection<File> files;
 
 
