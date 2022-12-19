@@ -1,3 +1,25 @@
+.folder-container{
+
+  min-width: 800px;
+  max-width: 500px;
+  min-height: 500px;
+  max-height: 500px;
+  border-radius: 13%;
+
+
+}
+
+
+
+mat-sidenav {
+
+  border-right: none;
+  color: white;
+  border-radius: 10px;
+ 
+}
+
+
 .folders {
     width: 100%;
   }
@@ -246,7 +268,7 @@
   
 .form-control {
   display: block;
-  width: 25%;
+  width: 40%;
   padding: .375rem .75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -262,7 +284,7 @@
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
  padding-right: 5rem;
 
- margin-left: 64%;
+ margin-left: 2%;
  margin-bottom: 20px;
 }
 
@@ -281,17 +303,19 @@
 
 .document {
   float: left;
-  width: calc(33% - 20px);
+  width: 190px;
   max-width: 240px;
   margin: 0px 10px 20px;
   background-color: #fff;
   border-radius: 6px;
   border: 1px solid #dce2e9;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .document .document-body {
   height: 130px;
+  width: 130px;
   text-align: center;
   border-radius: 3px 3px 0 0;
   background-color: #fdfdfe;

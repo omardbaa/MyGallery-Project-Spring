@@ -12,7 +12,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { CreateFolderComponent } from './compenents/create-folder/create-folder.component';
 import { UpdateFolderComponent } from './compenents/update-folder/update-folder.component';
 import { CommonModule } from '@angular/common';
 import { FolderDetailsComponent } from './compenents/folder-details/folder-details.component';
@@ -22,6 +21,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { CreateFolderComponent } from './compenents/create-folder/create-folder.component';
 
 @NgModule({
   declarations: [

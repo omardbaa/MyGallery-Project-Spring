@@ -43,6 +43,12 @@ export class CreateFolderComponent {
   constructor(private folderService: FolderService, 
     private router: Router,  private fileService :FileService, private route: ActivatedRoute,private observer: BreakpointObserver) { }
 
+
+
+
+   
+
+
   ngOnInit(): void {
     this.getFolders();
 
@@ -51,11 +57,15 @@ export class CreateFolderComponent {
     this.folderId = this.route.snapshot.params['id'];
     this.folder = new FolderModule();
     this.folderService.getFolderById(this.folderId).subscribe(data => {
-      this.folder = data;
+     this.folder = data;
 
-      this.getFiles();
+     this.getFiles();
     });
   }
+
+
+
+
 
   saveFolder(){
 this.folderService.createFolder(this.folder).subscribe(data => {
@@ -74,12 +84,17 @@ this.folderService.createFolder(this.folder).subscribe(data => {
   });
 }
 returnFolders(){
-  this.router.navigate(['/create-folder']);
+  this.router.navigate(['/folders']);
 
 }
 
 folderDetails(folderId:number){
-  this.router.navigate(['/create-folder', folderId]);
+  this.router.navigate(['/folders', folderId]);
+  
+  
+  this.router.events.forEach((event) => {
+    console.log('event',event);
+  });
 
 }
 
@@ -218,7 +233,7 @@ folderDetails(folderId:number){
 
   ngAfterViewInit() {
     this.observer
-      .observe(['(max-width: 100px; min-height: 100px)'])
+      .observe(['(max-width: 500px; min-height: 500px)'])
       .pipe(delay(1), untilDestroyed(this))
       .subscribe((res) => {
         if (res.matches) {
