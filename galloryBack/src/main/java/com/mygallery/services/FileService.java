@@ -2,7 +2,9 @@ package com.mygallery.services;
 
 
 import com.mygallery.enities.File;
+import com.mygallery.enities.Folder;
 import com.mygallery.repositories.FileRepository;
+import com.mygallery.repositories.FolderRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -17,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -28,6 +31,9 @@ public class FileService {
     private final Path rootPath = Paths.get("uploads");
     @Autowired
     private final FileRepository fileRepository;
+    @Autowired
+    private FolderRepository folderRepository;
+
 
 
     public FileService(FileRepository fileRepository) {
@@ -43,14 +49,16 @@ public class FileService {
 
         File formFile = new File(fileName, file.getContentType(), file.getSize());
 
+
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
-        String exetention = Optional.ofNullable(fileName)
+        String extension = Optional.ofNullable(fileName)
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(fileName.lastIndexOf(".") + 1))
                 .get()
                 .toLowerCase();
-        System.out.println(exetention);
+
+//        System.out.println(exetention);
 
         try {
             if (Files.notExists(rootPath, linkOptions)) {
@@ -63,7 +71,8 @@ public class FileService {
         }
         try {
             fileRepository.save(formFile);
-            Files.copy(file.getInputStream(), this.rootPath.resolve(formFile.getId() + "." + exetention));
+            Files.copy(file.getInputStream(), this.rootPath.resolve(formFile.getId() + "." + extension));
+            formFile.setExtension(extension);
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
@@ -123,8 +132,8 @@ public class FileService {
 
 //            Path file = rootPath.resolve(fileRepository.selectFileName(id));
 
-            String exten= FilenameUtils.getExtension(fileRepository.getType(id));
-            Path filepath = rootPath.resolve(id + "." +exten);
+            String extension= FilenameUtils.getExtension(fileRepository.getName(id));
+            Path filepath = rootPath.resolve(id + "." +extension);
 
             // Path filepath = rootPath.resolve(id + "." +fileRepository.getType(id).split("/", 2)[1]);
             System.out.println(filepath);
@@ -137,8 +146,25 @@ public class FileService {
             throw new RuntimeException("Error: " + e.getMessage());
         }
 
+
+
     }
+    public List<File> getAllFilesOfFolder(Long folderId){
+
+        Folder folder = this.folderRepository.findByFolderId(folderId);
+
+        List <File> files = (List <File>)folder.getFiles();
+        return files;
+
+    }
+
+    public File loadFileByName(String fileName) {
+        return fileRepository.findByName(fileName);
+    }
+
+
 }
+
 
 
 

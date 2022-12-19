@@ -15,16 +15,18 @@ public class FileDto {
     private String name;
     private String type;
     private String url;
+    private String extension;
     private long size;
     private String description;
 
 
-    public FileDto(String id, String name, String type, String url, long size) {
+    public FileDto(String id, String name, String type, String url, long size,String extension) {
         this.id=id;
         this.name=name;
         this.type=type;
         this.url = url;
         this.size=size;
+        this.extension=extension;
 
     }
 }

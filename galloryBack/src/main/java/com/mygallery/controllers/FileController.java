@@ -30,12 +30,13 @@ public class FileController {
     private final Path rootPath = Paths.get("uploads");
 
     @Autowired
-    private final FileService fileService;
+    private FileService fileService;
 
+    @Autowired
+    private  FileRepository fileRepository;
 
-    private FileRepository fileRepository;
-
-    public FileController(FileService fileService) {
+    public FileController(FileService fileService,FileRepository fileRepository) {
+        this.fileRepository= fileRepository;
         this.fileService = fileService;
     }
 
@@ -55,6 +56,7 @@ public class FileController {
             String name = path.getName();
             String type = path.getType();
             long size = path.getSize();
+            String extension=path.getExtension();
 
 
             String exetention = Optional.ofNullable(name)
@@ -66,7 +68,7 @@ public class FileController {
 
 
             String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", path.getId() + "." + exetention).build().toString();
-            return new FileDto(id,name, type, url, size);
+            return new FileDto(id,name, type, url, size,extension);
 
 
         }).collect(Collectors.toList());

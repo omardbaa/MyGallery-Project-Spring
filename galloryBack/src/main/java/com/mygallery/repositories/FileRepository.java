@@ -17,5 +17,7 @@ public interface FileRepository extends JpaRepository<File, String> {
     /*@Query(value="SELECT name FROM File f WHERE f.id=?",nativeQuery = true)
     String selectFileName(String id);*/
    @Query(value="SELECT name FROM Files f WHERE f.id=?",nativeQuery = true)
-    String getType(String id);
+    String getName(String id);
+
+    File findByName(String fileName);
 }

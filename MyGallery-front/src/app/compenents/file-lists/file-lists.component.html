@@ -1,37 +1,112 @@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link
+  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+  rel="stylesheet"
+/>
 
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 tab-content no-bg no-border">
+      <div class="col-8">
+        <label class="btn btn-default p-0">
+          <input type="file" (change)="selectFile($event)" />
+        </label>
+      </div>
 
-<div id="main-content" class="file_manager" style="margin-bottom: 90px;">
+      <div class="col-4">
+        <button
+          class="btn btn-block btn-success"
+          [disabled]="!selectedFiles"
+          (click)="upload()"
+        >
+          <i class="fa fa-plus"> </i> Upload
+        </button>
+      </div>
 
-        <div class="container"style="margin-top: 90px" >
-            <H4 style="margin-bottom: 30px;">File lsits</H4>
-            <div class="row clearfix">
-                <div class="col-lg-3 col-md-4 col-sm-12" *ngFor="let file of files  ">
-                    <div class="card" >
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-
-
-                                    <button  (click)="deleteFile(file.id)"  type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="icon">
-                                    <img src="assets/Images/Logo.PNG" >
-                                   <!-- <i class="fa fa-file text-info" ></i>-->
-                                </div>
-                                <div class="file-name">
-                                   <small>{{ file.name }}</small>
-                                    <small>Size: 1.8 MB <span class="date text-muted">Dec 07, 2022  </span></small>
-                                    <a href="{{ file.url }}">Download</a> 
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
+      <div *ngIf="currentFile && progress" class="progress my-3">
+        <div
+          class="progress-bar progress-bar-info progress-bar-striped"
+          role="progressbar"
+          attr.aria-valuenow="{{ progress }}"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          [ngStyle]="{ width: progress + '%' }"
+        >
+          {{ progress }}%
         </div>
+      </div>
+
+      <div *ngIf="message" class="alert alert-secondary" role="alert">
+        {{ message }}
+      </div>
+
+      <div class="d-flex" style="margin-left: 33px; margin-right: 60px">
+        <input
+          [(ngModel)]="name"
+          [(ngModel)]="size"
+          [(ngModel)]="extension"
+          [(ngModel)]="folderName"
+          [(ngModel)]="id"
+          class="form-control me-6"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+      </div>
+
+      <div class="tab-pane active documents documents-panel">
+        <div
+          class="document {{ types[file.extension.toLowerCase()].class }}"
+          *ngFor="
+            let file of files
+              | filter : name
+              | filter : id
+              | filter : size
+              | filter : extension
+              | filter : folderName
+              | paginate : { itemsPerPage: perPage, currentPage: p }
+          "
+        >
+          <div class="document-body">
+            <i class="{{ types[file.extension.toLowerCase()].icon }}"></i>
+          </div>
+
+          <div class="document-footer">
+            <span class="document-name"> {{ file.name }} </span>
+            <span class="document-size"> size: {{ file.size }}b </span>
+            <span class="document-size"> {{ file.extension }} </span>
+
+            <div>
+              <a href="javascript:void(0);">
+                <div class="hover">
+                  <button
+                    (click)="deleteFile(file.id)"
+                    type="button"
+                    class="btn btn-icon btn-danger"
+                    style="margin-top: 3%; height: 30px; width: 30px"
+                  >
+                    <i class="fa fa-trash"></i>
+                  </button>
+
+                  <a href="{{ file.url }}" class="file-download"
+                    ><i
+                      class="fa fa-download"
+                      style="margin-left: 70%; height: 30px; width: 30px"
+                    >
+                    </i
+                  ></a>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div>
+      <pagination-controls
+        class="myPagination"
+        (pageChange)="p = $event"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>
