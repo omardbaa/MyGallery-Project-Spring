@@ -8,4 +8,6 @@ public class FolderDto {
     private Long id;
     private String folderName;
 
+    private FileDto File;
+
 }
