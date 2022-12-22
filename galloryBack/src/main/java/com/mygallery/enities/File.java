@@ -49,8 +49,7 @@ public class File {
             joinColumns = @JoinColumn(name ="fileId"),
             inverseJoinColumns = @JoinColumn(name ="folderId")
     )
-
-    //@JsonIgnore
+    @JsonIgnore
     private Collection <Folder> folder;
 
 

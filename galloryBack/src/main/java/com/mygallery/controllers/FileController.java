@@ -3,9 +3,11 @@ package com.mygallery.controllers;
 
 import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
+import com.mygallery.enities.Folder;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.response.ResponseMessage;
 import com.mygallery.services.FileService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -78,6 +80,7 @@ public class FileController {
 
 
     @GetMapping("/{filename:.+}")
+
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
 
 
@@ -89,14 +92,9 @@ public class FileController {
 
 
 
-    @GetMapping("/files/{id}")
-    public ResponseEntity<File> getFileById(@PathVariable ("id")String id) {
-
-
-        File file = fileService.findById(id);
-
-
-        return new ResponseEntity<>(file, HttpStatus.OK);
+    @RequestMapping(value = "/files/{id}", method = RequestMethod.GET)
+    public Optional<File> findById(@PathVariable("id") String id) {
+        return fileService.getfilebyId(id);
     }
 
 
@@ -117,5 +115,17 @@ public class FileController {
         }
     }
 
+    @GetMapping("/files/p")
+    public List<File> getPaginatedCountries(@RequestParam (value="pageNo") int pageNo,
+                                            @RequestParam(value="pageSize") int pageSize) {
+
+        return fileService.findPaginated(pageNo, pageSize);
+    }
+
+    @GetMapping("/files/")
+    public List<File> getPaginatedCountries(@PathParam("keyword")  String keyword) {
+
+        return fileService.listAll(keyword);
+    }
 
 }

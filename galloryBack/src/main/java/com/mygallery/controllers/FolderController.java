@@ -101,13 +101,30 @@ public class FolderController {
 
 
     }
-
     // Link File  To Folder By Name
-    @PostMapping("/fileFolder")
-    public Collection<Folder> AddFileToFolder(@RequestBody FileFolder fileFolder) {
+    @PostMapping("/fileFoldername")
+    public Collection<Folder> AsignFileToFolder(@RequestBody FileFolder fileFolder) {
 
         File file = (File) fileService.loadFileByName(fileFolder.getFileName());
         Folder folder = service.findByName(fileFolder.getFolderName());
+
+        Collection<Folder> folders = file.getFolder();
+        folders.add(folder);
+        file.setFolder(folders);
+        fileRepository.save(file);
+
+        return file.getFolder();
+    }
+
+
+
+    // Assing Folder To file
+    @PostMapping("/fileFolderid")
+
+    public Collection<Folder> AddFileToFolder(@RequestBody FileFolder fileFolder) {
+
+        File file =  fileService.findFileById(fileFolder.getFileId());
+        Folder folder = service.findById(fileFolder.getFolderId());
 
         Collection<Folder> folders = file.getFolder();
         folders.add(folder);

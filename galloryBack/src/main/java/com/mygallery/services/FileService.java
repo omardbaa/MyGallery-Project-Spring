@@ -9,6 +9,10 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -119,7 +123,10 @@ public class FileService {
 
     //Load all files
     public Stream<File> getAllFiles() {
-        return fileRepository.findAll().stream();
+        Sort nameSort = Sort.by("name");
+        Sort sizeSort = Sort.by("size");
+        Sort groupBySort = sizeSort.and(nameSort);
+        return fileRepository.findAll(groupBySort).stream();
     }
 
     public String Extension(String filename) {
@@ -176,6 +183,9 @@ public class FileService {
     public File loadFileByName(String fileName) {
         return fileRepository.findByName(fileName);
     }
+    public Optional<File> getfilebyId(String id){
+        return fileRepository.findById(id);
+    }
 
     public File FindFileById(String fileId) {
         return fileRepository.findFileById(fileId);
@@ -192,6 +202,25 @@ public class FileService {
 
 
 
+   public File findFileById(String Id){
+        return fileRepository.findFileById(Id);
+   }
+
+
+    public List<File> findPaginated(int pageNo,int pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        Page<File> pagedResult = fileRepository.findAll(paging);
+
+        return pagedResult.toList();
+    }
+
+//    search by a keyword
+    public List<File> listAll(String keyword) {
+        if (keyword != null) {
+            return fileRepository.search(keyword);
+        }
+        return fileRepository.findAll();
+    }
 }
 
 

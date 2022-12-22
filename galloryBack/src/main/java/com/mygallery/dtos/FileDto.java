@@ -18,6 +18,7 @@ public class FileDto {
     private String extension;
     private long size;
     private String description;
+    private FolderDto Folder;
 
 
     public FileDto(String id, String name, String type, String url, long size,String extension) {
