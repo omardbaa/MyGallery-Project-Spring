@@ -84,6 +84,7 @@ public class FolderController {
 
     }
 
+
     //Delet folder
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Boolean>> delete(@PathVariable Long id) {
@@ -92,7 +93,6 @@ public class FolderController {
         response.put("deleted", Boolean.TRUE);
         return ResponseEntity.ok(response);
     }
-
 
     @PostMapping("/upload")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
@@ -117,8 +117,10 @@ public class FolderController {
     }
 
 
+
     // Assing Folder To file
     @PostMapping("/fileFolderid")
+
     public Collection<Folder> AddFileToFolder(@RequestBody FileFolder fileFolder) {
 
         File file =  fileService.findFileById(fileFolder.getFileId());
@@ -128,6 +130,25 @@ public class FolderController {
         folders.add(folder);
         file.setFolder(folders);
        fileRepository.save(file);
+
+        return file.getFolder();
+    }
+
+
+
+
+    //Link file to folder By Id
+
+    @PostMapping("/fileToFolder")
+    public Collection<Folder> AddFileFolder(@RequestBody FileFolder fileFolder) {
+
+        File file =  fileService.FindFileById(fileFolder.getFileId());
+        Folder folder = service.findFolderById(fileFolder.getFolderId());
+
+        Collection<Folder> folders = file.getFolder();
+        folders.add(folder);
+        file.setFolder(folders);
+        fileRepository.save(file);
 
         return file.getFolder();
     }
