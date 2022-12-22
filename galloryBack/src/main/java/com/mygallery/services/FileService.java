@@ -1,7 +1,10 @@
 package com.mygallery.services;
 
 
+import com.mygallery.dtos.FileDto;
+import com.mygallery.dtos.FolderDto;
 import com.mygallery.enities.File;
+import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.Folder;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.repositories.FolderRepository;
@@ -23,9 +26,11 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -221,6 +226,57 @@ public class FileService {
         }
         return fileRepository.findAll();
     }
+
+    // convert Entity into DTO
+    private FileDto mapToDTO(File file){
+        FileDto fileDto = new FileDto();
+        fileDto.setId(file.getId());
+        fileDto.setName(file.getName());
+        fileDto.setDescription(file.getDescription());
+        fileDto.setExtension(file.getExtension());
+        fileDto.setSize(file.getSize());
+        fileDto.setType(file.getType());
+
+        return fileDto;
+    }
+
+    // convert DTO to entity
+    private File mapToEntity(FileDto postDto){
+        File file = new File();
+        file.setName(postDto.getName());
+        file.setDescription(postDto.getDescription());
+        file.setExtension(postDto.getExtension());
+        file.setSize(postDto.getSize());
+        file.setType(postDto.getType());
+        return file;
+    }
+
+    public FileResponse getAllFiles(int pageNo, int pageSize, String sortBy, String sortDir) {
+
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        // create Pageable instance
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+
+        Page<File> files = fileRepository.findAll(pageable);
+
+        // get content for page object
+        List<File> listOfFiles = files.getContent();
+
+        List<FileDto> content= listOfFiles.stream().map(file -> mapToDTO(file)).collect(Collectors.toList());
+
+        FileResponse fileResponse = new FileResponse();
+        fileResponse.setContent(content);
+        fileResponse.setPageNo(files.getNumber());
+        fileResponse.setPageSize(files.getSize());
+        fileResponse.setTotalElements(files.getTotalElements());
+        fileResponse.setTotalPages(files.getTotalPages());
+        fileResponse.setLast(files.isLast());
+
+        return fileResponse;
+    }
+
 }
 
 

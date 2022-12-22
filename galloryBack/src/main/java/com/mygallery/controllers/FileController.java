@@ -3,7 +3,9 @@ package com.mygallery.controllers;
 
 import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
+import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.Folder;
+import com.mygallery.enities.PaginationConsts;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.response.ResponseMessage;
 import com.mygallery.services.FileService;
@@ -51,7 +53,7 @@ public class FileController {
     }
 
 
-    @GetMapping("/files")
+    @GetMapping("/fileList")
     public ResponseEntity<List<FileDto>> getListFiles() {
         List<FileDto> fileInfos = fileService.getAllFiles().map(path -> {
             String id = path.getId();
@@ -114,13 +116,23 @@ public class FileController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message));
         }
     }
+    @GetMapping("/files")
+    public FileResponse getAllPosts(
+            @RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = PaginationConsts.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = PaginationConsts.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION, required = false) String sortDir
 
-    @GetMapping("/files/p")
+    ){
+        return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir);
+    }
+
+   /* @GetMapping("/files/p")
     public List<File> getPaginatedCountries(@RequestParam (value="pageNo") int pageNo,
                                             @RequestParam(value="pageSize") int pageSize) {
 
         return fileService.findPaginated(pageNo, pageSize);
-    }
+    }*/
 
     @GetMapping("/files/")
     public List<File> getPaginatedCountries(@PathParam("keyword")  String keyword) {
