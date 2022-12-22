@@ -7,6 +7,7 @@ import com.mygallery.enities.Folder;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.response.ResponseMessage;
 import com.mygallery.services.FileService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -111,13 +112,17 @@ public class FileController {
         }
     }
 
-
-
-    @GetMapping("/{pageNo}/{pageSize}")
-    public List<File> getPaginatedCountries(@PathVariable int pageNo,
-                                               @PathVariable int pageSize) {
+    @GetMapping("/files/p")
+    public List<File> getPaginatedCountries(@RequestParam (value="pageNo") int pageNo,
+                                            @RequestParam(value="pageSize") int pageSize) {
 
         return fileService.findPaginated(pageNo, pageSize);
+    }
+
+    @GetMapping("/files/")
+    public List<File> getPaginatedCountries(@PathParam("keyword")  String keyword) {
+
+        return fileService.listAll(keyword);
     }
 
 }

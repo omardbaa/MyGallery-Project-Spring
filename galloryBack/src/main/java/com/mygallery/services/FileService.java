@@ -178,14 +178,20 @@ public class FileService {
    }
 
 
-    public List<File> findPaginated(int pageNo, int pageSize) {
+    public List<File> findPaginated(int pageNo,int pageSize) {
         Pageable paging = PageRequest.of(pageNo, pageSize);
         Page<File> pagedResult = fileRepository.findAll(paging);
 
         return pagedResult.toList();
     }
 
-
+//    search by a keyword
+    public List<File> listAll(String keyword) {
+        if (keyword != null) {
+            return fileRepository.search(keyword);
+        }
+        return fileRepository.findAll();
+    }
 }
 
 
