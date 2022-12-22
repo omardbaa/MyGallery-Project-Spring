@@ -46,4 +46,11 @@ public class FolderService {
     public Folder findByName(String folderName) {
         return folderRepository.findByFolderName(folderName);
     }
+
+
+    public Folder findFolderById(Long folderId) {
+        return folderRepository.findByFolderId(folderId);
+    }
+
+
 }

@@ -77,7 +77,7 @@ public class FileController {
     }
 
 
-    @GetMapping("/files/{filename:.+}")
+    @GetMapping("/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
 
 
@@ -85,6 +85,18 @@ public class FileController {
 
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
+
+
+
+    @GetMapping("/files/{id}")
+    public ResponseEntity<File> getFileById(@PathVariable ("id")String id) {
+
+
+        File file = fileService.findById(id);
+
+
+        return new ResponseEntity<>(file, HttpStatus.OK);
     }
 
 

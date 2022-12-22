@@ -20,4 +20,7 @@ public interface FileRepository extends JpaRepository<File, String> {
     String getName(String id);
 
     File findByName(String fileName);
+
+
+    File findFileById(String fileId);
 }
