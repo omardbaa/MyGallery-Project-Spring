@@ -1,5 +1,6 @@
 package com.mygallery.repositories;
 
+import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Pageable;
