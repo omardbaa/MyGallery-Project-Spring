@@ -30,10 +30,12 @@ public interface FileRepository extends JpaRepository<File, String> {
     List<File> search(String keyword);
 
 
+
  @Query(value="SELECT * FROM files WHERE name LIKE %?1%"
          + " OR extension LIKE %?1%"
          + " OR type LIKE %?1%"
          + " OR CONCAT(size, '') LIKE %?1% ",nativeQuery = true)
  Page<File> findAll(Pageable pageable, String keyword);
+
 
 }

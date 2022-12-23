@@ -81,7 +81,8 @@ public class FileController {
     }
 
 
-    @GetMapping("{filename:.+}")
+    @GetMapping("/{filename:.+}")
+
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
 
 
@@ -92,10 +93,12 @@ public class FileController {
     }
 
 
+
     @RequestMapping(value = "/files/{id}", method = RequestMethod.GET)
     public Optional<File> findById(@PathVariable("id") String id) {
         return fileService.getfilebyId(id);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String id) {

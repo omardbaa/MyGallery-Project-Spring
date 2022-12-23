@@ -90,6 +90,21 @@ public class FileService {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //Load a file by id
 
     public Resource getFile(String id) {
@@ -175,6 +190,20 @@ public class FileService {
     public Optional<File> getfilebyId(String id) {
         return fileRepository.findById(id);
     }
+
+    public File FindFileById(String fileId) {
+        return fileRepository.findFileById(fileId);
+    }
+
+
+
+
+
+
+    public File findById(String id) {
+        return fileRepository.findById(id).get();
+    }
+
 
 
     public File findFileById(String Id) {
