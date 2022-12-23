@@ -250,7 +250,7 @@ public class FileService {
         return file;
     }
 
-    public FileResponse getAllFiles(int pageNo, int pageSize, String sortBy, String sortDir) {
+    public FileResponse getAllFiles(int pageNo, int pageSize, String sortBy, String sortDir,String keyword) {
 
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
@@ -258,14 +258,14 @@ public class FileService {
         // create Pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 
-        Page<File> files = fileRepository.findAll(pageable);
+        Page<File> files = fileRepository.findAll(pageable,keyword);
+
 
         // get content for page object
         List<File> listOfFiles = files.getContent();
 
 
         List<FileDto> content = listOfFiles.stream().map(file -> mapToDTO(file)).collect(Collectors.toList());
-        //url problem fixed here
         content.forEach(fileDto -> {
             String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", fileDto.getId() + "." + fileDto.getExtension()).build().toString();
 

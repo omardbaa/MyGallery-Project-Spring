@@ -122,11 +122,11 @@ public class FileController {
             @RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = PaginationConsts.DEFAULT_PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = PaginationConsts.DEFAULT_SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION, required = false) String sortDir
-
+            @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION, required = false) String sortDir,
+            @RequestParam(value ="keyword",defaultValue ="",required = false) String keyword
     ) {
 
-        return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir);
+        return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir,keyword);
     }
 
    /* @GetMapping("/files/p")
