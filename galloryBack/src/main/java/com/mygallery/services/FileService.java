@@ -1,8 +1,8 @@
 package com.mygallery.services;
 
 
+import com.mygallery.controllers.FileController;
 import com.mygallery.dtos.FileDto;
-import com.mygallery.dtos.FolderDto;
 import com.mygallery.enities.File;
 import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.Folder;
@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -26,7 +27,6 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -42,7 +42,6 @@ public class FileService {
     private final FileRepository fileRepository;
     @Autowired
     private FolderRepository folderRepository;
-
 
 
     public FileService(FileRepository fileRepository) {
@@ -140,7 +139,6 @@ public class FileService {
     }
 
 
-
     //Delete file by id
     public boolean delete(String id) {
 
@@ -159,8 +157,8 @@ public class FileService {
 
 //            Path file = rootPath.resolve(fileRepository.selectFileName(id));
 
-            String extension= FilenameUtils.getExtension(fileRepository.getName(id));
-            Path filepath = rootPath.resolve(id + "." +extension);
+            String extension = FilenameUtils.getExtension(fileRepository.getName(id));
+            Path filepath = rootPath.resolve(id + "." + extension);
 
             // Path filepath = rootPath.resolve(id + "." +fileRepository.getType(id).split("/", 2)[1]);
             System.out.println(filepath);
@@ -174,13 +172,13 @@ public class FileService {
         }
 
 
-
     }
-    public List<File> getAllFilesOfFolder(Long folderId){
+
+    public List<File> getAllFilesOfFolder(Long folderId) {
 
         Folder folder = this.folderRepository.findByFolderId(folderId);
 
-        List <File> files = (List <File>)folder.getFiles();
+        List<File> files = (List<File>) folder.getFiles();
         return files;
 
     }
@@ -188,7 +186,8 @@ public class FileService {
     public File loadFileByName(String fileName) {
         return fileRepository.findByName(fileName);
     }
-    public Optional<File> getfilebyId(String id){
+
+    public Optional<File> getfilebyId(String id) {
         return fileRepository.findById(id);
     }
 
@@ -207,19 +206,19 @@ public class FileService {
 
 
 
-   public File findFileById(String Id){
+    public File findFileById(String Id) {
         return fileRepository.findFileById(Id);
-   }
+    }
 
 
-    public List<File> findPaginated(int pageNo,int pageSize) {
+    public List<File> findPaginated(int pageNo, int pageSize) {
         Pageable paging = PageRequest.of(pageNo, pageSize);
         Page<File> pagedResult = fileRepository.findAll(paging);
 
         return pagedResult.toList();
     }
 
-//    search by a keyword
+    //    search by a keyword
     public List<File> listAll(String keyword) {
         if (keyword != null) {
             return fileRepository.search(keyword);
@@ -228,7 +227,7 @@ public class FileService {
     }
 
     // convert Entity into DTO
-    private FileDto mapToDTO(File file){
+    private FileDto mapToDTO(File file) {
         FileDto fileDto = new FileDto();
         fileDto.setId(file.getId());
         fileDto.setName(file.getName());
@@ -241,7 +240,7 @@ public class FileService {
     }
 
     // convert DTO to entity
-    private File mapToEntity(FileDto postDto){
+    private File mapToEntity(FileDto postDto) {
         File file = new File();
         file.setName(postDto.getName());
         file.setDescription(postDto.getDescription());
@@ -264,8 +263,14 @@ public class FileService {
         // get content for page object
         List<File> listOfFiles = files.getContent();
 
-        List<FileDto> content= listOfFiles.stream().map(file -> mapToDTO(file)).collect(Collectors.toList());
 
+        List<FileDto> content = listOfFiles.stream().map(file -> mapToDTO(file)).collect(Collectors.toList());
+        //url problem fixed here
+        content.forEach(fileDto -> {
+            String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", fileDto.getId() + "." + fileDto.getExtension()).build().toString();
+
+            fileDto.setUrl(url);
+        });
         FileResponse fileResponse = new FileResponse();
         fileResponse.setContent(content);
         fileResponse.setPageNo(files.getNumber());

@@ -4,7 +4,6 @@ package com.mygallery.controllers;
 import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
 import com.mygallery.enities.FileResponse;
-import com.mygallery.enities.Folder;
 import com.mygallery.enities.PaginationConsts;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.response.ResponseMessage;
@@ -37,10 +36,10 @@ public class FileController {
     private FileService fileService;
 
     @Autowired
-    private  FileRepository fileRepository;
+    private FileRepository fileRepository;
 
-    public FileController(FileService fileService,FileRepository fileRepository) {
-        this.fileRepository= fileRepository;
+    public FileController(FileService fileService, FileRepository fileRepository) {
+        this.fileRepository = fileRepository;
         this.fileService = fileService;
     }
 
@@ -55,12 +54,13 @@ public class FileController {
 
     @GetMapping("/fileList")
     public ResponseEntity<List<FileDto>> getListFiles() {
+
         List<FileDto> fileInfos = fileService.getAllFiles().map(path -> {
             String id = path.getId();
             String name = path.getName();
             String type = path.getType();
             long size = path.getSize();
-            String extension=path.getExtension();
+            String extension = path.getExtension();
 
 
             String exetention = Optional.ofNullable(name)
@@ -72,7 +72,7 @@ public class FileController {
 
 
             String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", path.getId() + "." + exetention).build().toString();
-            return new FileDto(id,name, type, url, size,extension);
+            return new FileDto(id, name, type, url, size, extension);
 
 
         }).collect(Collectors.toList());
@@ -116,6 +116,7 @@ public class FileController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message));
         }
     }
+
     @GetMapping("/files")
     public FileResponse getAllPosts(
             @RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
@@ -123,7 +124,8 @@ public class FileController {
             @RequestParam(value = "sortBy", defaultValue = PaginationConsts.DEFAULT_SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION, required = false) String sortDir
 
-    ){
+    ) {
+
         return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir);
     }
 
@@ -135,7 +137,7 @@ public class FileController {
     }*/
 
     @GetMapping("/files/")
-    public List<File> getPaginatedCountries(@PathParam("keyword")  String keyword) {
+    public List<File> getPaginatedCountries(@PathParam("keyword") String keyword) {
 
         return fileService.listAll(keyword);
     }
