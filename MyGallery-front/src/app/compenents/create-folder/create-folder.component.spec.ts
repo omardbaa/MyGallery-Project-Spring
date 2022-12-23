@@ -8,9 +8,8 @@ describe('CreateFolderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateFolderComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateFolderComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CreateFolderComponent);
     component = fixture.componentInstance;

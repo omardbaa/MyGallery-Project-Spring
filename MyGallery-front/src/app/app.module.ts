@@ -49,12 +49,8 @@ import { CreateFolderComponent } from './compenents/create-folder/create-folder.
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-
-
   ],
   providers: [],
-  bootstrap: [AppComponent]
-
-
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -3,43 +3,44 @@ import { Observable } from 'rxjs';
 
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { FolderModule } from '../modules/folder/folder.module';
+import { FileFolder } from '../modules/fileFolder/FileFolder';
+import { BASE_URL } from '../Constants';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FolderService {
+  private baseURL = `${BASE_URL}/folder`;
 
+  constructor(private httpClient: HttpClient) {}
 
-
-  private baseURL = "http://localhost:8080/v1/folder";
-  constructor(private httpClient: HttpClient) { }
-
-
-
-  getFolderList():Observable<FolderModule[]>{
-
+  getFolderList(): Observable<FolderModule[]> {
     return this.httpClient.get<FolderModule[]>(`${this.baseURL}`);
   }
-  
-  createFolder(projct:FolderModule): Observable<Object>{
-    return this.httpClient.post(`${this.baseURL}`, projct);
+
+  createFolder(folder: FolderModule): Observable<Object> {
+    return this.httpClient.post(`${this.baseURL}`, folder);
   }
-  
-  getFolderById(id: number): Observable<FolderModule>{
+
+  fileFolder(foldreId: FileFolder, fileId: FileFolder): Observable<Object> {
+    return this.httpClient.post(`${this.baseURL}/fileToFolder`, {
+      foldreId,
+      fileId,
+    });
+  }
+
+  getFolderById(id: number): Observable<FolderModule> {
     return this.httpClient.get<FolderModule>(`${this.baseURL}/${id}`);
   }
-  
-  updateFolder(id:number, project: FolderModule): Observable<Object>{
-    return this.httpClient.put(`${this.baseURL}/${id}`,project);
+
+  updateFolder(id: number, project: FolderModule): Observable<Object> {
+    return this.httpClient.put(`${this.baseURL}/${id}`, project);
   }
-  
-  deleteFolder(id: number):Observable<Object>{
+
+  deleteFolder(id: number): Observable<Object> {
     return this.httpClient.delete(`${this.baseURL}/${id}`);
-  
   }
-  
-  
-  
+
   upload(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
 
@@ -47,17 +48,15 @@ export class FolderService {
 
     const req = new HttpRequest('POST', `${this.baseURL}/upload`, formData, {
       reportProgress: true,
-      responseType: 'json'
+      responseType: 'json',
     });
 
     return this.httpClient.request(req);
   }
-  
-  
-  getAllFiles(id: number): Observable<FolderModule>{
-    return this.httpClient.get<FolderModule>(`${this.baseURL}/${id}`+'/files');
+
+  getAllFiles(id: number): Observable<FolderModule> {
+    return this.httpClient.get<FolderModule>(
+      `${this.baseURL}/${id}` + '/files'
+    );
   }
-  
-  
-  }
-  
+}

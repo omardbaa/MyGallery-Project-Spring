@@ -1,37 +1,64 @@
 <head>
-  <meta charset="utf-8">
-  <title>MyGalleryFront</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="https://unpkg.com/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+  <meta charset="utf-8" />
+  <title>My Gallery</title>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+  />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+  />
 </head>
 
 <body class="mat-typography">
   <div class="container app">
     <mat-toolbar>
-      <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+      <button
+        mat-icon-button
+        *ngIf="sidenav.mode === 'over'"
+        (click)="sidenav.toggle()"
+      >
         <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
         <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
       </button>
-      My Gallery
+      <div role="button" routerLink="files" routerLinkActive="active">
+        My Gallery
+      </div>
     </mat-toolbar>
     <mat-sidenav-container>
       <mat-sidenav #sidenav="matSidenav">
-        <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
+        <img
+          class="avatar mat-elevation-z8"
+          src="https://images.pexels.com/photos/2663853/pexels-photo-2663853.jpeg"
+        />
         <h4 class="name">Abderrahim Omar</h4>
         <p class="designation">Software Engineer</p>
         <mat-divider></mat-divider>
-        <button mat-button class="menu-button" routerLink="files" routerLinkActive="active">
+        <button
+          mat-button
+          class="menu-button"
+          routerLink="files"
+          routerLinkActive="active"
+        >
           <mat-icon>note</mat-icon>
           <span>Files</span>
         </button>
         <mat-divider></mat-divider>
-        <button mat-button class="menu-button" routerLink="folders" routerLinkActive="active">
+        <button
+          mat-button
+          class="menu-button"
+          routerLink="folders"
+          routerLinkActive="active"
+        >
           <mat-icon>folder</mat-icon>
           <span>Folders</span>
         </button>
@@ -46,3 +73,5 @@
         </div>
       </mat-sidenav-content>
     </mat-sidenav-container>
+  </div>
+</body>

@@ -12,50 +12,51 @@
         </label>
       </div>
 
-      <div class="col-4">
-        <button
-          class="btn btn-block btn-success"
-          [disabled]="!selectedFiles"
-          (click)="upload()"
-        >
-          <i class="fa fa-plus"> </i> Upload
-        </button>
-      </div>
-
-      <div *ngIf="currentFile && progress" class="progress my-3">
-        <div
-          class="progress-bar progress-bar-info progress-bar-striped"
-          role="progressbar"
-          attr.aria-valuenow="{{ progress }}"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          [ngStyle]="{ width: progress + '%' }"
-        >
-          {{ progress }}%
+      <div class="wrap-div">
+        <div class="col-4">
+          <button
+            class="btn btn-block btn-success"
+            [disabled]="!selectedFiles"
+            (click)="upload()"
+          >
+            <i class="fa fa-plus"> </i> Upload
+          </button>
         </div>
-      </div>
 
-      <div *ngIf="message" class="alert alert-secondary" role="alert">
-        {{ message }}
-      </div>
+        <div *ngIf="currentFile && progress" class="progress my-3">
+          <div
+            class="progress-bar progress-bar-info progress-bar-striped"
+            role="progressbar"
+            attr.aria-valuenow="{{ progress }}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [ngStyle]="{ width: progress + '%' }"
+          >
+            {{ progress }}%
+          </div>
+        </div>
 
-      <div class="d-flex" style="margin-left: 33px; margin-right: 60px">
-        <input
-          [(ngModel)]="name"
-          [(ngModel)]="size"
-          [(ngModel)]="extension"
-          [(ngModel)]="folderName"
-          [(ngModel)]="id"
-          class="form-control me-6"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
+        <div *ngIf="message" class="alert alert-secondary" role="alert">
+          {{ message }}
+        </div>
+
+        <div class="d-flex" style="width: 20%; margin-left: 41%">
+          <input
+            [(ngModel)]="name"
+            [(ngModel)]="size"
+            [(ngModel)]="extension"
+            [(ngModel)]="folderName"
+            [(ngModel)]="id"
+            class="form-control me-6"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </div>
       </div>
 
       <div class="tab-pane active documents documents-panel">
         <div
-          class="document {{ types[file.extension.toLowerCase()].class }}"
           *ngFor="
             let file of files
               | filter : name
@@ -63,39 +64,40 @@
               | filter : size
               | filter : extension
               | filter : folderName
-              | paginate : { itemsPerPage: perPage, currentPage: p }
+              | paginate
+                : {
+                    itemsPerPage: pageSize,
+                    currentPage: pageNo + 1,
+                    totalItems: totalElements
+                  }
           "
+          [ngClass]="'document ' + types[file.extension.toLowerCase()]?.class"
         >
           <div class="document-body">
-            <i class="{{ types[file.extension.toLowerCase()].icon }}"></i>
+            <i [ngClass]="types[file.extension.toLowerCase()]?.icon"></i>
           </div>
 
           <div class="document-footer">
             <span class="document-name"> {{ file.name }} </span>
-            <span class="document-size"> size: {{ file.size }}b </span>
-            <span class="document-size"> {{ file.extension }} </span>
 
             <div>
-              <a href="javascript:void(0);">
-                <div class="hover">
-                  <button
-                    (click)="deleteFile(file.id)"
-                    type="button"
-                    class="btn btn-icon btn-danger"
-                    style="margin-top: 3%; height: 30px; width: 30px"
-                  >
-                    <i class="fa fa-trash"></i>
-                  </button>
+              <div class="hover" style="margin-top: 15px">
+                <button mat-button role="button" (click)="deleteFile(file.id)">
+                  <mat-icon style="color: white">delete</mat-icon>
+                </button>
 
-                  <a href="{{ file.url }}" class="file-download"
-                    ><i
-                      class="fa fa-download"
-                      style="margin-left: 70%; height: 30px; width: 30px"
-                    >
-                    </i
-                  ></a>
-                </div>
-              </a>
+                <button mat-button role="button" (click)="fileDetails(file.id)">
+                  <mat-icon style="color: white">info</mat-icon>
+                </button>
+
+                <a role="button" href="{{ file.url }}" class="file-download"
+                  ><i
+                    class="fa fa-download"
+                    style="margin-left: 20px; color: white"
+                  >
+                  </i
+                ></a>
+              </div>
             </div>
           </div>
         </div>
@@ -105,7 +107,7 @@
     <div>
       <pagination-controls
         class="myPagination"
-        (pageChange)="p = $event"
+        (pageChange)="fetchNextPage($event)"
       ></pagination-controls>
     </div>
   </div>

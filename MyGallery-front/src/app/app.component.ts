@@ -6,23 +6,15 @@ import { NavigationEnd, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FolderDetailsComponent } from './compenents/folder-details/folder-details.component';
 
-
-
 @UntilDestroy()
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'MyGallery';
 
-
-
-  
-
-
-  
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
@@ -36,7 +28,6 @@ export class AppComponent {
         if (res.matches) {
           this.sidenav.mode = 'over';
           this.sidenav.close();
-          
         } else {
           this.sidenav.mode = 'side';
           this.sidenav.open();
@@ -55,8 +46,3 @@ export class AppComponent {
       });
   }
 }
-
-
-
-
-
