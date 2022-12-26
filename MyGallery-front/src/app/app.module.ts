@@ -22,6 +22,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateFolderComponent } from './compenents/create-folder/create-folder.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { CreateFolderComponent } from './compenents/create-folder/create-folder.
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
+    NgxDocViewerModule,
+    PdfViewerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
