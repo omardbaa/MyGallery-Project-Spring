@@ -65,7 +65,7 @@ export class FileListsComponent implements OnInit {
     },
   };
 
-  data!: PaginatedData<FileModule[]>;
+  data!: PaginatedData<FileModule>;
 
   file?: FileModule;
 
@@ -82,15 +82,12 @@ export class FileListsComponent implements OnInit {
 
   private getFiles() {
     this.fileSrvice.getFiles().subscribe((data) => {
-      //@ts-ignore
-
       this.files = data.content;
       this.pageNo = data.pageNo;
       this.pageSize = data.pageSize;
       this.totalElements = data.totalElements;
       this.totalPages = data.totalPages;
       this.last = data.last;
-      //@ts-ignore
 
       console.log('data ', this.files);
     });

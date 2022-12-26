@@ -26,15 +26,25 @@ export class FileService {
     return this.httpClient.request(req);
   }
 
-  getFiles(): Observable<PaginatedData<FileModule[]>> {
-    return this.httpClient.get<PaginatedData<FileModule[]>>(
+  //   pageNo
+  // pageSize
+  // sortBy
+  // sortDir
+
+  getFiles(): Observable<PaginatedData<FileModule>> {
+    return this.httpClient.get<PaginatedData<FileModule>>(
       `${this.baseURL}/files`
     );
   }
-  getFilesByPageNumber(
-    pageNo: number
-  ): Observable<PaginatedData<FileModule[]>> {
-    return this.httpClient.get<PaginatedData<FileModule[]>>(
+
+  getAllFiles(pageNo: number): Observable<PaginatedData<FileModule>> {
+    return this.httpClient.get<PaginatedData<FileModule>>(
+      `${this.baseURL}/files?pageNo` + pageNo
+    );
+  }
+
+  getFilesByPageNumber(pageNo: number): Observable<PaginatedData<FileModule>> {
+    return this.httpClient.get<PaginatedData<FileModule>>(
       `${this.baseURL}/files`,
       { params: { pageNo } }
     );
