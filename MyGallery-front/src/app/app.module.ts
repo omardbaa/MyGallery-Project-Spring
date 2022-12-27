@@ -24,6 +24,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CreateFolderComponent } from './compenents/create-folder/create-folder.component';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { RegisterCompenentComponent } from './compenents/register-compenent/register-compenent.component';
+import { LoginCompenentComponent } from './compenents/login-compenent/login-compenent.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     CreateFolderComponent,
     UpdateFolderComponent,
     FolderDetailsComponent,
+    RegisterCompenentComponent,
+    LoginCompenentComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +58,6 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     MatIconModule,
     MatDividerModule,
     NgxDocViewerModule,
-    PdfViewerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
