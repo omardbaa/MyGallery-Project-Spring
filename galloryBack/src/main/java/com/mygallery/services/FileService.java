@@ -6,8 +6,10 @@ import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
 import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.Folder;
+import com.mygallery.enities.Tag;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.repositories.FolderRepository;
+import com.mygallery.repositories.TagRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -43,6 +45,8 @@ public class FileService {
     @Autowired
     private FolderRepository folderRepository;
 
+    @Autowired
+    private TagRepository tagRepository;
 
     public FileService(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
@@ -281,6 +285,19 @@ public class FileService {
 
         return fileResponse;
     }
+
+    /*public List<File> getAllTagsOfFile(Long id) {
+
+        Optional<Tag> tag = this.tagRepository.findById(id);
+
+        List<File> files = (List<File>) tag.getFiles();
+        return files;
+    }*/
+
+
+
+
+
 
 }
 

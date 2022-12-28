@@ -20,11 +20,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 public class File {
 
-
-
-
-
-
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -51,6 +46,16 @@ public class File {
     )
     @JsonIgnore
     private Collection <Folder> folder;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "file_tag",
+            joinColumns = @JoinColumn(name = "file_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Collection <Tag> tags;
+
+
 
 
 
