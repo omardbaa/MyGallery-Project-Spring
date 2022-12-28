@@ -1,6 +1,7 @@
 package com.mygallery.enities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,10 @@ public class Tag {
     private String tagName;
 
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", targetEntity = File.class, fetch = FetchType.LAZY)
+
+  //  @JsonIgnore
+
     private Collection<File> files;
 
 

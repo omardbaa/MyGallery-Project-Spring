@@ -8,3 +8,10 @@
     <h4><mat-icon class="icon">desktop_windows</mat-icon> {{ file.size }}</h4>
   </div>
 </div>
+
+<div style="margin-bottom: 25px; margin-top: 25px">
+  <h4>Tags:</h4>
+  <div *ngFor="let tag of tags" class="wraped">
+    <button class="bottun" onclick="">{{ tag.tagName }}</button>
+  </div>
+</div>

@@ -64,9 +64,7 @@ export class CreateFolderComponent {
   folderDetails(folderId: number) {
     this.router.navigate(['/folder-details', folderId]);
 
-    this.router.events.forEach((event) => {
-      console.log('event', event);
-    });
+    console.log('folderId:', folderId);
   }
 
   onSubmit() {

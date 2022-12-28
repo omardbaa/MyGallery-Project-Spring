@@ -26,21 +26,27 @@ export class FileDetailsComponent implements OnInit {
       this.file = data;
       console.log(data);
     });
+    this.getTags();
   }
 
-  pdfSrc!: string;
+  tags: any = [];
+  private getTags() {
+    this.fileService.getTags(this.id).subscribe((data) => {
+      let allTags = [];
+      let datalist: any = data;
+      for (let a of datalist) {
+        if (a.id) {
+          allTags.push(a);
+        }
+      }
+      this.tags = allTags;
+    });
+  }
 
-  onFileSelected() {
-    let $img: any = document.querySelector('#file');
-
-    if (typeof FileReader !== 'undefined') {
-      let reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        this.pdfSrc = e.target.result;
-      };
-
-      reader.readAsArrayBuffer($img.files[0]);
-    }
+  deleteTag(id: number) {
+    this.fileService.deleteTag(id).subscribe((data) => {
+      console.log(data);
+      this.getTags();
+    });
   }
 }

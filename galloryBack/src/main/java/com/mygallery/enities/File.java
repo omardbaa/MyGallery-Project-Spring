@@ -48,11 +48,14 @@ public class File {
     private Collection <Folder> folder;
 
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            targetEntity = Tag.class, fetch = FetchType.LAZY)
     @JoinTable(
             name = "file_tag",
             joinColumns = @JoinColumn(name = "file_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
+
+
     private Collection <Tag> tags;
 
 

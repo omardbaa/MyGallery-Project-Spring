@@ -1,20 +1,27 @@
 package com.mygallery.services;
 
 
+import com.mygallery.enities.File;
 import com.mygallery.enities.Tag;
+import com.mygallery.repositories.FileRepository;
 import com.mygallery.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TagService {
     @Autowired
     private final TagRepository tagRepository;
 
-    public TagService(TagRepository tagRepository) {
+    @Autowired
+    private  final FileRepository fileRepository;
+
+    public TagService(TagRepository tagRepository, FileRepository fileRepository) {
         this.tagRepository = tagRepository;
+        this.fileRepository = fileRepository;
     }
 
 
@@ -48,4 +55,13 @@ public class TagService {
     }
 
 
+
+
+    public List<Tag> getTagsOfFile(String id) {
+
+        File file = this.fileRepository.findFileById(id);
+
+        List <Tag> tags = (List <Tag>)file.getTags();
+        return tags;
+    }
 }
