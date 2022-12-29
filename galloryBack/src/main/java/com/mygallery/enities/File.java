@@ -55,7 +55,7 @@ public class File {
             joinColumns = @JoinColumn(name = "file_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
 
-
+@JsonIgnore
     private Collection <Tag> tags;
 
 
