@@ -20,6 +20,8 @@ public class FileDto {
     private String description;
     private FolderDto Folder;
 
+    private TagDto Tag;
+
     public FileDto(String id, String name, String type, String url, long size) {
         this.id = id;
         this.name = name;
@@ -30,13 +32,14 @@ public class FileDto {
 
     }
 
-    public FileDto(String id, String name, String type, String url, long size, String extension) {
+    public FileDto(String id, String name, String type, String url, long size, String extension,TagDto Tag ) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.url = url;
         this.size = size;
         this.extension = extension;
+        this.Tag = Tag;
 
     }
 }

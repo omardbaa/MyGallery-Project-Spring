@@ -24,3 +24,33 @@
 color: steelblue;
 
 }
+
+
+.wraped{
+
+    display: inline;
+    margin: 10px;
+   
+}
+
+
+.bottun {
+    flex: 1 1 auto;
+    
+    padding: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 100% auto;
+    color: white;
+   /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    border-color: transparent;
+
+    background-image: linear-gradient(to right, #004a9f, #22577E);}
+
+
+    .bottun:hover {
+        background-position: right center;
+    }

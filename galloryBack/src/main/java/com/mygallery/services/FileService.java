@@ -6,8 +6,10 @@ import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
 import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.Folder;
+import com.mygallery.enities.Tag;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.repositories.FolderRepository;
+import com.mygallery.repositories.TagRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -43,6 +45,8 @@ public class FileService {
     @Autowired
     private FolderRepository folderRepository;
 
+    @Autowired
+    private TagRepository tagRepository;
 
     public FileService(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
@@ -144,18 +148,7 @@ public class FileService {
 
 
         try {
-         /*   File file= new File(id);
 
-            String exetention= Optional.ofNullable(file.getName())
-                    .filter(f -> f.contains("."))
-                    .map(f -> f.substring(file.getName().lastIndexOf(".") + 1))
-                    .get()
-                    .toLowerCase();
-            System.out.println(exetention);*/
-//            System.out.println(fileRepository.selectFileName(id));
-//            fileRepository.deleteById(id);
-
-//            Path file = rootPath.resolve(fileRepository.selectFileName(id));
 
             String extension = FilenameUtils.getExtension(fileRepository.getName(id));
             Path filepath = rootPath.resolve(id + "." + extension);
@@ -240,13 +233,13 @@ public class FileService {
     }
 
     // convert DTO to entity
-    private File mapToEntity(FileDto postDto) {
+    private File mapToEntity(FileDto fileDto) {
         File file = new File();
-        file.setName(postDto.getName());
-        file.setDescription(postDto.getDescription());
-        file.setExtension(postDto.getExtension());
-        file.setSize(postDto.getSize());
-        file.setType(postDto.getType());
+        file.setName(fileDto.getName());
+        file.setDescription(fileDto.getDescription());
+        file.setExtension(fileDto.getExtension());
+        file.setSize(fileDto.getSize());
+        file.setType(fileDto.getType());
         return file;
     }
 
@@ -270,6 +263,8 @@ public class FileService {
             String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", fileDto.getId() + "." + fileDto.getExtension()).build().toString();
 
             fileDto.setUrl(url);
+
+
         });
         FileResponse fileResponse = new FileResponse();
         fileResponse.setContent(content);
@@ -281,6 +276,29 @@ public class FileService {
 
         return fileResponse;
     }
+
+
+    //Delete tage from file by id
+
+    /*
+    public void deleteTag(Long id) {
+        fileRepository.deleteById(id);
+    }*/
+
+
+
+    /*public List<File> getAllTagsOfFile(Long id) {
+
+        Optional<Tag> tag = this.tagRepository.findById(id);
+
+        List<File> files = (List<File>) tag.getFiles();
+        return files;
+    }*/
+
+
+
+
+
 
 }
 

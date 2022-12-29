@@ -2,6 +2,7 @@ package com.mygallery.repositories;
 
 import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
+import com.mygallery.enities.Tag;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,9 @@ public interface FileRepository extends JpaRepository<File, String> {
     File findByName(String fileName);
 
     File findFileById(String Id);
+/*
+ @Query(value="DELETE  FROM file_tag  WHERE tag_id=?",nativeQuery = true)
+ Tag deleteById(Long Id);*/
 
     @Query(value="SELECT * FROM files WHERE name LIKE %?1%"
             + " OR extension LIKE %?1%"

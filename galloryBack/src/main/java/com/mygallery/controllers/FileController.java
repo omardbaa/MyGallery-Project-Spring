@@ -2,12 +2,15 @@ package com.mygallery.controllers;
 
 
 import com.mygallery.dtos.FileDto;
+import com.mygallery.dtos.TagDto;
 import com.mygallery.enities.File;
 import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.PaginationConsts;
+import com.mygallery.enities.Tag;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.response.ResponseMessage;
 import com.mygallery.services.FileService;
+import com.mygallery.services.TagService;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -38,6 +41,9 @@ public class FileController {
     @Autowired
     private FileRepository fileRepository;
 
+    @Autowired
+    TagService tagService;
+
     public FileController(FileService fileService, FileRepository fileRepository) {
         this.fileRepository = fileRepository;
         this.fileService = fileService;
@@ -61,6 +67,7 @@ public class FileController {
             String type = path.getType();
             long size = path.getSize();
             String extension = path.getExtension();
+            TagDto tag = new TagDto();
 
 
             String exetention = Optional.ofNullable(name)
@@ -72,7 +79,7 @@ public class FileController {
 
 
             String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", path.getId() + "." + exetention).build().toString();
-            return new FileDto(id, name, type, url, size, extension);
+            return new FileDto(id, name, type, url, size, extension, tag);
 
 
         }).collect(Collectors.toList());
@@ -142,4 +149,42 @@ public class FileController {
         return fileService.listAll(keyword);
     }
 
+
+
+    // get tags of file
+
+    @GetMapping("/{id}/tags")
+    public List<Tag> getTags (@PathVariable("id") String id) {
+
+        return this.tagService.getTagsOfFile(id);
+
+    }
+
+
+
+
+
+//Delete tag from file by id
+
+    /*
+    @DeleteMapping("/tag/{id}")
+    public ResponseEntity<ResponseMessage> deleteTag(@PathVariable Long id) {
+        String message = "";
+
+        try {
+            fileService.deleteTag(id);
+
+
+            message = "Delete the tag successfully: " + id;
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+
+        } catch (Exception e) {
+            message = "Could not delete the tag: " + id + ". Error: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message));
+        }
+    }
+
+
+
+     */
 }
