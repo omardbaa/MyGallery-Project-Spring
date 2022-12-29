@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -95,15 +96,32 @@ public class FileController {
 
         Resource file = fileService.getFile(filename);
 
+       String nameoffile= file.getFilename();
+      //  assert nameoffile != null;
+        String[] id=nameoffile.split("\\.");
 
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+
+        System.out.println( "type is :"+ fileRepository.getType(id[0])+ " id is: "+ id[0]);
+        String[] types=fileRepository.getType(id[0]).split("/");
+       // FileDto fileDto = new FileDto();
+        //String type =new  File().getId();
+        //System.out.println("type is:"+ fileRepository.getType(nameoffile));
+
+        MediaType contentType =   new MediaType(types[0],types[1]);
+
+        return ResponseEntity.ok().contentType(contentType)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename()).body(file);
     }
 
 
+    //attachment
 
     @RequestMapping(value = "/files/{id}", method = RequestMethod.GET)
     public Optional<File> findById(@PathVariable("id") String id) {
         return fileService.getfilebyId(id);
+
+
+
     }
 
 

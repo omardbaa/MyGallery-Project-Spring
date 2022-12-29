@@ -20,6 +20,9 @@ public interface FileRepository extends JpaRepository<File, String> {
    @Query(value="SELECT name FROM Files f WHERE f.id=?",nativeQuery = true)
     String getName(String id);
 
+ @Query(value="SELECT type FROM Files f WHERE f.id LIKE %?%",nativeQuery = true)
+ String getType(String id);
+
     File findByName(String fileName);
 
     File findFileById(String Id);
@@ -40,6 +43,7 @@ public interface FileRepository extends JpaRepository<File, String> {
          + " OR type LIKE %?1%"
          + " OR CONCAT(size, '') LIKE %?1% ",nativeQuery = true)
  Page<File> findAll(Pageable pageable, String keyword);
+
 
 
 }
