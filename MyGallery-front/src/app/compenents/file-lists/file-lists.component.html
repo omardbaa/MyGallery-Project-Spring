@@ -47,6 +47,7 @@
             [(ngModel)]="extension"
             [(ngModel)]="folderName"
             [(ngModel)]="id"
+            [(ngModel)]="tag"
             class="form-control me-6"
             type="search"
             placeholder="Search"
@@ -64,6 +65,7 @@
               | filter : size
               | filter : extension
               | filter : folderName
+              | filter : tag
               | paginate
                 : {
                     itemsPerPage: pageSize,
@@ -73,9 +75,14 @@
           "
           [ngClass]="'document ' + types[file.extension.toLowerCase()]?.class"
         >
-          <div class="document-body">
+          <a
+            role="button"
+            href="{{ file.url }}"
+            class="document-body"
+            style="margin: 25px; margin-left: 90px; color: white"
+          >
             <i [ngClass]="types[file.extension.toLowerCase()]?.icon"></i>
-          </div>
+          </a>
 
           <div class="document-footer">
             <span class="document-name"> {{ file.name }} </span>
@@ -90,13 +97,13 @@
                   <mat-icon style="color: white">info</mat-icon>
                 </button>
 
-                <a role="button" href="{{ file.url }}" class="file-download"
+                <!-- <a role="button" href="{{ file.url }}" class="file-download"
                   ><i
                     class="fa fa-download"
                     style="margin-left: 20px; color: white"
                   >
                   </i
-                ></a>
+                ></a> -->
               </div>
             </div>
           </div>

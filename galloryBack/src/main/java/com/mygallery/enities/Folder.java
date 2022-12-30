@@ -32,7 +32,7 @@ public class Folder {
     private String folderName;
 
     @ManyToMany(mappedBy = "folder", targetEntity = File.class, fetch = FetchType.LAZY)
-@JsonIgnore
+//@JsonIgnore
     private Collection<File> files;
 
 

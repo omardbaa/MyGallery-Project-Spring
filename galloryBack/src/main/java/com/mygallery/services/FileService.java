@@ -158,9 +158,15 @@ public class FileService {
 
     public List<File> getAllFilesOfFolder(Long folderId) {
 
+
+
+
         Folder folder = this.folderRepository.findByFolderId(folderId);
 
+
         List<File> files = (List<File>) folder.getFiles();
+
+
         return files;
 
     }
@@ -236,6 +242,9 @@ public class FileService {
         file.setType(fileDto.getType());
         return file;
     }
+
+
+    //Display File content
 
     public FileResponse getAllFiles(int pageNo, int pageSize, String sortBy, String sortDir,String keyword) {
 

@@ -9,7 +9,11 @@ import { FileDetailsComponent } from './compenents/file-details/file-details.com
 import { FileListsComponent } from './compenents/file-lists/file-lists.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroupDirective,
+  FormGroupName,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { UpdateFolderComponent } from './compenents/update-folder/update-folder.component';
@@ -22,8 +26,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateFolderComponent } from './compenents/create-folder/create-folder.component';
-import { NgxDocViewerModule } from 'ngx-doc-viewer';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { LoginCompenentComponent } from './compenents/login-compenent/login-compenent.component';
+import { RegisterCompenentComponent } from './compenents/register-compenent/register-compenent.component';
 
 @NgModule({
   declarations: [
@@ -31,10 +35,11 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     UploadFileComponent,
     FileDetailsComponent,
     FileListsComponent,
-    RenamePipe,
     CreateFolderComponent,
     UpdateFolderComponent,
     FolderDetailsComponent,
+    LoginCompenentComponent,
+    RegisterCompenentComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,8 +56,6 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-    NgxDocViewerModule,
-    PdfViewerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

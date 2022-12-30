@@ -21,6 +21,7 @@ export class FileListsComponent implements OnInit {
   extension = '';
   folderName = '';
   id = '';
+  tag = '';
   pageSize!: number;
   pageNo!: number;
 
@@ -45,6 +46,11 @@ export class FileListsComponent implements OnInit {
     csv: {
       icon: 'fa fa-file-excel-o text-success',
       class: 'success',
+    },
+
+    docx: {
+      icon: 'fa fa-file-text-o text-secondary',
+      class: 'gold',
     },
     txt: {
       icon: 'fa fa-file-text-o text-secondary',

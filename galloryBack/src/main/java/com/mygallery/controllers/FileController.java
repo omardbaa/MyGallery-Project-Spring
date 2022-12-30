@@ -50,6 +50,8 @@ public class FileController {
         this.fileService = fileService;
     }
 
+
+    //Upload file
     @PostMapping("/upload")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
 
@@ -58,7 +60,7 @@ public class FileController {
 
     }
 
-
+/*
     @GetMapping("/fileList")
     public ResponseEntity<List<FileDto>> getListFiles() {
 
@@ -86,10 +88,13 @@ public class FileController {
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
-    }
+    }*/
 
 
-    @GetMapping("/{filename:.+}")
+
+    //Display file content
+
+    @GetMapping("/display/{filename:.+}")
 
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
 
@@ -101,11 +106,9 @@ public class FileController {
         String[] id=nameoffile.split("\\.");
 
 
-        System.out.println( "type is :"+ fileRepository.getType(id[0])+ " id is: "+ id[0]);
+
         String[] types=fileRepository.getType(id[0]).split("/");
-       // FileDto fileDto = new FileDto();
-        //String type =new  File().getId();
-        //System.out.println("type is:"+ fileRepository.getType(nameoffile));
+
 
         MediaType contentType =   new MediaType(types[0],types[1]);
 
@@ -113,6 +116,20 @@ public class FileController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename()).body(file);
     }
 
+
+    //Download file
+
+    @GetMapping("/{filename:.+}")
+
+    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+
+
+        Resource file = fileService.getFile(filename);
+
+
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename()).body(file);
+    }
 
     //attachment
 
@@ -124,6 +141,7 @@ public class FileController {
 
     }
 
+    //Delete file by id
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String id) {
@@ -142,6 +160,8 @@ public class FileController {
         }
     }
 
+
+    //Get all files
     @GetMapping("/files")
     public FileResponse getAllPosts(
             @RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
@@ -154,18 +174,13 @@ public class FileController {
         return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir,keyword);
     }
 
-   /* @GetMapping("/files/p")
-    public List<File> getPaginatedCountries(@RequestParam (value="pageNo") int pageNo,
-                                            @RequestParam(value="pageSize") int pageSize) {
 
-        return fileService.findPaginated(pageNo, pageSize);
-    }*/
 
-    @GetMapping("/files/")
+   /* @GetMapping("/files/")
     public List<File> getPaginatedCountries(@PathParam("keyword") String keyword) {
 
         return fileService.listAll(keyword);
-    }
+    }*/
 
 
 
