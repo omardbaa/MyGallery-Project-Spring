@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RenamePipe } from './compenents/file-lists/rename.pipe';
+import { SafePipe } from './compenents/file-details/Safe.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,6 +40,7 @@ import { RegisterCompenentComponent } from './compenents/register-compenent/regi
     FolderDetailsComponent,
     LoginCompenentComponent,
     RegisterCompenentComponent,
+    SafePipe,
   ],
   imports: [
     BrowserModule,

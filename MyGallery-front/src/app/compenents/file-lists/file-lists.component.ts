@@ -65,6 +65,11 @@ export class FileListsComponent implements OnInit {
       class: 'dark',
     },
 
+    mp3: {
+      icon: 'fa fa-file-audio-o text-dark',
+      class: 'dark',
+    },
+
     rar: {
       icon: 'fa fa-file-video-o text-dark',
       class: 'dark',
