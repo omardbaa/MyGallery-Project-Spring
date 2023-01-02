@@ -41,6 +41,12 @@ export class FolderService {
     return this.httpClient.delete(`${this.baseURL}/${id}`);
   }
 
+  deleteFile(fileId: String, folderId: number): Observable<Object> {
+    return this.httpClient.delete(
+      `${this.baseURL}/deleteFile/${fileId}/${folderId}`
+    );
+  }
+
   upload(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
 

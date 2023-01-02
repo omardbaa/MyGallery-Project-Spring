@@ -85,6 +85,7 @@ public class FolderController {
     }
 
 
+
     //Delet folder
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Boolean>> delete(@PathVariable Long id) {
@@ -93,6 +94,21 @@ public class FolderController {
         response.put("deleted", Boolean.TRUE);
         return ResponseEntity.ok(response);
     }
+
+
+    //delete file from folder
+
+    @DeleteMapping("/deleteFile/{fileId}/{folderId}")
+    public ResponseEntity<Map<String, Boolean>> deleteFile(@PathVariable ("fileId") String fileId, @PathVariable ("folderId")  Long folderId) {
+        service.deleteFile(fileId, folderId);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
+    }
+
+
+
+
 
     @PostMapping("/upload")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {

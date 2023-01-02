@@ -34,6 +34,12 @@ public class FolderService {
     }
 
 
+    public void deleteFile (String fileId, Long folderId){
+
+        folderRepository.deleteFile(fileId,folderId);
+    }
+
+
     public Folder findById(Long id) {
         return folderRepository.findById(id).get();
     }

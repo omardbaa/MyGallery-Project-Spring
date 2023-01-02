@@ -90,7 +90,11 @@
 
             <div>
               <div class="hover" style="margin-top: 15px">
-                <button mat-button role="button" (click)="deleteFile(file.id)">
+                <button
+                  mat-button
+                  role="button"
+                  (click)="deleteFile(file.id, folderId)"
+                >
                   <mat-icon style="color: white">delete</mat-icon>
                 </button>
 
