@@ -9,11 +9,7 @@ import { FileDetailsComponent } from './compenents/file-details/file-details.com
 import { FileListsComponent } from './compenents/file-lists/file-lists.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
-import {
-  FormGroupDirective,
-  FormGroupName,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { UpdateFolderComponent } from './compenents/update-folder/update-folder.component';
@@ -28,6 +24,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CreateFolderComponent } from './compenents/create-folder/create-folder.component';
 import { LoginCompenentComponent } from './compenents/login-compenent/login-compenent.component';
 import { RegisterCompenentComponent } from './compenents/register-compenent/register-compenent.component';
+import { SearchComponent } from './compenents/search/search.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -41,6 +41,7 @@ import { RegisterCompenentComponent } from './compenents/register-compenent/regi
     LoginCompenentComponent,
     RegisterCompenentComponent,
     SafePipe,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +58,9 @@ import { RegisterCompenentComponent } from './compenents/register-compenent/regi
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

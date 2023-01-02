@@ -9,12 +9,13 @@ import { RegisterCompenentComponent } from './compenents/register-compenent/regi
 import { UploadFileComponent } from './compenents/upload-file/upload-file.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginCompenentComponent },
   { path: 'register', component: RegisterCompenentComponent },
   { path: 'upload-file', component: UploadFileComponent },
   { path: 'files', component: FileListsComponent },
   { path: 'folders', component: CreateFolderComponent },
-  // {path: 'folder-details/:id', component: FolderDetailsComponent},
+
   { path: 'folder-details/:id', component: FolderDetailsComponent },
   { path: 'file-details/:id', component: FileDetailsComponent },
 ];

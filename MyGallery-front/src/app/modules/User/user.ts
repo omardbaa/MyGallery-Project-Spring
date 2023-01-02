@@ -6,10 +6,19 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
 })
 export class User {
-  id!: string;
-  username!: string;
-  password!: string;
+  id!: number;
   firstName!: string;
   lastName!: string;
-  token!: string;
+  username!: string;
+  password!: string;
+  photo!: string;
+  email!: string;
+  phone!: string;
+  birthday!: Date;
+  country!: string;
+  city!: string;
+  address!: string;
+  active!: boolean;
+
+  roles!: String[];
 }
