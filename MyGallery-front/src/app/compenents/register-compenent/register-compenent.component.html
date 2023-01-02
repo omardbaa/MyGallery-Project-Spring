@@ -1,0 +1,89 @@
+<div class="container">
+  <section>
+    <div>
+      <div class="login d-flex align-items-center py-5">
+        <div class="col-md-9 col-lg-8 mx-auto">
+          <h3 class="login-heading mb-4">Welcome !</h3>
+
+          <!-- Sign In Form -->
+
+          <!-- {{userFormGroup.value| json}} -->
+          <form [formGroup]="userFormGroup">
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                formControlName="firstname"
+                class="form-control"
+                id="floatingInput"
+              />
+              <label for="floatingInput">first Name</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                formControlName="lastname"
+                class="form-control"
+                id="floatingInput"
+              />
+              <label for="floatingInput">last Name</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                formControlName="email"
+                class="form-control"
+                id="floatingInput"
+              />
+              <label for="floatingInput">Insert Email</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="date"
+                id="date"
+                formControlName="date"
+                class="form-control"
+              />
+              <label for="floatingInput">birthday</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="password"
+                formControlName="password"
+                class="form-control"
+                id="floatingPassword"
+              />
+              <label for="floatingPassword">Password</label>
+            </div>
+
+            <div class="form-check mb-3">
+              <span>Gender: </span>
+              <fieldset id="setgender">
+                <input id="setgender_male" type="checkbox" />
+                <label for="setgender_male">Male</label>
+                <input id="setgender_female" type="checkbox" />
+                <label for="setgender_female">Female</label>
+              </fieldset>
+            </div>
+
+            <div class="d-grid">
+              <button
+                class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+                type="submit"
+              >
+                Sign up
+              </button>
+              <div class="text-center">
+                already have account?
+                <button class="small" routerLink="login">Sign in</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

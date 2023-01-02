@@ -1,17 +1,32 @@
-<div class="document">
-  <div class="card">
+<div class="document display">
+  <div class="details">
+    <h1>Details:</h1>
     <h4><mat-icon class="icon">desktop_windows</mat-icon> {{ file.name }}</h4>
     <h4><mat-icon class="icon">desktop_windows</mat-icon> {{ file.type }}</h4>
     <h4>
       <mat-icon class="icon">desktop_windows</mat-icon> {{ file.extension }}
     </h4>
     <h4><mat-icon class="icon">desktop_windows</mat-icon> {{ file.size }}</h4>
-  </div>
-</div>
 
-<div style="margin-bottom: 25px; margin-top: 25px">
-  <h4>Tags:</h4>
-  <div *ngFor="let tag of tags" class="wraped">
-    <button class="bottun" onclick="">{{ tag.tagName }}</button>
+    <div style="margin-bottom: 25px; margin-top: 40%">
+      <h1>Tags:</h1>
+      <div *ngFor="let tag of tags" class="wraped">
+        <button class="bottun" onclick="">{{ tag.tagName }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-body">
+    <h1>File viewer</h1>
+
+    <iframe
+      [src]="
+        'http://localhost:8080/v1/file/display/' +
+          file.id +
+          '.' +
+          file.extension | safe
+      "
+      class="viewer"
+    ></iframe>
   </div>
 </div>

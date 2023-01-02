@@ -1,13 +1,15 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FileModule } from 'src/app/modules/file/file.module';
 import { PaginatedData } from 'src/app/modules/FilePage/PaginatedData';
 import { FileService } from 'src/app/services/file.service';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-file-lists',
+
   templateUrl: './file-lists.component.html',
   styleUrls: ['./file-lists.component.css'],
 })
@@ -21,6 +23,7 @@ export class FileListsComponent implements OnInit {
   extension = '';
   folderName = '';
   id = '';
+  tag = '';
   pageSize!: number;
   pageNo!: number;
 
@@ -46,6 +49,11 @@ export class FileListsComponent implements OnInit {
       icon: 'fa fa-file-excel-o text-success',
       class: 'success',
     },
+
+    docx: {
+      icon: 'fa fa-file-text-o text-secondary',
+      class: 'gold',
+    },
     txt: {
       icon: 'fa fa-file-text-o text-secondary',
       class: 'gold',
@@ -56,6 +64,11 @@ export class FileListsComponent implements OnInit {
     },
     mp4: {
       icon: 'fa fa-file-video-o text-dark',
+      class: 'dark',
+    },
+
+    mp3: {
+      icon: 'fa fa-file-audio-o text-dark',
       class: 'dark',
     },
 

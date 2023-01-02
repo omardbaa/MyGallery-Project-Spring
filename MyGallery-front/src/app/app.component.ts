@@ -4,7 +4,6 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { delay, filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { FolderDetailsComponent } from './compenents/folder-details/folder-details.component';
 
 @UntilDestroy()
 @Component({

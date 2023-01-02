@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RenamePipe } from './compenents/file-lists/rename.pipe';
+import { SafePipe } from './compenents/file-details/Safe.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,8 +22,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateFolderComponent } from './compenents/create-folder/create-folder.component';
-import { NgxDocViewerModule } from 'ngx-doc-viewer';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { LoginCompenentComponent } from './compenents/login-compenent/login-compenent.component';
+import { RegisterCompenentComponent } from './compenents/register-compenent/register-compenent.component';
+import { SearchComponent } from './compenents/search/search.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -31,10 +35,13 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     UploadFileComponent,
     FileDetailsComponent,
     FileListsComponent,
-    RenamePipe,
     CreateFolderComponent,
     UpdateFolderComponent,
     FolderDetailsComponent,
+    LoginCompenentComponent,
+    RegisterCompenentComponent,
+    SafePipe,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,8 +58,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-    NgxDocViewerModule,
-    PdfViewerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

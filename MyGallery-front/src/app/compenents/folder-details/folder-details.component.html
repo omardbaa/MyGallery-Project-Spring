@@ -74,10 +74,16 @@
               | filter : folderName
               | paginate : { itemsPerPage: perPage, currentPage: p }
           "
+          [ngClass]="'document ' + types[file.extension.toLowerCase()]?.class"
         >
-          <div class="document-body">
-            <i class="{{ types[file.extension.toLowerCase()].icon }}"></i>
-          </div>
+          <a
+            class="document-body"
+            style="margin: 25px; margin-left: 90px; color: white"
+            (click)="fileDetails(file.id)"
+            role="button"
+          >
+            <i [ngClass]="types[file.extension.toLowerCase()]?.icon"></i>
+          </a>
 
           <div class="document-footer">
             <span class="document-name"> {{ file.name }} </span>

@@ -1,5 +1,7 @@
 package com.mygallery.enities;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.Collection;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,6 +39,8 @@ public class File {
 
     private String extension;
 
+    private  String url;
+
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
             targetEntity = Folder.class, fetch = FetchType.LAZY)
@@ -72,4 +76,6 @@ public class File {
     public File(String id) {
         this.id=id;
     }
+
+
 }

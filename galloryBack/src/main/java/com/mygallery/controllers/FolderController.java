@@ -70,7 +70,7 @@ public class FolderController {
 
     }
     @GetMapping("/{id}/files")
-    public List<File> getAllEmployeeOfProject(@PathVariable("id") Long folderId) {
+    public List<File> getAllFilesOfFolder(@PathVariable("id") Long folderId) {
 
         return this.fileService.getAllFilesOfFolder(folderId);
 

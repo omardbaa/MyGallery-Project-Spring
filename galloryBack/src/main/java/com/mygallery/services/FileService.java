@@ -32,6 +32,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -60,7 +61,6 @@ public class FileService {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         File formFile = new File(fileName, file.getContentType(), file.getSize());
-
 
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
@@ -92,17 +92,6 @@ public class FileService {
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -169,9 +158,15 @@ public class FileService {
 
     public List<File> getAllFilesOfFolder(Long folderId) {
 
+
+
+
         Folder folder = this.folderRepository.findByFolderId(folderId);
 
+
         List<File> files = (List<File>) folder.getFiles();
+
+
         return files;
 
     }
@@ -182,6 +177,11 @@ public class FileService {
 
     public Optional<File> getfilebyId(String id) {
         return fileRepository.findById(id);
+    }
+
+    public String getFileType(String type){
+
+        return  fileRepository.getType(type);
     }
 
     public File FindFileById(String fileId) {
@@ -242,6 +242,9 @@ public class FileService {
         file.setType(fileDto.getType());
         return file;
     }
+
+
+    //Display File content
 
     public FileResponse getAllFiles(int pageNo, int pageSize, String sortBy, String sortDir,String keyword) {
 

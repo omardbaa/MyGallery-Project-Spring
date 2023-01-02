@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +50,8 @@ public class FileController {
         this.fileService = fileService;
     }
 
+
+    //Upload file
     @PostMapping("/upload")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
 
@@ -57,7 +60,7 @@ public class FileController {
 
     }
 
-
+/*
     @GetMapping("/fileList")
     public ResponseEntity<List<FileDto>> getListFiles() {
 
@@ -85,27 +88,60 @@ public class FileController {
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
-    }
+    }*/
 
 
-    @GetMapping("/{filename:.+}")
+
+    //Display file content
+
+    @GetMapping("/display/{filename:.+}")
 
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
 
 
         Resource file = fileService.getFile(filename);
 
+       String nameoffile= file.getFilename();
+      //  assert nameoffile != null;
+        String[] id=nameoffile.split("\\.");
 
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+
+
+        String[] types=fileRepository.getType(id[0]).split("/");
+
+
+        MediaType contentType =   new MediaType(types[0],types[1]);
+
+        return ResponseEntity.ok().contentType(contentType)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename()).body(file);
     }
 
 
+    //Download file
+
+    @GetMapping("/{filename:.+}")
+
+    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+
+
+        Resource file = fileService.getFile(filename);
+
+
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename()).body(file);
+    }
+
+    //attachment
 
     @RequestMapping(value = "/files/{id}", method = RequestMethod.GET)
     public Optional<File> findById(@PathVariable("id") String id) {
         return fileService.getfilebyId(id);
+
+
+
     }
 
+    //Delete file by id
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String id) {
@@ -124,6 +160,8 @@ public class FileController {
         }
     }
 
+
+    //Get all files
     @GetMapping("/files")
     public FileResponse getAllPosts(
             @RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
@@ -136,18 +174,13 @@ public class FileController {
         return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir,keyword);
     }
 
-   /* @GetMapping("/files/p")
-    public List<File> getPaginatedCountries(@RequestParam (value="pageNo") int pageNo,
-                                            @RequestParam(value="pageSize") int pageSize) {
 
-        return fileService.findPaginated(pageNo, pageSize);
-    }*/
 
-    @GetMapping("/files/")
+   /* @GetMapping("/files/")
     public List<File> getPaginatedCountries(@PathParam("keyword") String keyword) {
 
         return fileService.listAll(keyword);
-    }
+    }*/
 
 
 
