@@ -25,7 +25,9 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -198,26 +200,12 @@ public class FileController {
 
 
 //Delete tag from file by id
-
-    /*
-    @DeleteMapping("/tag/{id}")
-    public ResponseEntity<ResponseMessage> deleteTag(@PathVariable Long id) {
-        String message = "";
-
-        try {
-            fileService.deleteTag(id);
-
-
-            message = "Delete the tag successfully: " + id;
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-
-        } catch (Exception e) {
-            message = "Could not delete the tag: " + id + ". Error: " + e.getMessage();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message));
-        }
+    @DeleteMapping("/deleteTag/{fileId}/{tagId}")
+    public ResponseEntity<Map<String, Boolean>> deleteFile(@PathVariable ("fileId") String fileId, @PathVariable ("tagId")  Long tagId) {
+        fileService.deleteTag(fileId, tagId);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
     }
 
-
-
-     */
 }

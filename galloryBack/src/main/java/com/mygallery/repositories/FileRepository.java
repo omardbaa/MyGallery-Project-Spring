@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,9 +27,13 @@ public interface FileRepository extends JpaRepository<File, String> {
     File findByName(String fileName);
 
     File findFileById(String Id);
-/*
- @Query(value="DELETE  FROM file_tag  WHERE tag_id=?",nativeQuery = true)
- Tag deleteById(Long Id);*/
+    @Modifying
+    @Transactional
+    @Query(value=" DELETE FROM file_tag\n" +
+            "    WHERE file_id LIKE %?% AND tag_id=?;\n",nativeQuery = true)
+    void deleteTag(String fileId, Long tagId);
+
+
 
     @Query(value="SELECT * FROM files WHERE name LIKE %?1%"
             + " OR extension LIKE %?1%"

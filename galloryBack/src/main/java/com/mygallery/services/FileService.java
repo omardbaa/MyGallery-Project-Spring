@@ -283,21 +283,10 @@ public class FileService {
 
     //Delete tage from file by id
 
-    /*
-    public void deleteTag(Long id) {
-        fileRepository.deleteById(id);
-    }*/
+    public void deleteTag (String fileId, Long tagId){
 
-
-
-    /*public List<File> getAllTagsOfFile(Long id) {
-
-        Optional<Tag> tag = this.tagRepository.findById(id);
-
-        List<File> files = (List<File>) tag.getFiles();
-        return files;
-    }*/
-
+        fileRepository.deleteTag(fileId,tagId);
+    }
 
 
 
