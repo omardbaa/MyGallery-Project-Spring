@@ -1,13 +1,15 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FileModule } from 'src/app/modules/file/file.module';
 import { PaginatedData } from 'src/app/modules/FilePage/PaginatedData';
 import { FileService } from 'src/app/services/file.service';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-file-lists',
+
   templateUrl: './file-lists.component.html',
   styleUrls: ['./file-lists.component.css'],
 })
