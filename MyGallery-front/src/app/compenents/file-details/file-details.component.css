@@ -80,4 +80,18 @@ color: steelblue;
         padding: 0.5em;
         border-radius: 13px;
     }
+
+
+    .icon-container {
+        /* display: none !important; */
+        visibility: visible;
+       
+    }
+    
+
+    .icon-container:hover  {
+        /* display: block !important; */
+        visibility: visible;
+        color: white;
+    }
     

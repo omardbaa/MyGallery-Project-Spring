@@ -43,8 +43,8 @@ export class FileDetailsComponent implements OnInit {
     });
   }
 
-  deleteTag(id: number) {
-    this.fileService.deleteTag(id).subscribe((data) => {
+  deleteTag(fileId: string, tagId: number) {
+    this.fileService.deleteTag(fileId, tagId).subscribe((data) => {
       console.log(data);
       this.getTags();
     });

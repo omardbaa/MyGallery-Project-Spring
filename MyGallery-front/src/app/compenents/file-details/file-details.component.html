@@ -11,7 +11,24 @@
     <div style="margin-bottom: 25px; margin-top: 40%">
       <h1>Tags:</h1>
       <div *ngFor="let tag of tags" class="wraped">
-        <button class="bottun" onclick="">{{ tag.tagName }}</button>
+        <button class="bottun" onclick="">
+          {{ tag.tagName }}
+          <mat-icon
+            role="button"
+            (click)="deleteTag(file.id, tag.id)"
+            class="icon-container"
+            >clear</mat-icon
+          >
+        </button>
+        <!-- <button class="bottun" onclick="">
+          {{ tag.tagName }}
+          <span
+            role="button"
+            (click)="deleteTag(file.id, tag.id)"
+            class="icon-container"
+            >X</span
+          >
+        </button> -->
       </div>
     </div>
   </div>

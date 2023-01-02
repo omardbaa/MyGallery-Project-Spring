@@ -8,9 +8,8 @@ describe('FileListsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FileListsComponent ]
-    })
-    .compileComponents();
+      declarations: [FileListsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FileListsComponent);
     component = fixture.componentInstance;
