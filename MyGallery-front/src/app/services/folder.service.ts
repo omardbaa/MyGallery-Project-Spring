@@ -5,6 +5,7 @@ import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { FolderModule } from '../modules/folder/folder.module';
 import { FileFolder } from '../modules/fileFolder/FileFolder';
 import { BASE_URL } from '../Constants';
+import { FileModule } from '../modules/file/file.module';
 
 @Injectable({
   providedIn: 'root',
@@ -22,10 +23,10 @@ export class FolderService {
     return this.httpClient.post(`${this.baseURL}`, folder);
   }
 
-  fileFolder(foldreId: FileFolder, fileId: FileFolder): Observable<Object> {
+  fileFolder(folder: FolderModule, file: FileModule): Observable<Object> {
     return this.httpClient.post(`${this.baseURL}/fileToFolder`, {
-      foldreId,
-      fileId,
+      folder,
+      file,
     });
   }
 

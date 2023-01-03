@@ -67,13 +67,13 @@ public class TagController {
     }
 
 
-    /*
-    @GetMapping("/{id}/tags")
+
+    @GetMapping("/{id}/files")
     public List<File> getAllTagsOfFile(@PathVariable("id") Long id) {
 
         return this.fileService.getAllTagsOfFile(id);
 
-    }*/
+    }
 
     //	 Get Tag by ID
     @GetMapping("/{id}")

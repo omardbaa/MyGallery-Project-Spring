@@ -76,7 +76,7 @@ public class FolderController {
 
     }
 
-    //	 Get Project by ID
+    //	 Get Folder by ID
     @GetMapping("/{id}")
     public ResponseEntity<Folder> findById(@PathVariable("id") Long id) {
         Folder folder = service.findById(id);
@@ -107,6 +107,15 @@ public class FolderController {
     }
 
 
+/*
+    @PostMapping("/addFile")
+    public ResponseEntity<Map<String, Boolean>> addFile(@RequestBody String fileId, Long folderId) {
+        service.addFile(fileId,folderId);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("added", Boolean.TRUE);
+        return ResponseEntity.ok(response);
+    }*/
+
 
 
 
@@ -131,25 +140,6 @@ public class FolderController {
 
         return file.getFolder();
     }
-
-
-
-    // Assing Folder To file
-    @PostMapping("/fileFolderid")
-
-    public Collection<Folder> AddFileToFolder(@RequestBody FileFolder fileFolder) {
-
-        File file =  fileService.findFileById(fileFolder.getFileId());
-        Folder folder = service.findById(fileFolder.getFolderId());
-
-        Collection<Folder> folders = file.getFolder();
-        folders.add(folder);
-        file.setFolder(folders);
-       fileRepository.save(file);
-
-        return file.getFolder();
-    }
-
 
 
 

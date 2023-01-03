@@ -12,6 +12,39 @@
 </head>
 
 <body>
+  <div class="col-sm-12">
+    <form (ngSubmit)="onSubmit()">
+      <label> Folder Id </label>
+      <div class="file-wrap">
+        <input
+          type="text"
+          id="folderId"
+          [(ngModel)]="folder.folderId"
+          name="folderId"
+          placeholder="folderId"
+        />
+      </div>
+
+      <label> File Id </label>
+      <div class="file-wrap" *ngFor="let file of allFiles">
+        <input
+          type="text"
+          id="id"
+          [(ngModel)]="file.id"
+          name="id"
+          placeholder="file Id"
+        />
+        <button
+          class="btn btn-success"
+          style="margin-left: 1.5em"
+          type="submit"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+
   <div>
     <section>
       <div class="d-flex">

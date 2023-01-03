@@ -292,6 +292,28 @@ public class FileService {
 
 
 
+
+
+
+    public List<File> getAllTagsOfFile(Long tagId) {
+
+
+
+
+        Tag tag = this.tagRepository.findByTagId(tagId);
+
+
+        List<File> files = (List<File>) tag.getFiles();
+
+
+        return files;
+
+    }
+
+
+
+
+
 }
 
 

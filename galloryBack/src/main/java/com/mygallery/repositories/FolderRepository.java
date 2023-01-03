@@ -23,5 +23,16 @@ public interface FolderRepository extends JpaRepository<Folder, Long> {
             "    WHERE file_id LIKE %?% AND folder_id=?;\n",nativeQuery = true)
     void deleteFile(String fileId, Long folderId);
 
+/*
+
+ @Query(value=" SELECT  id, folder_id FROM files, folders  WHERE files.id  LIKE %?% and folders.folder_id LIKE %?% ",nativeQuery = true)
+ void addFile(String fileId, Long folderId);
+
+*/
+
+
+
+
+
 
 }

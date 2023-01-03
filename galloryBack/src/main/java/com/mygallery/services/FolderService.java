@@ -40,6 +40,11 @@ public class FolderService {
     }
 
 
+    /*public void addFile (String fileId, Long folderId){
+
+        folderRepository.addFile(fileId,folderId);
+    }*/
+
     public Folder findById(Long id) {
         return folderRepository.findById(id).get();
     }

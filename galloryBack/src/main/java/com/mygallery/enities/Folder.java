@@ -16,7 +16,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "folder")
+@Table(name = "folders")
 
 @JsonIdentityInfo(scope = Folder.class, generator = ObjectIdGenerators.PropertyGenerator.class,
 

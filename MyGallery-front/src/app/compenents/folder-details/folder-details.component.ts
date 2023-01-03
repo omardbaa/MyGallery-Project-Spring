@@ -79,6 +79,21 @@ export class FolderDetailsComponent {
     });
   }
 
+  onSubmit() {
+    console.log(this.folder);
+    this.fileFolder();
+    this.getFiles();
+  }
+
+  fileFolder() {
+    this.folderService.fileFolder(this.folder, this.file).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (error) => console.log(error)
+    );
+  }
+
   deleteFile(fileId: string, folderId: number) {
     this.folderService.deleteFile(fileId, folderId).subscribe((data) => {
       console.log(data);
