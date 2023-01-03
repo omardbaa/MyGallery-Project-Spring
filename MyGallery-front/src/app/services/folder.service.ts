@@ -34,8 +34,8 @@ export class FolderService {
     return this.httpClient.get<FolderModule>(`${this.baseURL}/${id}`);
   }
 
-  updateFolder(id: number, project: FolderModule): Observable<Object> {
-    return this.httpClient.put(`${this.baseURL}/${id}`, project);
+  updateFolder(id: number, folder: FolderModule): Observable<Object> {
+    return this.httpClient.put(`${this.baseURL}/${id}`, folder);
   }
 
   deleteFolder(id: number): Observable<Object> {

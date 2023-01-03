@@ -11,16 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface FolderRepository extends JpaRepository<Folder, Long> {
 
-   Folder  findByFolderId(Long folderId);
+    Folder findByFolderId(Long folderId);
 
     Folder findByFolderName(String folderName);
 
 
-
+    //Remove file from folder
     @Modifying
     @Transactional
-    @Query(value=" DELETE FROM files_folder\n" +
-            "    WHERE file_id LIKE %?% AND folder_id=?;\n",nativeQuery = true)
+    @Query(value = " DELETE FROM files_folder\n"
+            + "WHERE file_id LIKE %?% AND folder_id=?;\n", nativeQuery = true)
     void deleteFile(String fileId, Long folderId);
 
 /*
@@ -29,10 +29,6 @@ public interface FolderRepository extends JpaRepository<Folder, Long> {
  void addFile(String fileId, Long folderId);
 
 */
-
-
-
-
 
 
 }

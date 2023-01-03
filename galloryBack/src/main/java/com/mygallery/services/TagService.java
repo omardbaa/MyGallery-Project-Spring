@@ -57,7 +57,7 @@ public class TagService {
 
 
 
-    public List<Tag> getTagsOfFile(String id) {
+    public List<Tag> getFilesOfTag(String id) {
 
         File file = this.fileRepository.findFileById(id);
 

@@ -24,69 +24,62 @@ import java.util.Map;
 @RequestMapping("v1/folder")
 public class FolderController {
     @Autowired
-    private FileService fileService;
-    @Autowired
     private final FolderService service;
-
-
-
     @Autowired
-    private  FileRepository fileRepository;
+    private final FileService fileService;
+    @Autowired
+    private final FileRepository fileRepository;
 
 
-
-    public FolderController(FolderService service,FileService fileService,FileRepository fileRepository ) {
+    public FolderController(FolderService service, FileService fileService, FileRepository fileRepository) {
         this.service = service;
-        this.fileService= fileService;
+        this.fileService = fileService;
         this.fileRepository = fileRepository;
 
     }
 
+    //Create new folder
     @PostMapping
-    public Folder save(@RequestBody Folder Folder) {
-        service.save(Folder);
-        return Folder;
+    public Folder save(@RequestBody Folder folder) {
+        service.save(folder);
+        return folder;
     }
+
 
     // Update Folder
     @PutMapping("/{id}")
     public ResponseEntity<Folder> update(@PathVariable Long id, @RequestBody Folder folder) {
-
         Folder newFolder = service.findById(id);
-
         newFolder.setFolderName(folder.getFolderName());
-
-
         service.save(newFolder);
         return new ResponseEntity<>(newFolder, HttpStatus.OK);
     }
 
+
     //	Get All Folders
-//	@PostAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public ResponseEntity<List<Folder>> getAll() {
         List<Folder> folders = service.getAll();
         return new ResponseEntity<>(folders, HttpStatus.OK);
-
     }
+
+
+    //Get all files of folder
     @GetMapping("/{id}/files")
     public List<File> getAllFilesOfFolder(@PathVariable("id") Long folderId) {
-
         return this.fileService.getAllFilesOfFolder(folderId);
-
     }
+
 
     //	 Get Folder by ID
     @GetMapping("/{id}")
     public ResponseEntity<Folder> findById(@PathVariable("id") Long id) {
         Folder folder = service.findById(id);
         return new ResponseEntity<>(folder, HttpStatus.OK);
-
     }
 
 
-
-    //Delet folder
+    //Delete folder
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Boolean>> delete(@PathVariable Long id) {
         service.delete(id);
@@ -96,10 +89,9 @@ public class FolderController {
     }
 
 
-    //delete file from folder
-
+    //remove file from folder
     @DeleteMapping("/deleteFile/{fileId}/{folderId}")
-    public ResponseEntity<Map<String, Boolean>> deleteFile(@PathVariable ("fileId") String fileId, @PathVariable ("folderId")  Long folderId) {
+    public ResponseEntity<Map<String, Boolean>> deleteFile(@PathVariable("fileId") String fileId, @PathVariable("folderId") Long folderId) {
         service.deleteFile(fileId, folderId);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
@@ -117,45 +109,35 @@ public class FolderController {
     }*/
 
 
-
-
+    //need to fixing
     @PostMapping("/upload")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-
         return fileService.Upload(file);
-
-
     }
+
+
     // Link File  To Folder By Name
     @PostMapping("/fileFoldername")
     public Collection<Folder> AsignFileToFolder(@RequestBody FileFolder fileFolder) {
-
-        File file = (File) fileService.loadFileByName(fileFolder.getFileName());
+        File file = fileService.loadFileByName(fileFolder.getFileName());
         Folder folder = service.findByName(fileFolder.getFolderName());
-
         Collection<Folder> folders = file.getFolder();
         folders.add(folder);
         file.setFolder(folders);
         fileRepository.save(file);
-
         return file.getFolder();
     }
 
 
-
     //Link file to folder By Id
-
     @PostMapping("/fileToFolder")
     public Collection<Folder> AddFileFolder(@RequestBody FileFolder fileFolder) {
-
-        File file =  fileService.FindFileById(fileFolder.getFileId());
+        File file = fileService.FindFileById(fileFolder.getFileId());
         Folder folder = service.findFolderById(fileFolder.getFolderId());
-
         Collection<Folder> folders = file.getFolder();
         folders.add(folder);
         file.setFolder(folders);
         fileRepository.save(file);
-
         return file.getFolder();
     }
 
