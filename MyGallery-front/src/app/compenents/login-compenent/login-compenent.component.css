@@ -1,18 +1,4 @@
-.viewer{
 
-    height: 80%;
-    width: 50%;
-    border: 2px;
-    border-color: gray;
-    box-shadow: 0px 0px 6px 6px rgba(64, 59, 59, 0.318);
-    padding: 0.5em;
-    border-radius: 13px;
-    display: block;
-    margin: auto;
-    
-    
-    
-}
 
 
 
@@ -21,60 +7,38 @@
   height: 80%;
   width: 60%;
   margin: auto;
+ 
+}
 
-  
+
+.login{
+
+  position: relative;
+  margin-bottom: 10px;
+
+  border-color: gray;
+  box-shadow: 0px 0px 6px 6px rgba(64, 59, 59, 0.318);
+ 
+  border-radius: 13px;
+
+display: flexbox;
+justify-content: end;
+
+height: 100%;
+width: 80%;
 
 
 }
 
-.body{
+.svg{
 
   height: 100%;
-  width: 100%;
-  margin: auto;
-
-  background-image: url("../../../assets/Images/bg.svg");
-
-
+width: 80%;
+margin-bottom: -48px;
 }
 
 
-.avatar {
-    vertical-align: middle;
-   
-    border-radius: 50%;
-    box-shadow: 0px 0px 6px 6px rgba(64, 59, 59, 0.318);
-    height: 100%;
-    width: 100%;
-    
-  }
-
-
-.profile-avatar {
-    
-    border-radius: 50%;
-    margin: auto;
-    position: sticky;
-
-    align-items: center;
-    display: flex;
-    justify-content: center;
-
-    
-    height: 8rem;
-    width: 8rem;
-  }
 
 
 
 
-
-
-
-
-
-
-
-
-
-  
