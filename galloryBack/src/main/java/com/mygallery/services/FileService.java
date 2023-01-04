@@ -32,12 +32,12 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
 public class FileService {
+
 
     //Create path to upload file in local storage
     private final Path rootPath = Paths.get("uploads");
@@ -58,19 +58,16 @@ public class FileService {
 
     public File Upload(MultipartFile file) throws IOException {
 
+
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         File formFile = new File(fileName, file.getContentType(), file.getSize());
 
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
-        String extension = Optional.ofNullable(fileName)
-                .filter(f -> f.contains("."))
-                .map(f -> f.substring(fileName.lastIndexOf(".") + 1))
-                .get()
-                .toLowerCase();
+        String extension = Optional.ofNullable(fileName).filter(f -> f.contains(".")).map(f -> f.substring(fileName.lastIndexOf(".") + 1)).get().toLowerCase();
 
-//        System.out.println(exetention);
+
 
         try {
             if (Files.notExists(rootPath, linkOptions)) {
@@ -92,10 +89,6 @@ public class FileService {
 
 
     }
-
-
-
-
 
 
     //Load a file by id
@@ -142,8 +135,6 @@ public class FileService {
             String extension = FilenameUtils.getExtension(fileRepository.getName(id));
             Path filepath = rootPath.resolve(id + "." + extension);
 
-            // Path filepath = rootPath.resolve(id + "." +fileRepository.getType(id).split("/", 2)[1]);
-            System.out.println(filepath);
             Files.deleteIfExists(filepath);
             fileRepository.deleteById(id);
             return Files.deleteIfExists(filepath);
@@ -156,20 +147,6 @@ public class FileService {
 
     }
 
-    public List<File> getAllFilesOfFolder(Long folderId) {
-
-
-
-
-        Folder folder = this.folderRepository.findByFolderId(folderId);
-
-
-        List<File> files = (List<File>) folder.getFiles();
-
-
-        return files;
-
-    }
 
     public File loadFileByName(String fileName) {
         return fileRepository.findByName(fileName);
@@ -179,9 +156,9 @@ public class FileService {
         return fileRepository.findById(id);
     }
 
-    public String getFileType(String type){
+    public String getFileType(String type) {
 
-        return  fileRepository.getType(type);
+        return fileRepository.getType(type);
     }
 
     public File FindFileById(String fileId) {
@@ -189,14 +166,9 @@ public class FileService {
     }
 
 
-
-
-
-
     public File findById(String id) {
         return fileRepository.findById(id).get();
     }
-
 
 
     public File findFileById(String Id) {
@@ -246,15 +218,14 @@ public class FileService {
 
     //Display File content
 
-    public FileResponse getAllFiles(int pageNo, int pageSize, String sortBy, String sortDir,String keyword) {
+    public FileResponse getAllFiles(int pageNo, int pageSize, String sortBy, String sortDir, String keyword) {
 
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
         // create Pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 
-        Page<File> files = fileRepository.findAll(pageable,keyword);
+        Page<File> files = fileRepository.findAll(pageable, keyword);
 
 
         // get content for page object
@@ -282,25 +253,27 @@ public class FileService {
 
 
     //Delete tage from file by id
-
-    /*
-    public void deleteTag(Long id) {
-        fileRepository.deleteById(id);
-    }*/
+    public void deleteTag(String fileId, Long tagId) {
+        fileRepository.deleteTag(fileId, tagId);
+    }
 
 
-
-    /*public List<File> getAllTagsOfFile(Long id) {
-
-        Optional<Tag> tag = this.tagRepository.findById(id);
-
+    //get all files of tag
+    public List<File> getAllFilesOfTag(Long tagId) {
+        Tag tag = this.tagRepository.findByTagId(tagId);
         List<File> files = (List<File>) tag.getFiles();
         return files;
-    }*/
+
+    }
 
 
+    //get all files of folder
+    public List<File> getAllFilesOfFolder(Long folderId) {
+        Folder folder = this.folderRepository.findByFolderId(folderId);
+        List<File> files = (List<File>) folder.getFiles();
+        return files;
 
-
+    }
 
 
 }

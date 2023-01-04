@@ -64,8 +64,10 @@ export class FileService {
     return this.httpClient.delete(`${this.baseURL}/${id}`);
   }
 
-  deleteTag(id: number): Observable<Object> {
-    return this.httpClient.delete(`${this.baseURL}/tag/${id}`);
+  deleteTag(fileId: String, tagId: number): Observable<Object> {
+    return this.httpClient.delete(
+      `${this.baseURL}/deleteTag/${fileId}/${tagId}`
+    );
   }
 
   /*getAllFilesOfFolder(id: number): Observable<FileModule>{

@@ -52,6 +52,7 @@ export class CreateFolderComponent {
       (error) => console.log(error)
     );
   }
+
   getFolders() {
     this.folderService.getFolderList().subscribe((data) => {
       this.folders = data;

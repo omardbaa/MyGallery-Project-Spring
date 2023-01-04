@@ -1,14 +1,12 @@
-<section class="container">
-  <div>
-    <div class="login d-flex align-items-center py-5">
-      <div class="col-md-9 col-lg-8 mx-auto">
+<div class="container">
+  <div class="login-form">
+    <div class="login py-5">
+      <div class="col-md-9 col-lg-8 mx-auto form">
         <h3 class="login-heading mb-4">Welcome back!</h3>
         <div class="text-danger" *ngIf="errorMessage">
           {{ errorMessage }}
         </div>
-        <!-- Sign In Form -->
 
-        <!-- {{userFormGroup.value| json}} -->
         <form [formGroup]="userFormGroup" (ngSubmit)="handleLogin()">
           <div class="form-floating mb-3">
             <input
@@ -62,6 +60,22 @@
           </div>
         </form>
       </div>
+
+      <div class="svg">
+        <svg
+          id="visual"
+          width="125%"
+          height="90"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          version="1.1"
+        >
+          <path
+            d="M0 35L18.8 35.2C37.7 35.3 75.3 35.7 112.8 39.7C150.3 43.7 187.7 51.3 225.2 50.3C262.7 49.3 300.3 39.7 337.8 37.7C375.3 35.7 412.7 41.3 450.2 43.3C487.7 45.3 525.3 43.7 562.8 41C600.3 38.3 637.7 34.7 675.2 33C712.7 31.3 750.3 31.7 787.8 32.5C825.3 33.3 862.7 34.7 881.3 35.3L900 36L900 91L881.3 91C862.7 91 825.3 91 787.8 91C750.3 91 712.7 91 675.2 91C637.7 91 600.3 91 562.8 91C525.3 91 487.7 91 450.2 91C412.7 91 375.3 91 337.8 91C300.3 91 262.7 91 225.2 91C187.7 91 150.3 91 112.8 91C75.3 91 37.7 91 18.8 91L0 91Z"
+            fill="#002b5c"
+          ></path>
+        </svg>
+      </div>
     </div>
   </div>
-</section>
+</div>
