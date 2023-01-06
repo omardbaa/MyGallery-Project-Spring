@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.Collection;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,19 +26,25 @@ public class File {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
 
-
+    @Column(name = "id")
     private String id;
 
+    @Column(name = "name")
     private String name;
 
+
+    @Column(name = "type")
     private String type;
 
+
+    @Column(name = "size")
     private long size;
 
-    private String description;
 
+    @Column(name = "extension")
     private String extension;
 
+    @Column(name = "url")
     private  String url;
 
 
