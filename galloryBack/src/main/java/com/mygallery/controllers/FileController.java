@@ -1,6 +1,7 @@
 package com.mygallery.controllers;
 
 
+
 import com.mygallery.enities.File;
 import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.PaginationConsts;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,9 +28,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+
+@CrossOrigin(origins = "http://localhost:8081", maxAge = 3600)
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
-@RequestMapping("v1/file")
+@RequestMapping("/v1/file")
 public class FileController {
 
     private final Path rootPath = Paths.get("uploads");
@@ -47,6 +50,7 @@ public class FileController {
 
     //Upload file
     @PostMapping("/upload")
+    @PreAuthorize("hasRole('MODERATOR')")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         return fileService.Upload(file);
     }
@@ -97,6 +101,7 @@ public class FileController {
 
     //Get all files
     @GetMapping("/files")
+    @PreAuthorize("hasRole('MODERATOR')")
     public FileResponse getAllPosts(@RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo, @RequestParam(value = "pageSize", defaultValue = PaginationConsts.DEFAULT_PAGE_SIZE, required = false) int pageSize, @RequestParam(value = "sortBy", defaultValue = PaginationConsts.DEFAULT_SORT_BY, required = false) String sortBy, @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION, required = false) String sortDir, @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
 
         return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir, keyword);

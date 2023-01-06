@@ -1,6 +1,5 @@
 package com.mygallery.enities;
 
-import com.mygallery.dtos.FileDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

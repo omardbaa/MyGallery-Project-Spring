@@ -68,7 +68,6 @@ public class FileService {
         String extension = Optional.ofNullable(fileName).filter(f -> f.contains(".")).map(f -> f.substring(fileName.lastIndexOf(".") + 1)).get().toLowerCase();
 
 
-
         try {
             if (Files.notExists(rootPath, linkOptions)) {
 
