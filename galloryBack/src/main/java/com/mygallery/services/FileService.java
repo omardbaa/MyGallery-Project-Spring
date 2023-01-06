@@ -196,7 +196,6 @@ public class FileService {
         FileDto fileDto = new FileDto();
         fileDto.setId(file.getId());
         fileDto.setName(file.getName());
-        fileDto.setDescription(file.getDescription());
         fileDto.setExtension(file.getExtension());
         fileDto.setSize(file.getSize());
         fileDto.setType(file.getType());
@@ -208,7 +207,7 @@ public class FileService {
     private File mapToEntity(FileDto fileDto) {
         File file = new File();
         file.setName(fileDto.getName());
-        file.setDescription(fileDto.getDescription());
+
         file.setExtension(fileDto.getExtension());
         file.setSize(fileDto.getSize());
         file.setType(fileDto.getType());
