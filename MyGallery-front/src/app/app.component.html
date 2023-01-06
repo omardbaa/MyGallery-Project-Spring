@@ -43,6 +43,17 @@
         <h4 class="name">Abderrahim Omar</h4>
         <p class="designation">Software Engineer</p>
         <mat-divider></mat-divider>
+
+        <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+          <li class="nav-item">
+            <a href="/profile" class="nav-link" routerLink="profile">{{
+              username
+            }}</a>
+          </li>
+          <li class="nav-item">
+            <a href class="nav-link" (click)="logout()">LogOut</a>
+          </li>
+        </ul>
         <button
           mat-button
           class="menu-button"
@@ -69,6 +80,7 @@
           class="menu-button"
           routerLink="login"
           routerLinkActive="active"
+          *ngIf="!isLoggedIn"
         >
           <mat-icon>login</mat-icon>
           <span>lgoin</span>
@@ -80,6 +92,7 @@
           class="menu-button"
           routerLink="register"
           routerLinkActive="active"
+          *ngIf="!isLoggedIn"
         >
           <mat-icon>account_circle</mat-icon>
           <span>register</span>

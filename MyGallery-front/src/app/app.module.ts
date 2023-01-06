@@ -28,6 +28,7 @@ import { SearchComponent } from './compenents/search/search.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ProfileComponent } from './compenents/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     RegisterCompenentComponent,
     SafePipe,
     SearchComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
