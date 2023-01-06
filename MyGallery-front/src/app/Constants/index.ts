@@ -13,4 +13,4 @@ export const FILE_TYPES = {
   },
 };
 //192.168.1.22
-export const BASE_URL = 'http://localhost:8080/v1';
+export const BASE_URL = 'http://localhost:8080/api/v1';

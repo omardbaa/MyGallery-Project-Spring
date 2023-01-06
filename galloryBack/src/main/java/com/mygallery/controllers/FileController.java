@@ -31,7 +31,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8081", maxAge = 3600)
 @RestController
-@RequestMapping("/v1/file")
+@RequestMapping("/api/v1/file")
 public class FileController {
 
     private final Path rootPath = Paths.get("uploads");

@@ -19,7 +19,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:8081" , maxAge = 3600)
 @RestController
-@RequestMapping("v1/tag")
+@RequestMapping("/api/v1/tag")
 public class TagController {
     @Autowired
     private final TagService service;

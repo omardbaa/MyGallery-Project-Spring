@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AccountServiceService } from 'src/app/services/account.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-login-compenent',
@@ -9,38 +8,47 @@ import { AccountServiceService } from 'src/app/services/account.service';
   styleUrls: ['./login-compenent.component.css'],
 })
 export class LoginCompenentComponent implements OnInit {
-  userFormGroup!: FormGroup;
-
-  errorMessage: any;
+  form: any = {
+    username: null,
+    password: null,
+  };
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
 
   constructor(
-    private accountService: AccountServiceService,
-    private formBuilder: FormBuilder,
-    private router: Router
+    private authService: AuthService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
-    this.userFormGroup = this.formBuilder.group({
-      username: this.formBuilder.control(''),
-      password: this.formBuilder.control(''),
+    if (this.storageService.isLoggedIn()) {
+      this.isLoggedIn = true;
+      this.roles = this.storageService.getUser().roles;
+    }
+  }
+
+  onSubmit(): void {
+    const { username, password } = this.form;
+
+    this.authService.login(username, password).subscribe({
+      next: (data) => {
+        this.storageService.saveUser(data);
+
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.storageService.getUser().roles;
+        this.reloadPage();
+      },
+      error: (err) => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      },
     });
   }
 
-  handleLogin() {
-    let username = this.userFormGroup.value.username;
-
-    let password = this.userFormGroup.value.password;
-    this.accountService.login(username, password).subscribe({
-      next: (user) => {
-        this.accountService.authenticateUser(user).subscribe({
-          next: (data) => {
-            this.router.navigate(['files']);
-          },
-        });
-      },
-      error: (err) => {
-        this.errorMessage = err;
-      },
-    });
+  reloadPage(): void {
+    window.location.reload();
   }
 }

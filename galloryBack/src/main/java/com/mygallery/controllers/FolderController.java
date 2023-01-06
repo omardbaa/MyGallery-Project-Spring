@@ -21,7 +21,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:8081" , maxAge = 3600)
 @RestController
-@RequestMapping("v1/folder")
+@RequestMapping("/api/v1/folder")
 public class FolderController {
     @Autowired
     private final FolderService service;

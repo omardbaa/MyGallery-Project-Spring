@@ -7,29 +7,56 @@
           {{ errorMessage }}
         </div>
 
-        <form [formGroup]="userFormGroup" (ngSubmit)="handleLogin()">
-          <div class="form-floating mb-3">
+        <form
+          *ngIf="!isLoggedIn"
+          name="form"
+          (ngSubmit)="f.form.valid && onSubmit()"
+          #f="ngForm"
+          novalidate
+        >
+          <div class="form-group">
+            <label for="username">Username</label>
             <input
               type="text"
-              formControlName="username"
               class="form-control"
-              id="floatingInput"
-              placeholder="please incert your username"
+              name="username"
+              [(ngModel)]="form.username"
+              required
+              #username="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
             />
-            <label for="floatingInput">Username</label>
+            <div
+              *ngIf="username.errors && f.submitted"
+              class="invalid-feedback"
+            >
+              Username is required!
+            </div>
           </div>
 
-          <div class="form-floating mb-3">
+          <div class="form-group">
+            <label for="password">Password</label>
             <input
               type="password"
-              formControlName="password"
               class="form-control"
-              id="floatingPassword"
-              placeholder="Password"
+              name="password"
+              [(ngModel)]="form.password"
+              required
+              minlength="6"
+              #password="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
             />
-            <label for="floatingPassword">Password</label>
+            <div
+              *ngIf="password.errors && f.submitted"
+              class="invalid-feedback"
+            >
+              <div *ngIf="password.errors['required']">
+                Password is required
+              </div>
+              <div *ngIf="password.errors['minlength']">
+                Password must be at least 6 characters
+              </div>
+            </div>
           </div>
-
           <div class="form-check mb-3">
             <input
               class="form-check-input"
@@ -41,14 +68,20 @@
               Remember password
             </label>
           </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block">Login</button>
+          </div>
+          <div class="form-group">
+            <div
+              *ngIf="f.submitted && isLoginFailed"
+              class="alert alert-danger"
+              role="alert"
+            >
+              Login failed: {{ errorMessage }}
+            </div>
+          </div>
 
           <div class="d-grid">
-            <button
-              class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
-              type="submit"
-            >
-              Sign in
-            </button>
             <div class="text-center">
               <a class="small" href="#">Forgot password?</a>
             </div>
