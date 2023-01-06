@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TagService {
@@ -17,7 +16,7 @@ public class TagService {
     private final TagRepository tagRepository;
 
     @Autowired
-    private  final FileRepository fileRepository;
+    private final FileRepository fileRepository;
 
     public TagService(TagRepository tagRepository, FileRepository fileRepository) {
         this.tagRepository = tagRepository;
@@ -55,13 +54,11 @@ public class TagService {
     }
 
 
-
-
     public List<Tag> getFilesOfTag(String id) {
 
         File file = this.fileRepository.findFileById(id);
 
-        List <Tag> tags = (List <Tag>)file.getTags();
+        List<Tag> tags = (List<Tag>) file.getTags();
         return tags;
     }
 }

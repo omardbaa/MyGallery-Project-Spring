@@ -19,8 +19,7 @@ public interface FolderRepository extends JpaRepository<Folder, Long> {
     //Remove file from folder
     @Modifying
     @Transactional
-    @Query(value = " DELETE FROM files_folder\n"
-            + "WHERE file_id LIKE %?% AND folder_id=?;\n", nativeQuery = true)
+    @Query(value = " DELETE FROM files_folder\n" + "WHERE file_id LIKE %?% AND folder_id=?;\n", nativeQuery = true)
     void deleteFile(String fileId, Long folderId);
 
 /*

@@ -1,16 +1,14 @@
 package com.mygallery.enities;
 
-import java.net.URI;
-import java.net.URL;
-import java.util.Collection;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @AllArgsConstructor
@@ -45,17 +43,17 @@ public class File {
     private String extension;
 
     @Column(name = "url")
-    private  String url;
+    private String url;
 
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
             targetEntity = Folder.class, fetch = FetchType.LAZY)
     @JoinTable(name = "files_folder",
-            joinColumns = @JoinColumn(name ="fileId"),
-            inverseJoinColumns = @JoinColumn(name ="folderId")
+            joinColumns = @JoinColumn(name = "fileId"),
+            inverseJoinColumns = @JoinColumn(name = "folderId")
     )
     @JsonIgnore
-    private Collection <Folder> folder;
+    private Collection<Folder> folder;
 
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
@@ -65,22 +63,19 @@ public class File {
             joinColumns = @JoinColumn(name = "file_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
 
-@JsonIgnore
-    private Collection <Tag> tags;
-
-
-
+    @JsonIgnore
+    private Collection<Tag> tags;
 
 
     public File(String name, String type, long size) {
         this.name = name;
         this.type = type;
-        this.size=size;
+        this.size = size;
 
     }
 
     public File(String id) {
-        this.id=id;
+        this.id = id;
     }
 
 

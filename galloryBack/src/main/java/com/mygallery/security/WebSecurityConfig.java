@@ -1,9 +1,8 @@
 package com.mygallery.security;
 
-
 import com.mygallery.security.jwt.AuthEntryPointJwt;
 import com.mygallery.security.jwt.AuthTokenFilter;
-import com.mygallery.services.UserDetailsServiceImpl;
+import com.mygallery.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

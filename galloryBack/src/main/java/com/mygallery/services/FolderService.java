@@ -20,7 +20,7 @@ public class FolderService {
 
     public void save(Folder folder) {
 
-         folderRepository.save(folder);
+        folderRepository.save(folder);
     }
 
 
@@ -34,9 +34,9 @@ public class FolderService {
     }
 
 
-    public void deleteFile (String fileId, Long folderId){
+    public void deleteFile(String fileId, Long folderId) {
 
-        folderRepository.deleteFile(fileId,folderId);
+        folderRepository.deleteFile(fileId, folderId);
     }
 
 
