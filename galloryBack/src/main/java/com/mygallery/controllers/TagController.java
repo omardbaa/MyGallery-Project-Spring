@@ -10,6 +10,7 @@ import com.mygallery.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -38,6 +39,7 @@ public class TagController {
 
     //Create new tag
     @PostMapping
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Tag save(@RequestBody Tag tag) {
         service.save(tag);
         return tag;
@@ -46,6 +48,7 @@ public class TagController {
 
     // Update Tag
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Tag> update(@PathVariable Long id, @RequestBody Tag tag) {
         Tag newTag = service.findById(id);
         newTag.setTagName(tag.getTagName());
@@ -57,6 +60,7 @@ public class TagController {
     //	Get All tags
 
     @GetMapping
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<List<Tag>> getAll() {
         List<Tag> tags = service.getAll();
         return new ResponseEntity<>(tags, HttpStatus.OK);
@@ -65,6 +69,7 @@ public class TagController {
 
     //get all files of tag
     @GetMapping("/{id}/files")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<File> getAllTagsOfFile(@PathVariable("id") Long id) {
         return this.fileService.getAllFilesOfTag(id);
 
@@ -73,6 +78,7 @@ public class TagController {
 
     //	 Get Tag by ID
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Tag> findById(@PathVariable("id") Long id) {
         Tag tag = service.findById(id);
         return new ResponseEntity<>(tag, HttpStatus.OK);
@@ -82,6 +88,7 @@ public class TagController {
 
     //Delete tag byId
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Map<String, Boolean>> delete(@PathVariable Long id) {
         service.delete(id);
         Map<String, Boolean> response = new HashMap<>();
@@ -92,6 +99,7 @@ public class TagController {
 
     //Link tag with file By Id
     @PostMapping("/tagToFile")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Collection<Tag> AddTagToFile(@RequestBody TagFile tagFile) {
         File file = fileService.FindFileById(tagFile.getFileId());
         Tag tag = service.findById(tagFile.getTagId());

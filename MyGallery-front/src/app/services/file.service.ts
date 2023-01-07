@@ -26,11 +26,6 @@ export class FileService {
     return this.httpClient.request(req);
   }
 
-  //   pageNo
-  // pageSize
-  // sortBy
-  // sortDir
-
   getFiles(): Observable<PaginatedData<FileModule>> {
     return this.httpClient.get<PaginatedData<FileModule>>(
       `${this.baseURL}/files`

@@ -40,8 +40,7 @@
           class="avatar mat-elevation-z8"
           src="https://images.pexels.com/photos/2663853/pexels-photo-2663853.jpeg"
         />
-        <h4 class="name">Abderrahim Omar</h4>
-        <p class="designation">Software Engineer</p>
+
         <mat-divider></mat-divider>
 
         <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
@@ -59,6 +58,7 @@
           class="menu-button"
           routerLink="files"
           routerLinkActive="active"
+          *ngIf="isLoggedIn"
         >
           <mat-icon>note</mat-icon>
           <span>Files</span>
@@ -69,6 +69,7 @@
           class="menu-button"
           routerLink="folders"
           routerLinkActive="active"
+          *ngIf="isLoggedIn"
         >
           <mat-icon>folder</mat-icon>
           <span>Folders</span>

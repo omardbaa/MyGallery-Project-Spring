@@ -31,7 +31,9 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8081", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1/file")
+
+@RequestMapping("/api/v1/file/")
+
 public class FileController {
 
     private final Path rootPath = Paths.get("uploads");
@@ -50,7 +52,7 @@ public class FileController {
 
     //Upload file
     @PostMapping("/upload")
-    @PreAuthorize("hasRole('MODERATOR')")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         return fileService.Upload(file);
     }
@@ -58,6 +60,7 @@ public class FileController {
 
     //Display file content
     @GetMapping("/display/{filename:.+}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = fileService.getFile(filename);
         String nameoffile = file.getFilename();
@@ -70,6 +73,7 @@ public class FileController {
 
     //Download file
     @GetMapping("/{filename:.+}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
         Resource file = fileService.getFile(filename);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename()).body(file);
@@ -78,6 +82,7 @@ public class FileController {
 
     //find file by id
     @RequestMapping(value = "/files/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Optional<File> findById(@PathVariable("id") String id) {
         return fileService.getfilebyId(id);
     }
@@ -85,6 +90,7 @@ public class FileController {
 
     //Delete file by id
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String id) {
         String message = "";
 
@@ -101,8 +107,8 @@ public class FileController {
 
     //Get all files
     @GetMapping("/files")
-    @PreAuthorize("hasRole('MODERATOR')")
-    public FileResponse getAllPosts(@RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo, @RequestParam(value = "pageSize", defaultValue = PaginationConsts.DEFAULT_PAGE_SIZE, required = false) int pageSize, @RequestParam(value = "sortBy", defaultValue = PaginationConsts.DEFAULT_SORT_BY, required = false) String sortBy, @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION, required = false) String sortDir, @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
+   // @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN') or hasRole('USER')")
+    public FileResponse getAllFiles(@RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo, @RequestParam(value = "pageSize", defaultValue = PaginationConsts.DEFAULT_PAGE_SIZE, required = false) int pageSize, @RequestParam(value = "sortBy", defaultValue = PaginationConsts.DEFAULT_SORT_BY, required = false) String sortBy, @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION, required = false) String sortDir, @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
 
         return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir, keyword);
     }
@@ -110,6 +116,7 @@ public class FileController {
 
     // get tags of file
     @GetMapping("/{id}/tags")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<Tag> getTags(@PathVariable("id") String id) {
 
         return this.tagService.getFilesOfTag(id);
@@ -119,6 +126,7 @@ public class FileController {
 
     //Remove tag from file by id
     @DeleteMapping("/deleteTag/{fileId}/{tagId}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Map<String, Boolean>> deleteTag(@PathVariable("fileId") String fileId, @PathVariable("tagId") Long tagId) {
         fileService.deleteTag(fileId, tagId);
         Map<String, Boolean> response = new HashMap<>();

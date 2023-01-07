@@ -10,6 +10,7 @@ import com.mygallery.services.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,6 +41,7 @@ public class FolderController {
 
     //Create new folder
     @PostMapping
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Folder save(@RequestBody Folder folder) {
         service.save(folder);
         return folder;
@@ -48,6 +50,7 @@ public class FolderController {
 
     // Update Folder
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Folder> update(@PathVariable Long id, @RequestBody Folder folder) {
         Folder newFolder = service.findById(id);
         newFolder.setFolderName(folder.getFolderName());
@@ -58,6 +61,7 @@ public class FolderController {
 
     //	Get All Folders
     @GetMapping
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<List<Folder>> getAll() {
         List<Folder> folders = service.getAll();
         return new ResponseEntity<>(folders, HttpStatus.OK);
@@ -66,6 +70,7 @@ public class FolderController {
 
     //Get all files of folder
     @GetMapping("/{id}/files")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<File> getAllFilesOfFolder(@PathVariable("id") Long folderId) {
         return this.fileService.getAllFilesOfFolder(folderId);
     }
@@ -73,6 +78,7 @@ public class FolderController {
 
     //	 Get Folder by ID
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Folder> findById(@PathVariable("id") Long id) {
         Folder folder = service.findById(id);
         return new ResponseEntity<>(folder, HttpStatus.OK);
@@ -81,6 +87,7 @@ public class FolderController {
 
     //Delete folder
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Map<String, Boolean>> delete(@PathVariable Long id) {
         service.delete(id);
         Map<String, Boolean> response = new HashMap<>();
@@ -91,6 +98,7 @@ public class FolderController {
 
     //remove file from folder
     @DeleteMapping("/deleteFile/{fileId}/{folderId}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Map<String, Boolean>> deleteFile(@PathVariable("fileId") String fileId, @PathVariable("folderId") Long folderId) {
         service.deleteFile(fileId, folderId);
         Map<String, Boolean> response = new HashMap<>();
@@ -111,6 +119,7 @@ public class FolderController {
 
     //need to fixing
     @PostMapping("/upload")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         return fileService.Upload(file);
     }
@@ -118,6 +127,7 @@ public class FolderController {
 
     // Link File  To Folder By Name
     @PostMapping("/fileFoldername")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Collection<Folder> AsignFileToFolder(@RequestBody FileFolder fileFolder) {
         File file = fileService.loadFileByName(fileFolder.getFileName());
         Folder folder = service.findByName(fileFolder.getFolderName());
@@ -131,6 +141,7 @@ public class FolderController {
 
     //Link file to folder By Id
     @PostMapping("/fileToFolder")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Collection<Folder> AddFileFolder(@RequestBody FileFolder fileFolder) {
         File file = fileService.FindFileById(fileFolder.getFileId());
         Folder folder = service.findFolderById(fileFolder.getFolderId());
