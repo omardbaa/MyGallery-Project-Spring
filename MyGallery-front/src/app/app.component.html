@@ -39,9 +39,10 @@
         <img
           class="avatar mat-elevation-z8"
           src="https://images.pexels.com/photos/2663853/pexels-photo-2663853.jpeg"
+          *ngIf="isLoggedIn"
         />
 
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="isLoggedIn"></mat-divider>
 
         <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
           <li class="nav-item">
@@ -63,7 +64,7 @@
           <mat-icon>note</mat-icon>
           <span>Files</span>
         </button>
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="isLoggedIn"></mat-divider>
         <button
           mat-button
           class="menu-button"
@@ -75,7 +76,7 @@
           <span>Folders</span>
         </button>
 
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="isLoggedIn"></mat-divider>
         <button
           mat-button
           class="menu-button"
@@ -87,7 +88,7 @@
           <span>lgoin</span>
         </button>
 
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="isLoggedIn"></mat-divider>
         <button
           mat-button
           class="menu-button"
