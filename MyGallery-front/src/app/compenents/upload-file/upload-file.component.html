@@ -1,4 +1,4 @@
-<div class="container" style="width:1900px, " style="margin-top: 90px;">
+<div class="container" style="width: 1900px" style="margin-top: 90px">
   <h5 style="margin-bottom: 30px">Upload File</h5>
 
   <div class="row">
@@ -9,32 +9,37 @@
     </div>
 
     <div class="col-4">
-      <button class="btn btn-success btn-sm" [disabled]="!selectedFiles" (click)="upload()">
+      <button
+        class="btn btn-success btn-sm"
+        [disabled]="!selectedFiles"
+        (click)="upload()"
+      >
         Upload
       </button>
     </div>
 
     <div class="col-4">
-
-
       <label for="description">Add description</label>
 
-
       <textarea id="description" name="description" rows="4" cols="50">
-
-                </textarea>
+      </textarea>
     </div>
-
-
   </div>
 
   <div *ngIf="currentFile" class="progress my-3">
-    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
-      attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: progress + '%' }">
+    <div
+      class="progress-bar progress-bar-info progress-bar-striped"
+      role="progressbar"
+      attr.aria-valuenow="{{ progress }}"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      [ngStyle]="{ width: progress + '%' }"
+    >
       {{ progress }}%
     </div>
   </div>
 
-  <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
-
+  <div *ngIf="message" class="alert alert-secondary" role="alert">
+    {{ message }}
+  </div>
 </div>

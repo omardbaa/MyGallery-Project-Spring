@@ -21,109 +21,20 @@
   </form>
 </div>
 
-
 <div class="wrap-section">
-  <div class="col-sm-4"  >
+  <div class="col-sm-4">
     <div class="panel panel-dark-outline tabs-panel">
       <div class="panel-body tab-content">
         <div class="tab-pane active documents-panel">
           <ul class="folders list-unstyled" *ngFor="let folder of folders">
             <li>
-              <a role="button" *ngIf="details.mode === 'over'" (click)="details.open(); folderDetails(folder.folderId)" >
-                <!-- <a role="button" (click)=" folderDetails(folder.folderId)" > -->
-                
-                <i class="fa fa-folder"  *ngIf="!details.opened"></i> {{ folder.folderName }}
+              <a role="button" (click)="folderDetails(folder.folderId)">
+                <i class="fa fa-folder"></i> {{ folder.folderName }}
               </a>
             </li>
           </ul>
-          <div class="v-spacing-xs"></div>
-
-          <!-- <a class="btn btn-block btn-success"> <i class="fa fa-plus"> </i> Upload</a> -->
         </div>
       </div>
     </div>
   </div>
-
-   <!-- <button mat-icon-button *ngIf="details.mode === 'over'" (click)="details.open()">
-      <mat-icon *ngIf="!details.opened"> menu </mat-icon>
-      
-    </button> -->
-    <mat-sidenav #details="matSidenav" style="position: sticky;" >
-
-  <div class="col-sm-12" class="folder-container">
-    <button mat-icon-button *ngIf="details.mode === 'over'" (click)="returnFolders(); details.close()"  style="margin: 15px;">
-      
-      <mat-icon *ngIf="details.opened" style="color:#002b5c ;"> close </mat-icon>
-    </button>
-    
-
-   
-    <!-- <h3 style="margin-left: 120px; margin-bottom: 30px">Files</h3> -->
-
-    
-
-    <div class="col-sm-8 tab-content no-bg no-border">
-      <div class="d-flex" >
-        <input
-          [(ngModel)]="name"
-          [(ngModel)]="size"
-          [(ngModel)]="extension"
-          [(ngModel)]="folderName"
-          [(ngModel)]="id"
-          class="form-control me-6"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-      </div>
-
-      <div class="tab-pane active documents documents-panel">
-        <div
-          class="document {{ types[file.extension.toLowerCase()].class }}"
-          *ngFor="
-            let file of allFiles
-              | filter : name
-              | filter : idFile
-              | filter : size
-              | filter : extension
-              | filter : folderName
-              | paginate : { itemsPerPage: perPage, currentPage: p }
-          "
-        >
-          <div class="document-body">
-            <i class="{{ types[file.extension.toLowerCase()].icon }}"></i>
-          </div>
-
-          <div class="document-footer">
-            <span class="document-name"> {{ file.name }} </span>
-            <span class="document-size"> size: {{ file.size }}b </span>
-            <span class="document-size"> {{ file.extension }} </span>
-
-            <div>
-              <a href="javascript:void(0);">
-                <div class="hover">
-                  <!-- <button (click)="deleteFile(file.id)" type="button" class="btn btn-icon btn-danger"
-                              style="margin-TOP: 3%; height: 30px; width:30px ;">
-                              <i class="fa fa-trash"></i>
-                              </button> -->
-
-                  <!-- <a href="{{ file.url }}" class="file-download"><i class="fa fa-download"
-                                      style="margin-left: 70%; height: 30px; width:30px "> </i></a> -->
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-   <!-- <pagination-controls
-        class="myPagination"
-        (pageChange)="p = $event"
-      ></pagination-controls> -->
-   
-  </div>
- </mat-sidenav>
-
 </div>
- 

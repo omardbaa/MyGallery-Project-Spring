@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 public class FileDto {
 
-   private String id;
+    private String id;
 
     private String name;
     private String type;
@@ -20,13 +20,28 @@ public class FileDto {
     private String description;
 
 
-    public FileDto(String id, String name, String type, String url, long size,String extension) {
-        this.id=id;
-        this.name=name;
-        this.type=type;
+    private FolderDto Folder;
+
+    private TagDto Tag;
+
+    public FileDto(String id, String name, String type, String url, long size) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
         this.url = url;
-        this.size=size;
-        this.extension=extension;
+        this.size = size;
+
+
+    }
+
+    public FileDto(String id, String name, String type, String url, long size, String extension,TagDto Tag ) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.url = url;
+        this.size = size;
+        this.extension = extension;
+        this.Tag = Tag;
 
     }
 }

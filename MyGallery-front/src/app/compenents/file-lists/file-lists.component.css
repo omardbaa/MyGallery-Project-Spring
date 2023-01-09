@@ -558,3 +558,10 @@ body {
 .dropzone:hover .dropzone-image {
   opacity: 1;
 }
+
+
+.wrap-div{
+
+
+  display: flex;
+}

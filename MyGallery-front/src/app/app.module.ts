@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RenamePipe } from './compenents/file-lists/rename.pipe';
+import { SafePipe } from './compenents/file-details/Safe.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,17 +22,29 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateFolderComponent } from './compenents/create-folder/create-folder.component';
-
+import { LoginCompenentComponent } from './compenents/login-compenent/login-compenent.component';
+import { RegisterCompenentComponent } from './compenents/register-compenent/register-compenent.component';
+import { SearchComponent } from './compenents/search/search.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ProfileComponent } from './compenents/profile/profile.component';
+import { HttpRequestInterceptor } from './_helpers/http.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
     UploadFileComponent,
     FileDetailsComponent,
     FileListsComponent,
-    RenamePipe,
     CreateFolderComponent,
     UpdateFolderComponent,
     FolderDetailsComponent,
+    LoginCompenentComponent,
+    RegisterCompenentComponent,
+    SafePipe,
+    SearchComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,12 +61,11 @@ import { CreateFolderComponent } from './compenents/create-folder/create-folder.
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-
-
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
-
-
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

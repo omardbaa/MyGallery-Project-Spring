@@ -154,18 +154,14 @@ section {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
    padding-right: 5rem;
 
-   margin-left: 64%;
+   margin-left: 2%;
    margin-bottom: 20px;
 }
 
 
 
 
-.container2{
-    height: 400px;
-    width: 100%;
-    margin-bottom: 110px;
-}
+
 
 
 

@@ -1,14 +1,13 @@
 package com.mygallery.enities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
@@ -16,7 +15,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "folder")
+@Table(name = "folders")
 
 @JsonIdentityInfo(scope = Folder.class, generator = ObjectIdGenerators.PropertyGenerator.class,
 
@@ -28,6 +27,7 @@ public class Folder {
 
     private Long folderId;
 
+    @Column(unique = true, nullable = false)
     private String folderName;
 
     @ManyToMany(mappedBy = "folder", targetEntity = File.class, fetch = FetchType.LAZY)

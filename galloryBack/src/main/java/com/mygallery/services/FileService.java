@@ -1,17 +1,27 @@
 package com.mygallery.services;
 
 
+import com.mygallery.controllers.FileController;
+import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
+import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.Folder;
+import com.mygallery.enities.Tag;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.repositories.FolderRepository;
+import com.mygallery.repositories.TagRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -22,10 +32,12 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
 public class FileService {
+
 
     //Create path to upload file in local storage
     private final Path rootPath = Paths.get("uploads");
@@ -34,7 +46,8 @@ public class FileService {
     @Autowired
     private FolderRepository folderRepository;
 
-
+    @Autowired
+    private TagRepository tagRepository;
 
     public FileService(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
@@ -45,20 +58,15 @@ public class FileService {
 
     public File Upload(MultipartFile file) throws IOException {
 
+
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         File formFile = new File(fileName, file.getContentType(), file.getSize());
 
-
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
-        String extension = Optional.ofNullable(fileName)
-                .filter(f -> f.contains("."))
-                .map(f -> f.substring(fileName.lastIndexOf(".") + 1))
-                .get()
-                .toLowerCase();
+        String extension = Optional.ofNullable(fileName).filter(f -> f.contains(".")).map(f -> f.substring(fileName.lastIndexOf(".") + 1)).get().toLowerCase();
 
-//        System.out.println(exetention);
 
         try {
             if (Files.notExists(rootPath, linkOptions)) {
@@ -104,7 +112,10 @@ public class FileService {
 
     //Load all files
     public Stream<File> getAllFiles() {
-        return fileRepository.findAll().stream();
+        Sort nameSort = Sort.by("name");
+        Sort sizeSort = Sort.by("size");
+        Sort groupBySort = sizeSort.and(nameSort);
+        return fileRepository.findAll(groupBySort).stream();
     }
 
     public String Extension(String filename) {
@@ -113,30 +124,16 @@ public class FileService {
     }
 
 
-
     //Delete file by id
     public boolean delete(String id) {
 
 
         try {
-         /*   File file= new File(id);
 
-            String exetention= Optional.ofNullable(file.getName())
-                    .filter(f -> f.contains("."))
-                    .map(f -> f.substring(file.getName().lastIndexOf(".") + 1))
-                    .get()
-                    .toLowerCase();
-            System.out.println(exetention);*/
-//            System.out.println(fileRepository.selectFileName(id));
-//            fileRepository.deleteById(id);
 
-//            Path file = rootPath.resolve(fileRepository.selectFileName(id));
+            String extension = FilenameUtils.getExtension(fileRepository.getName(id));
+            Path filepath = rootPath.resolve(id + "." + extension);
 
-            String extension= FilenameUtils.getExtension(fileRepository.getName(id));
-            Path filepath = rootPath.resolve(id + "." +extension);
-
-            // Path filepath = rootPath.resolve(id + "." +fileRepository.getType(id).split("/", 2)[1]);
-            System.out.println(filepath);
             Files.deleteIfExists(filepath);
             fileRepository.deleteById(id);
             return Files.deleteIfExists(filepath);
@@ -147,19 +144,133 @@ public class FileService {
         }
 
 
-
     }
-    public List<File> getAllFilesOfFolder(Long folderId){
 
-        Folder folder = this.folderRepository.findByFolderId(folderId);
 
-        List <File> files = (List <File>)folder.getFiles();
+    public File loadFileByName(String fileName) {
+        return fileRepository.findByName(fileName);
+    }
+
+    public Optional<File> getfilebyId(String id) {
+        return fileRepository.findById(id);
+    }
+
+    public String getFileType(String type) {
+
+        return fileRepository.getType(type);
+    }
+
+    public File FindFileById(String fileId) {
+        return fileRepository.findFileById(fileId);
+    }
+
+
+    public File findById(String id) {
+        return fileRepository.findById(id).get();
+    }
+
+
+    public File findFileById(String Id) {
+        return fileRepository.findFileById(Id);
+    }
+
+
+    public List<File> findPaginated(int pageNo, int pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        Page<File> pagedResult = fileRepository.findAll(paging);
+
+        return pagedResult.toList();
+    }
+
+    //    search by a keyword
+    public List<File> listAll(String keyword) {
+        if (keyword != null) {
+            return fileRepository.search(keyword);
+        }
+        return fileRepository.findAll();
+    }
+
+    // convert Entity into DTO
+    private FileDto mapToDTO(File file) {
+        FileDto fileDto = new FileDto();
+        fileDto.setId(file.getId());
+        fileDto.setName(file.getName());
+        fileDto.setExtension(file.getExtension());
+        fileDto.setSize(file.getSize());
+        fileDto.setType(file.getType());
+
+        return fileDto;
+    }
+
+    // convert DTO to entity
+    private File mapToEntity(FileDto fileDto) {
+        File file = new File();
+        file.setName(fileDto.getName());
+
+        file.setExtension(fileDto.getExtension());
+        file.setSize(fileDto.getSize());
+        file.setType(fileDto.getType());
+        return file;
+    }
+
+
+    //Display File content
+
+    public FileResponse getAllFiles(int pageNo, int pageSize, String sortBy, String sortDir, String keyword) {
+
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        // create Pageable instance
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+
+        Page<File> files = fileRepository.findAll(pageable, keyword);
+
+
+        // get content for page object
+        List<File> listOfFiles = files.getContent();
+
+
+        List<FileDto> content = listOfFiles.stream().map(file -> mapToDTO(file)).collect(Collectors.toList());
+        content.forEach(fileDto -> {
+            String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", fileDto.getId() + "." + fileDto.getExtension()).build().toString();
+
+            fileDto.setUrl(url);
+
+
+        });
+        FileResponse fileResponse = new FileResponse();
+        fileResponse.setContent(content);
+        fileResponse.setPageNo(files.getNumber());
+        fileResponse.setPageSize(files.getSize());
+        fileResponse.setTotalElements(files.getTotalElements());
+        fileResponse.setTotalPages(files.getTotalPages());
+        fileResponse.setLast(files.isLast());
+
+        return fileResponse;
+    }
+
+
+    //Delete tage from file by id
+    public void deleteTag(String fileId, Long tagId) {
+        fileRepository.deleteTag(fileId, tagId);
+    }
+
+
+    //get all files of tag
+    public List<File> getAllFilesOfTag(Long tagId) {
+        Tag tag = this.tagRepository.findByTagId(tagId);
+        List<File> files = (List<File>) tag.getFiles();
         return files;
 
     }
 
-    public File loadFileByName(String fileName) {
-        return fileRepository.findByName(fileName);
+
+    //get all files of folder
+    public List<File> getAllFilesOfFolder(Long folderId) {
+        Folder folder = this.folderRepository.findByFolderId(folderId);
+        List<File> files = (List<File>) folder.getFiles();
+        return files;
+
     }
 
 

@@ -20,7 +20,7 @@ public class FolderService {
 
     public void save(Folder folder) {
 
-         folderRepository.save(folder);
+        folderRepository.save(folder);
     }
 
 
@@ -34,6 +34,17 @@ public class FolderService {
     }
 
 
+    public void deleteFile(String fileId, Long folderId) {
+
+        folderRepository.deleteFile(fileId, folderId);
+    }
+
+
+    /*public void addFile (String fileId, Long folderId){
+
+        folderRepository.addFile(fileId,folderId);
+    }*/
+
     public Folder findById(Long id) {
         return folderRepository.findById(id).get();
     }
@@ -46,4 +57,11 @@ public class FolderService {
     public Folder findByName(String folderName) {
         return folderRepository.findByFolderName(folderName);
     }
+
+
+    public Folder findFolderById(Long folderId) {
+        return folderRepository.findByFolderId(folderId);
+    }
+
+
 }

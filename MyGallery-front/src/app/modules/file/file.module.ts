@@ -1,16 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
+import { Tag } from '../Tag/tag';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule],
 })
 export class FileModule {
-
   id!: string;
   name!: string;
   type!: string;
@@ -18,9 +14,6 @@ export class FileModule {
   size!: number;
   extension!: string;
   description!: string;
-  folder!:      number[];
-
-
-
-
+  folder!: number[];
+  tags!: string;
 }
