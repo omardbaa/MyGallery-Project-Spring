@@ -16,7 +16,14 @@ export class FolderService {
   constructor(private httpClient: HttpClient) {}
 
   getFolderList(): Observable<FolderModule[]> {
-    return this.httpClient.get<FolderModule[]>(`${this.baseURL}`);
+    return this.httpClient.get<FolderModule[]>(`${this.baseURL}`, {
+      responseType: 'text' as 'json',
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem('auth-user') ?? '{}')?.token
+        }`,
+      },
+    });
   }
 
   createFolder(folder: FolderModule): Observable<Object> {

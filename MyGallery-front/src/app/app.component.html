@@ -39,47 +39,62 @@
         <img
           class="avatar mat-elevation-z8"
           src="https://images.pexels.com/photos/2663853/pexels-photo-2663853.jpeg"
+          *ngIf="isLoggedIn"
         />
-        <h4 class="name">Abderrahim Omar</h4>
-        <p class="designation">Software Engineer</p>
-        <mat-divider></mat-divider>
+
+        <mat-divider *ngIf="isLoggedIn"></mat-divider>
+
+        <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+          <li class="nav-item">
+            <a href="/profile" class="nav-link" routerLink="profile">{{
+              username
+            }}</a>
+          </li>
+          <li class="nav-item">
+            <a href class="nav-link" (click)="logout()">LogOut</a>
+          </li>
+        </ul>
         <button
           mat-button
           class="menu-button"
           routerLink="files"
           routerLinkActive="active"
+          *ngIf="isLoggedIn"
         >
           <mat-icon>note</mat-icon>
           <span>Files</span>
         </button>
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="isLoggedIn"></mat-divider>
         <button
           mat-button
           class="menu-button"
           routerLink="folders"
           routerLinkActive="active"
+          *ngIf="isLoggedIn"
         >
           <mat-icon>folder</mat-icon>
           <span>Folders</span>
         </button>
 
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="isLoggedIn"></mat-divider>
         <button
           mat-button
           class="menu-button"
           routerLink="login"
           routerLinkActive="active"
+          *ngIf="!isLoggedIn"
         >
           <mat-icon>login</mat-icon>
           <span>lgoin</span>
         </button>
 
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="isLoggedIn"></mat-divider>
         <button
           mat-button
           class="menu-button"
           routerLink="register"
           routerLinkActive="active"
+          *ngIf="!isLoggedIn"
         >
           <mat-icon>account_circle</mat-icon>
           <span>register</span>

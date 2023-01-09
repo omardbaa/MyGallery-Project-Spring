@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AccountServiceService } from 'src/app/services/account.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register-compenent',
@@ -9,23 +9,32 @@ import { AccountServiceService } from 'src/app/services/account.service';
   styleUrls: ['./register-compenent.component.css'],
 })
 export class RegisterCompenentComponent implements OnInit {
-  userFormGroup!: FormGroup;
+  form: any = {
+    username: null,
+    email: null,
+    password: null,
+  };
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
 
-  errorMessage: any;
+  constructor(private authService: AuthService) {}
 
-  constructor(
-    private accountService: AccountServiceService,
-    private formBuilder: FormBuilder,
-    private router: Router
-  ) {}
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    this.userFormGroup = this.formBuilder.group({
-      firstname: this.formBuilder.control(''),
-      lastname: this.formBuilder.control(''),
-      email: this.formBuilder.control(''),
-      date: this.formBuilder.control(''),
-      password: this.formBuilder.control(''),
+  onSubmit(): void {
+    const { username, email, password } = this.form;
+
+    this.authService.register(username, email, password).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+      },
+      error: (err) => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
+      },
     });
   }
 }

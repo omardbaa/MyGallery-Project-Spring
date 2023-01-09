@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { PaginatedData } from '../modules/FilePage/PaginatedData';
@@ -26,14 +27,17 @@ export class FileService {
     return this.httpClient.request(req);
   }
 
-  //   pageNo
-  // pageSize
-  // sortBy
-  // sortDir
-
   getFiles(): Observable<PaginatedData<FileModule>> {
     return this.httpClient.get<PaginatedData<FileModule>>(
-      `${this.baseURL}/files`
+      `${this.baseURL}/files`,
+      {
+        responseType: 'text' as 'json',
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(window.localStorage.getItem('auth-user') ?? '{}')?.token
+          }`,
+        },
+      }
     );
   }
 
