@@ -102,7 +102,7 @@ export class FileListsComponent implements OnInit {
       this.totalPages = data.totalPages;
       this.last = data.last;
 
-      console.log('data ', this.files);
+      console.log('data', this.files);
     });
   }
 

@@ -2,7 +2,11 @@
   <div class="login-form">
     <div class="login py-5">
       <div class="col-md-9 col-lg-8 mx-auto form">
-        <h3 class="login-heading mb-4">Welcome back!</h3>
+        <h3 class="login-heading mb-4" *ngIf="!isLoggedIn">Welcome back!</h3>
+
+        <div class="alert alert-success" *ngIf="isLoggedIn">
+          Successfuly logged in .
+        </div>
         <div class="text-danger" *ngIf="errorMessage">
           {{ errorMessage }}
         </div>

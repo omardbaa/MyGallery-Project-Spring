@@ -42,8 +42,6 @@
           *ngIf="isLoggedIn"
         />
 
-        <mat-divider *ngIf="isLoggedIn"></mat-divider>
-
         <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
           <li class="nav-item">
             <a href="/profile" class="nav-link" routerLink="profile">{{
@@ -54,6 +52,7 @@
             <a href class="nav-link" (click)="logout()">LogOut</a>
           </li>
         </ul>
+        <mat-divider *ngIf="isLoggedIn"></mat-divider>
         <button
           mat-button
           class="menu-button"
@@ -76,7 +75,7 @@
           <span>Folders</span>
         </button>
 
-        <mat-divider *ngIf="isLoggedIn"></mat-divider>
+        <mat-divider *ngIf="!isLoggedIn"></mat-divider>
         <button
           mat-button
           class="menu-button"
@@ -88,7 +87,7 @@
           <span>lgoin</span>
         </button>
 
-        <mat-divider *ngIf="isLoggedIn"></mat-divider>
+        <mat-divider *ngIf="!isLoggedIn"></mat-divider>
         <button
           mat-button
           class="menu-button"
