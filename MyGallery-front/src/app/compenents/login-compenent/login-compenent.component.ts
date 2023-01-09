@@ -41,16 +41,12 @@ export class LoginCompenentComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.storageService.getUser().roles;
-        this.reloadPage();
+        this.router.navigateByUrl('/files');
       },
       error: (err) => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
       },
     });
-  }
-
-  reloadPage(): void {
-    window.location.reload();
   }
 }
