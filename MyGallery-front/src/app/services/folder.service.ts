@@ -6,6 +6,7 @@ import { FolderModule } from '../modules/folder/folder.module';
 import { FileFolder } from '../modules/fileFolder/FileFolder';
 import { BASE_URL } from '../Constants';
 import { FileModule } from '../modules/file/file.module';
+import { USER_KEY } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,17 +18,22 @@ export class FolderService {
 
   getFolderList(): Observable<FolderModule[]> {
     return this.httpClient.get<FolderModule[]>(`${this.baseURL}`, {
-      responseType: 'text' as 'json',
       headers: {
         Authorization: `Bearer ${
-          JSON.parse(window.localStorage.getItem('auth-user') ?? '{}')?.token
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
         }`,
       },
     });
   }
 
   createFolder(folder: FolderModule): Observable<Object> {
-    return this.httpClient.post(`${this.baseURL}`, folder);
+    return this.httpClient.post(`${this.baseURL}`, folder, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+        }`,
+      },
+    });
   }
 
   fileFolder(folder: FolderModule, file: FileModule): Observable<Object> {
@@ -38,20 +44,45 @@ export class FolderService {
   }
 
   getFolderById(id: number): Observable<FolderModule> {
-    return this.httpClient.get<FolderModule>(`${this.baseURL}/${id}`);
+    return this.httpClient.get<FolderModule>(`${this.baseURL}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+        }`,
+      },
+    });
   }
 
   updateFolder(id: number, folder: FolderModule): Observable<Object> {
-    return this.httpClient.put(`${this.baseURL}/${id}`, folder);
+    return this.httpClient.put(`${this.baseURL}/${id}`, folder, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+        }`,
+      },
+    });
   }
 
   deleteFolder(id: number): Observable<Object> {
-    return this.httpClient.delete(`${this.baseURL}/${id}`);
+    return this.httpClient.delete(`${this.baseURL}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+        }`,
+      },
+    });
   }
 
   deleteFile(fileId: String, folderId: number): Observable<Object> {
     return this.httpClient.delete(
-      `${this.baseURL}/deleteFile/${fileId}/${folderId}`
+      `${this.baseURL}/deleteFile/${fileId}/${folderId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+          }`,
+        },
+      }
     );
   }
 
@@ -70,7 +101,14 @@ export class FolderService {
 
   getAllFiles(id: number): Observable<FolderModule> {
     return this.httpClient.get<FolderModule>(
-      `${this.baseURL}/${id}` + '/files'
+      `${this.baseURL}/${id}` + '/files',
+      {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+          }`,
+        },
+      }
     );
   }
 }

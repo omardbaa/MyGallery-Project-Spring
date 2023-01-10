@@ -7,6 +7,7 @@ import { FileFolder } from '../modules/fileFolder/FileFolder';
 import { BASE_URL } from '../Constants';
 import { FileModule } from '../modules/file/file.module';
 import { Tag } from '../modules/Tag/tag';
+import { USER_KEY } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,26 +18,62 @@ export class TagService {
   constructor(private httpClient: HttpClient) {}
 
   getTagList(): Observable<Tag[]> {
-    return this.httpClient.get<Tag[]>(`${this.baseURL}`);
+    return this.httpClient.get<Tag[]>(`${this.baseURL}`, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+        }`,
+      },
+    });
   }
 
   createTag(tag: Tag): Observable<Object> {
-    return this.httpClient.post(`${this.baseURL}`, tag);
+    return this.httpClient.post(`${this.baseURL}`, tag, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+        }`,
+      },
+    });
   }
 
   getTagById(id: number): Observable<Tag> {
-    return this.httpClient.get<Tag>(`${this.baseURL}/${id}`);
+    return this.httpClient.get<Tag>(`${this.baseURL}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+        }`,
+      },
+    });
   }
 
   updateTag(id: number, tag: Tag): Observable<Object> {
-    return this.httpClient.put(`${this.baseURL}/${id}`, tag);
+    return this.httpClient.put(`${this.baseURL}/${id}`, tag, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+        }`,
+      },
+    });
   }
 
   deleteTag(id: number): Observable<Object> {
-    return this.httpClient.delete(`${this.baseURL}/${id}`);
+    return this.httpClient.delete(`${this.baseURL}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+        }`,
+      },
+    });
   }
 
   getAllFiles(id: number): Observable<Tag> {
-    return this.httpClient.get<Tag>(`${this.baseURL}/${id}/files`);
+    return this.httpClient.get<Tag>(`${this.baseURL}/${id}/files`, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+        }`,
+      },
+    });
   }
 }

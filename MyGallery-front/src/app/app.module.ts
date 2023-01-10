@@ -31,6 +31,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ProfileComponent } from './compenents/profile/profile.component';
 import { HttpRequestInterceptor } from './_helpers/http.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +65,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

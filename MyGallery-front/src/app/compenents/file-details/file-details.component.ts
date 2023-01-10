@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FileModule } from 'src/app/modules/file/file.module';
 import { FileService } from 'src/app/services/file.service';
+import { BASE_URL } from 'src/app/Constants';
 
 @Component({
   selector: 'app-file-details',
@@ -15,11 +16,13 @@ export class FileDetailsComponent implements OnInit {
   ) {}
 
   files: FileModule[] = [];
+  url = BASE_URL;
 
   id!: string;
   file: FileModule = new FileModule();
 
   ngOnInit(): void {
+    this.fileService.displayFile;
     this.id = this.route.snapshot.params['id'];
     this.file = new FileModule();
     this.fileService.getFileById(this.id).subscribe((data) => {
@@ -41,6 +44,10 @@ export class FileDetailsComponent implements OnInit {
       }
       this.tags = allTags;
     });
+  }
+
+  displayFile() {
+    this.fileService.displayFile;
   }
 
   deleteTag(fileId: string, tagId: number) {

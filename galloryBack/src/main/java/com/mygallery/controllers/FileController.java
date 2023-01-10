@@ -60,7 +60,6 @@ public class FileController {
 
     //Display file content
     @GetMapping("/display/{filename:.+}")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = fileService.getFile(filename);
         String nameoffile = file.getFilename();

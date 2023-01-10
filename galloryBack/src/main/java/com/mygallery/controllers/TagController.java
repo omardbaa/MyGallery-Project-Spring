@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:8081" , maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:8081" , maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/v1/tag")
 public class TagController {
