@@ -20,9 +20,13 @@ export class FileDetailsComponent implements OnInit {
 
   id!: string;
   file: FileModule = new FileModule();
-
+  fileUrl!: string;
   ngOnInit(): void {
-    this.fileService.displayFile;
+    const token = 'your-token';
+    this.fileService.renderFile('fileName', token).subscribe((file) => {
+      this.fileUrl = URL.createObjectURL(file);
+    });
+
     this.id = this.route.snapshot.params['id'];
     this.file = new FileModule();
     this.fileService.getFileById(this.id).subscribe((data) => {
@@ -44,10 +48,6 @@ export class FileDetailsComponent implements OnInit {
       }
       this.tags = allTags;
     });
-  }
-
-  displayFile() {
-    this.fileService.displayFile;
   }
 
   deleteTag(fileId: string, tagId: number) {

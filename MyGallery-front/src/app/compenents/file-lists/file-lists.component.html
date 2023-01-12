@@ -99,13 +99,16 @@
                   <mat-icon style="color: white">info</mat-icon>
                 </button>
 
-                <!-- <a role="button" href="{{ file.url }}" class="file-download"
+                <a
+                  href="{{ file.url }}.{{ file.extension }}"
+                  role="button"
+                  class="file-download"
                   ><i
                     class="fa fa-download"
                     style="margin-left: 20px; color: white"
                   >
                   </i
-                ></a> -->
+                ></a>
               </div>
             </div>
           </div>

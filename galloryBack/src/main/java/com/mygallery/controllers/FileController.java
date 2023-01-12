@@ -2,12 +2,14 @@ package com.mygallery.controllers;
 
 
 
+import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
 import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.PaginationConsts;
 import com.mygallery.enities.Tag;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.response.ResponseMessage;
+import com.mygallery.response.StorageException;
 import com.mygallery.services.FileService;
 import com.mygallery.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +52,7 @@ public class FileController {
     }
 
 
-    //Upload file
+   //Upload file
     @PostMapping("/upload")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
@@ -69,15 +71,31 @@ public class FileController {
         return ResponseEntity.ok().contentType(contentType).header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename()).body(file);
     }
 
-
     //Download file
-    @GetMapping("/{filename:.+}")
+    @GetMapping("/download/{filename:.+}")
+    public ResponseEntity<Resource> download(@PathVariable String filename) {
+        Resource file = fileService.getFile(filename);
+        String nameoffile = file.getFilename();
+        String[] id = nameoffile.split("\\.");
+        String[] types = fileRepository.getType(id[0]).split("/");
+        MediaType contentType = new MediaType(types[0], types[1]);
+        return ResponseEntity.ok().contentType(contentType).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename()).body(file);
+    }
+
+
+
+
+   /*
+    @GetMapping("/download/{filename:.+}")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
         Resource file = fileService.getFile(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename()).body(file);
-    }
 
+        FileDto fileDto= new FileDto();
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename()+"."+fileDto.getExtension()).body(file);
+    }
+*/
 
     //find file by id
     @RequestMapping(value = "/files/{id}", method = RequestMethod.GET)
@@ -134,4 +152,26 @@ public class FileController {
     }
 
 
-}
+
+
+
+  /*  @PostMapping("/upload")
+    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        try {
+            fileService.store(file);
+
+            // Save the URL to the database
+            // ...
+            return new ResponseEntity<>("File uploaded successfully!", HttpStatus.OK);
+        } catch (StorageException e) {
+            return new ResponseEntity<>("Error uploading file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }*/
+
+
+
+
+
+
+
+        }

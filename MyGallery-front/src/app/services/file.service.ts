@@ -120,6 +120,16 @@ export class FileService {
     });
   }
 
+  renderFile(fileName: string, token: string): Observable<Blob> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.get(`${this.baseURL}/${fileName}`, {
+      headers,
+      responseType: 'blob',
+    });
+  }
+
   deleteTag(fileId: String, tagId: number): Observable<Object> {
     return this.httpClient.delete(
       `${this.baseURL}/deleteTag/${fileId}/${tagId}`,

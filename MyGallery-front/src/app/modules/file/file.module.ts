@@ -16,4 +16,7 @@ export class FileModule {
   description!: string;
   folder!: number[];
   tags!: string;
+  fileUrl!: string;
+
+  downloadUrl!: string;
 }

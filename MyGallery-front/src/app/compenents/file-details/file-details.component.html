@@ -36,14 +36,6 @@
   <div class="frame-body">
     <h1>File viewer</h1>
 
-    <iframe
-      [src]="
-        'http://localhost:8080/v1/file/display/' +
-          file.id +
-          '.' +
-          file.extension | safe
-      "
-      class="viewer"
-    ></iframe>
+    <embed [src]="file.url | safe" class="viewer" />
   </div>
 </div>

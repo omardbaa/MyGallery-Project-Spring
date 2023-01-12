@@ -10,6 +10,7 @@ import com.mygallery.enities.Tag;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.repositories.FolderRepository;
 import com.mygallery.repositories.TagRepository;
+import com.mygallery.response.StorageException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -58,7 +59,6 @@ public class FileService {
 
     public File Upload(MultipartFile file) throws IOException {
 
-
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         File formFile = new File(fileName, file.getContentType(), file.getSize());
@@ -66,6 +66,7 @@ public class FileService {
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
         String extension = Optional.ofNullable(fileName).filter(f -> f.contains(".")).map(f -> f.substring(fileName.lastIndexOf(".") + 1)).get().toLowerCase();
+
 
 
         try {
@@ -84,6 +85,10 @@ public class FileService {
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
+
+        String fileUrl = "http://localhost:8080/api/v1/file/display/" + formFile.getId() + "." + extension;
+
+        formFile.setUrl(fileUrl);
         return fileRepository.save(formFile);
 
 
@@ -274,6 +279,19 @@ public class FileService {
     }
 
 
+
+    public void store(MultipartFile file) {
+        try { File fildto = new File();
+            Files.copy(file.getInputStream(), this.rootPath.resolve(file.getOriginalFilename()));
+            String fileUrl = "http://localhost:8080/api/v1/file/" + file.getOriginalFilename();
+
+            fildto.setUrl(fileUrl);
+            fileRepository.save(fildto);
+        } catch (IOException e) {
+            throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
+        }
+
+    }
 }
 
 
