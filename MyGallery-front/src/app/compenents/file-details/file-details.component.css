@@ -95,3 +95,8 @@ color: steelblue;
         color: white;
     }
     
+    .hidden{
+
+        pointer-events: none;
+      opacity: 0; 
+    }

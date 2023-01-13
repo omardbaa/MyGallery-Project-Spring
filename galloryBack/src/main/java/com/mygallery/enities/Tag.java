@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 
 @Entity
@@ -32,11 +33,9 @@ public class Tag {
     private String tagName;
 
 
-    @ManyToMany(mappedBy = "tags", targetEntity = File.class, fetch = FetchType.LAZY)
-
-  //  @JsonIgnore
-
-    private Collection<File> files;
-
-
+    @ManyToMany
+    @JoinTable(name = "tag_file",
+            joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "file_id"))
+    private Set<File> files;
 }

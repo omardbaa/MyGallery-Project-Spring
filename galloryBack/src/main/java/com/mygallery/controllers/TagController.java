@@ -13,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:8081" , maxAge = 3600, allowCredentials = "true")
 @RestController
@@ -103,7 +100,7 @@ public class TagController {
     public Collection<Tag> AddTagToFile(@RequestBody TagFile tagFile) {
         File file = fileService.FindFileById(tagFile.getFileId());
         Tag tag = service.findById(tagFile.getTagId());
-        Collection<Tag> tags = file.getTags();
+        Set<Tag> tags = file.getTags();
         tags.add(tag);
         file.setTags(tags);
         fileRepository.save(file);

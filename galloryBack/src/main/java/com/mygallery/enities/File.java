@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -56,16 +57,8 @@ public class File {
     private Collection<Folder> folder;
 
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-            targetEntity = Tag.class, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "file_tag",
-            joinColumns = @JoinColumn(name = "file_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-
-    @JsonIgnore
-    private Collection<Tag> tags;
-
+    @ManyToMany(mappedBy = "files")
+    private Set<Tag> tags;
 
     public File(String name, String type, long size) {
         this.name = name;
