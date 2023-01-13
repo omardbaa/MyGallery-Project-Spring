@@ -1,15 +1,12 @@
 package com.mygallery.controllers;
 
 
-
-import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
 import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.PaginationConsts;
 import com.mygallery.enities.Tag;
 import com.mygallery.repositories.FileRepository;
 import com.mygallery.response.ResponseMessage;
-import com.mygallery.response.StorageException;
 import com.mygallery.services.FileService;
 import com.mygallery.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +48,16 @@ public class FileController {
         this.fileService = fileService;
     }
 
+    //Create new tag
+    @PostMapping("/tag")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public Tag save(@RequestBody Tag tag) {
+        tagService.save(tag);
+        return tag;
+    }
 
-   //Upload file
+
+    //Upload file
     @PostMapping("/upload")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
@@ -124,7 +129,7 @@ public class FileController {
 
     //Get all files
     @GetMapping("/files")
-   @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN') or hasRole('USER')")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN') or hasRole('USER')")
     public FileResponse getAllFiles(@RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo, @RequestParam(value = "pageSize", defaultValue = PaginationConsts.DEFAULT_PAGE_SIZE, required = false) int pageSize, @RequestParam(value = "sortBy", defaultValue = PaginationConsts.DEFAULT_SORT_BY, required = false) String sortBy, @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION, required = false) String sortDir, @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
 
         return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir, keyword);
@@ -132,26 +137,23 @@ public class FileController {
 
 
     // get tags of file
-    @GetMapping("/{id}/tags")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public List<Tag> getTags(@PathVariable("id") String id) {
 
-        return this.tagService.getFilesOfTag(id);
+    @RequestMapping(value = "/{fileId}/tags", method = RequestMethod.GET)
+    public List<Tag> getTagsByFile(@PathVariable String fileId) {
+        return fileService.getTagsByFile(fileId);
 
     }
 
 
     //Remove tag from file by id
-    @DeleteMapping("/deleteTag/{fileId}/{tagId}")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<Map<String, Boolean>> deleteTag(@PathVariable("fileId") String fileId, @PathVariable("tagId") Long tagId) {
-        fileService.deleteTag(fileId, tagId);
+    @DeleteMapping("/deleteTag/{fileId}/tags/{tagId}")
+    public ResponseEntity<Map<String, Boolean>> removeTagFromFile(@PathVariable String fileId, @PathVariable Long tagId) {
+        fileService.removeTagFromFile(fileId, tagId);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return ResponseEntity.ok(response);
     }
-
-
 
 
 
@@ -169,9 +171,11 @@ public class FileController {
     }*/
 
 
+    //Add tag to file
+    @PutMapping("/{fileId}/tags/{tagId}")
+    public void addTagToFile(@PathVariable String fileId, @PathVariable Long tagId) {
+        fileService.addTagToFile(fileId, tagId);
+    }
 
 
-
-
-
-        }
+}

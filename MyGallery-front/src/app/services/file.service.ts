@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 
 import {
   HttpClient,
@@ -11,12 +11,14 @@ import { PaginatedData } from '../modules/FilePage/PaginatedData';
 import { FileModule } from '../modules/file/file.module';
 import { BASE_URL } from '../Constants';
 import { USER_KEY } from './storage.service';
+import { Tag } from '../modules/Tag/tag';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileService {
   private baseURL = `${BASE_URL}/file`;
+
   constructor(private httpClient: HttpClient) {}
 
   upload(file: File) {
@@ -132,7 +134,7 @@ export class FileService {
 
   deleteTag(fileId: String, tagId: number): Observable<Object> {
     return this.httpClient.delete(
-      `${this.baseURL}/deleteTag/${fileId}/${tagId}`,
+      `${this.baseURL}/deleteTag/${fileId}/tags/${tagId}`,
       {
         headers: {
           Authorization: `Bearer ${
@@ -155,5 +157,47 @@ export class FileService {
         }`,
       },
     });
+  }
+
+  addTagToFile(fileId: string, tagId: number) {
+    return this.httpClient.put(`${this.baseURL}/${fileId}/tags/${tagId}`, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+        }`,
+      },
+    });
+  }
+
+  // createTagAndAddToFile(fileId: string, tagName: string) {
+  //   const headers = new HttpHeaders({
+  //     Authorization: `Bearer ${
+  //       JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+  //     }`,
+  //   });
+  //   return this.httpClient
+  //     .post<Tag>(`${this.baseURL}/tag`, { name: tagName }, { headers: headers })
+  //     .pipe(
+  //       switchMap((tag) => {
+  //         return this.httpClient.put(
+  //           `${this.baseURL}/files/${fileId}/tags/${tag.id}`,
+  //           {},
+  //           { headers: headers }
+  //         );
+  //       })
+  //     );
+  // }
+
+  createTagAndAddToFile(fileId: string, tagName: string) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${
+        JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+      }`,
+    });
+    return this.httpClient.post<Tag>(
+      `${this.baseURL}/${fileId}/tag`,
+      { name: tagName },
+      { headers: headers }
+    );
   }
 }

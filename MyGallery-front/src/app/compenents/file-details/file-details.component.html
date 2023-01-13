@@ -31,6 +31,27 @@
         </button> -->
       </div>
     </div>
+
+    <form (submit)="addTagToFile()">
+      <div>
+        <label>
+          File ID:
+          <input
+            type="text"
+            [(ngModel)]="fileId"
+            name="fileId"
+            [value]="file.id"
+            id="fileId"
+          />
+        </label>
+      </div>
+
+      <label>
+        Tag ID:
+        <input type="text" [(ngModel)]="tagId" name="tagId" />
+      </label>
+      <button type="submit">Add Tag to File</button>
+    </form>
   </div>
 
   <div class="frame-body">

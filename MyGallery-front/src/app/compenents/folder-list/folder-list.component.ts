@@ -9,11 +9,11 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'app-create-folder',
-  templateUrl: './create-folder.component.html',
-  styleUrls: ['./create-folder.component.css'],
+  selector: 'app-folder-list',
+  templateUrl: './folder-list.component.html',
+  styleUrls: ['./folder-list.component.css'],
 })
-export class CreateFolderComponent {
+export class FolderListComponent {
   folderId!: number;
   folders: FolderModule[] = [];
   folder: FolderModule = new FolderModule();

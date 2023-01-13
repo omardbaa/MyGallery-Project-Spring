@@ -3,11 +3,13 @@ package com.mygallery.services;
 
 import com.mygallery.controllers.FileController;
 import com.mygallery.dtos.FileDto;
+import com.mygallery.dtos.FileTag;
 import com.mygallery.enities.File;
 import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.Folder;
 import com.mygallery.enities.Tag;
 import com.mygallery.repositories.FileRepository;
+import com.mygallery.repositories.FileTagRepository;
 import com.mygallery.repositories.FolderRepository;
 import com.mygallery.repositories.TagRepository;
 import com.mygallery.response.StorageException;
@@ -50,6 +52,9 @@ public class FileService {
     @Autowired
     private TagRepository tagRepository;
 
+    @Autowired
+    private FileTagRepository fileTagRepository;
+
     public FileService(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
     }
@@ -66,7 +71,6 @@ public class FileService {
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
         String extension = Optional.ofNullable(fileName).filter(f -> f.contains(".")).map(f -> f.substring(fileName.lastIndexOf(".") + 1)).get().toLowerCase();
-
 
 
         try {
@@ -279,9 +283,9 @@ public class FileService {
     }
 
 
-
     public void store(MultipartFile file) {
-        try { File fildto = new File();
+        try {
+            File fildto = new File();
             Files.copy(file.getInputStream(), this.rootPath.resolve(file.getOriginalFilename()));
             String fileUrl = "http://localhost:8080/api/v1/file/" + file.getOriginalFilename();
 
@@ -292,6 +296,36 @@ public class FileService {
         }
 
     }
+
+
+    public void addTagToFile(String fileId, Long tagId) {
+        File file = fileRepository.findById(fileId).orElseThrow();
+        Tag tag = tagRepository.findById(tagId).orElseThrow();
+        FileTag fileTag = new FileTag();
+        fileTag.setFile(file);
+        fileTag.setTag(tag);
+        fileTagRepository.save(fileTag);
+    }
+
+
+    public void removeTagFromFile(String fileId, Long tagId) {
+        File file = fileRepository.findById(fileId).orElseThrow();
+        Tag tag = tagRepository.findById(tagId).orElseThrow();
+        FileTag fileTag = fileTagRepository.findByFileAndTag(file, tag);
+        fileTagRepository.delete(fileTag);
+    }
+
+    public List<File> getFilesByTag(Long tagId) {
+        Tag tag = tagRepository.findById(tagId).orElseThrow();
+        return fileTagRepository.findByTag(tag).stream().map(FileTag::getFile).collect(Collectors.toList());
+    }
+
+    public List<Tag> getTagsByFile(String fileId) {
+        File file = fileRepository.findById(fileId).orElseThrow();
+        return fileTagRepository.findByFile(file).stream().map(FileTag::getTag).collect(Collectors.toList());
+    }
+
+
 }
 
 

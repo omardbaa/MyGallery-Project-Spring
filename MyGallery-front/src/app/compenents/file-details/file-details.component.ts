@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FileModule } from 'src/app/modules/file/file.module';
 import { FileService } from 'src/app/services/file.service';
 import { BASE_URL } from 'src/app/Constants';
+import { Tag } from 'src/app/modules/Tag/tag';
 
 @Component({
   selector: 'app-file-details',
@@ -10,16 +11,19 @@ import { BASE_URL } from 'src/app/Constants';
   styleUrls: ['./file-details.component.css'],
 })
 export class FileDetailsComponent implements OnInit {
+  tagName!: string;
   constructor(
     private fileService: FileService,
     private route: ActivatedRoute
   ) {}
-
+  fileId!: string;
+  tagId!: number;
   files: FileModule[] = [];
   url = BASE_URL;
 
   id!: string;
   file: FileModule = new FileModule();
+  tag: Tag = new Tag();
   fileUrl!: string;
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
@@ -50,5 +54,18 @@ export class FileDetailsComponent implements OnInit {
       console.log(data);
       this.getTags();
     });
+  }
+
+  addTagToFile() {
+    this.fileService.addTagToFile(this.fileId, this.tagId).subscribe(
+      () => {
+        // handle success response
+        console.log('Tag added to file successfully');
+      },
+      (error) => {
+        // handle error response
+        console.error('Error adding tag to file', error);
+      }
+    );
   }
 }
