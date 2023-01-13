@@ -4,7 +4,6 @@ import { SafePipe } from './compenents/file-details/Safe.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UploadFileComponent } from './compenents/upload-file/upload-file.component';
 import { FileDetailsComponent } from './compenents/file-details/file-details.component';
 import { FileListsComponent } from './compenents/file-lists/file-lists.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,7 +20,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { CreateFolderComponent } from './compenents/create-folder/create-folder.component';
 import { LoginCompenentComponent } from './compenents/login-compenent/login-compenent.component';
 import { RegisterCompenentComponent } from './compenents/register-compenent/register-compenent.component';
 import { SearchComponent } from './compenents/search/search.component';
@@ -32,13 +30,13 @@ import { ProfileComponent } from './compenents/profile/profile.component';
 import { HttpRequestInterceptor } from './_helpers/http.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
+import { FolderListComponent } from './compenents/folder-list/folder-list.component';
 @NgModule({
   declarations: [
     AppComponent,
-    UploadFileComponent,
     FileDetailsComponent,
     FileListsComponent,
-    CreateFolderComponent,
+    FolderListComponent,
     UpdateFolderComponent,
     FolderDetailsComponent,
     LoginCompenentComponent,
