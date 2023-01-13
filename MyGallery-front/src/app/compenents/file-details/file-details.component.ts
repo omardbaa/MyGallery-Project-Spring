@@ -22,11 +22,6 @@ export class FileDetailsComponent implements OnInit {
   file: FileModule = new FileModule();
   fileUrl!: string;
   ngOnInit(): void {
-    const token = 'your-token';
-    this.fileService.renderFile('fileName', token).subscribe((file) => {
-      this.fileUrl = URL.createObjectURL(file);
-    });
-
     this.id = this.route.snapshot.params['id'];
     this.file = new FileModule();
     this.fileService.getFileById(this.id).subscribe((data) => {
