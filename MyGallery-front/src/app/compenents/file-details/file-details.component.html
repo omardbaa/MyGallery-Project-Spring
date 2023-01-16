@@ -10,25 +10,21 @@
 
     <div style="margin-bottom: 25px; margin-top: 40%">
       <h1>Tags:</h1>
-      <div *ngFor="let tag of tags" class="wraped">
-        <button class="bottun" onclick="">
+      <div *ngFor="let tag of tags; let i = index" class="wraped">
+        <button
+          class="bottun tag-container"
+          (click)="filesOfTag(tag.id)"
+          (mouseenter)="hoverStates[i] = false"
+          (mouseleave)="hoverStates[i] = true"
+        >
           {{ tag.tagName }}
           <mat-icon
             role="button"
+            [ngClass]="{ 'icon-container': true, active: hoverStates[i] }"
             (click)="deleteTag(file.id, tag.id)"
-            class="icon-container"
             >clear</mat-icon
           >
         </button>
-        <!-- <button class="bottun" onclick="">
-          {{ tag.tagName }}
-          <span
-            role="button"
-            (click)="deleteTag(file.id, tag.id)"
-            class="icon-container"
-            >X</span
-          >
-        </button> -->
       </div>
     </div>
 

@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { FolderDetailsComponent } from './compenents/folder-details/folder-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -64,6 +65,7 @@ import { FolderListComponent } from './compenents/folder-list/folder-list.compon
     MatNativeDateModule,
     MatFormFieldModule,
     MatTableModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

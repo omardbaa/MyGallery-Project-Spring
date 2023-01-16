@@ -187,17 +187,4 @@ export class FileService {
   //       })
   //     );
   // }
-
-  createTagAndAddToFile(fileId: string, tagName: string) {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${
-        JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
-      }`,
-    });
-    return this.httpClient.post<Tag>(
-      `${this.baseURL}/${fileId}/tag`,
-      { name: tagName },
-      { headers: headers }
-    );
-  }
 }

@@ -65,9 +65,7 @@ color: steelblue;
     background-image: linear-gradient(to right, #004a9f, #22577E);}
 
 
-    .bottun:hover {
-        background-position: right center;
-    }
+   
 
 
     .viewer{
@@ -82,21 +80,13 @@ color: steelblue;
     }
 
 
-    .icon-container {
-        /* display: none !important; */
-        visibility: visible;
-       
-    }
+    
     
 
-    .icon-container:hover  {
-        /* display: block !important; */
-        visibility: visible;
-        color: white;
-    }
+   
     
-    .hidden{
+   
 
-        pointer-events: none;
-      opacity: 0; 
-    }
+     .icon-container.active{
+        visibility: hidden;
+     }
