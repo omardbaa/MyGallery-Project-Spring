@@ -62,7 +62,7 @@ color: steelblue;
     border-radius: 10px;
     border-color: transparent;
 
-    background-image: linear-gradient(to right, #004a9f, #22577E);}
+    background-color: #22577E;}
 
 
    
@@ -86,7 +86,13 @@ color: steelblue;
    
     
    
-
-     .icon-container.active{
-        visibility: hidden;
+    .bottun .icon-container{
+        color:transparent;
+        padding: auto;
      }
+
+     .bottun .icon-container:hover{
+        color: #FFFF;
+     }
+
+    

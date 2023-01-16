@@ -12,7 +12,7 @@ import { Tag } from 'src/app/modules/Tag/tag';
 })
 export class FileDetailsComponent implements OnInit {
   tags: any = [];
-  hoverStates = Array(this.tags.length).fill(false);
+
   iconHover = false;
   tagName!: string;
   constructor(
