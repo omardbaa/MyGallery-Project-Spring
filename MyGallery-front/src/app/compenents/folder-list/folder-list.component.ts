@@ -51,12 +51,12 @@ export class FolderListComponent {
       },
       (error) => console.log(error)
     );
+    this.getFolders;
   }
 
   getFolders() {
     this.folderService.getFolderList().subscribe((data) => {
       this.folders = data;
-      this.getFolders;
 
       console.log('data ', this.folders);
     });
@@ -72,6 +72,15 @@ export class FolderListComponent {
     console.log(this.folder);
     this.saveFolder();
     this.getFolders();
+  }
+
+  deleteFolder(id: number) {
+    if (window.confirm('Are you sure you want to delete this folder?')) {
+      this.folderService.deleteFolder(id).subscribe((data) => {
+        console.log(data);
+        this.getFolders();
+      });
+    }
   }
 
   types: any = {

@@ -89,10 +89,17 @@ public class FileService {
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
+        String displayName= formFile.getId() + "." + extension;
+        formFile.setDisplayName(displayName);
 
         String fileUrl = "http://localhost:8080/api/v1/file/display/" + formFile.getId() + "." + extension;
 
         formFile.setUrl(fileUrl);
+
+
+        String fileUrlDowload = "http://localhost:8080/api/v1/file/download/" + formFile.getId() + "." + extension;
+
+        formFile.setDownloadUrl(fileUrlDowload);
         return fileRepository.save(formFile);
 
 
@@ -244,6 +251,9 @@ public class FileService {
             String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", fileDto.getId() + "." + fileDto.getExtension()).build().toString();
 
             fileDto.setUrl(url);
+            String downloadUrl = MvcUriComponentsBuilder.fromMethodName(FileController.class, "download", fileDto.getId() + "." + fileDto.getExtension()).build().toString();
+
+            fileDto.setDownloadUrl(downloadUrl);
 
 
         });
@@ -283,19 +293,6 @@ public class FileService {
     }
 
 
-    public void store(MultipartFile file) {
-        try {
-            File fildto = new File();
-            Files.copy(file.getInputStream(), this.rootPath.resolve(file.getOriginalFilename()));
-            String fileUrl = "http://localhost:8080/api/v1/file/" + file.getOriginalFilename();
-
-            fildto.setUrl(fileUrl);
-            fileRepository.save(fildto);
-        } catch (IOException e) {
-            throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
-        }
-
-    }
 
 
     public void addTagToFile(String fileId, Long tagId) {

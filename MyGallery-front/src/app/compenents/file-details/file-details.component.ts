@@ -51,15 +51,20 @@ export class FileDetailsComponent implements OnInit {
       this.tags = allTags;
     });
   }
+  readFile(id: string, extension: string) {
+    this.fileService.renderFile(id, extension).subscribe();
+  }
 
   filesOfTag(tagId: string) {
     this.tagId;
   }
   deleteTag(fileId: string, tagId: number) {
-    this.fileService.deleteTag(fileId, tagId).subscribe((data) => {
-      console.log(data);
-      this.getTags();
-    });
+    if (window.confirm('Are you sure you want to delete this tag?')) {
+      this.fileService.deleteTag(fileId, tagId).subscribe((data) => {
+        console.log(data);
+        this.getTags();
+      });
+    }
   }
 
   addTagToFile() {

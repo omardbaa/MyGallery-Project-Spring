@@ -17,8 +17,8 @@ public class FileDto {
     private String url;
     private String extension;
     private long size;
-    private String description;
-
+    private String downloadUrl;
+    private String displayName;
 
     private FolderDto Folder;
 

@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
 import {
   HttpClient,
   HttpEvent,
   HttpRequest,
   HttpHeaders,
+  HttpResponse,
 } from '@angular/common/http';
 import { PaginatedData } from '../modules/FilePage/PaginatedData';
 import { FileModule } from '../modules/file/file.module';
 import { BASE_URL } from '../Constants';
 import { USER_KEY } from './storage.service';
-import { Tag } from '../modules/Tag/tag';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root',
@@ -92,14 +93,47 @@ export class FileService {
     });
   }
 
-  displayFile() {
-    return this.httpClient.get(`${this.baseURL}/display/`, {
-      headers: {
-        Authorization: `Bearer ${
-          JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
-        }`,
-      },
-    });
+  downloadFile(name: string, extension: string): Observable<FileModule> {
+    return this.httpClient
+      .get(`${this.baseURL}/download/` + name + '.' + extension, {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+          }`,
+        },
+        responseType: 'blob',
+      })
+      .pipe(
+        tap((res) => saveAs(res, name)),
+        catchError((error) => {
+          console.log(error);
+          alert('Error while trying to download the file!');
+          return of(error);
+        })
+      );
+  }
+
+  renderFile(name: string, extension: string): Observable<FileModule> {
+    return this.httpClient
+      .get(`${this.baseURL}/display/` + name + '.' + extension, {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(window.localStorage.getItem(USER_KEY) ?? '{}')?.token
+          }`,
+        },
+        responseType: 'blob',
+      })
+      .pipe(
+        tap((res) => {
+          const fileUrl = URL.createObjectURL(res);
+          window.open(fileUrl);
+        }),
+        catchError((error) => {
+          console.log(error);
+          alert('Error while trying to display the file!');
+          return of(error);
+        })
+      );
   }
 
   updateFile(id: string, file: FileModule): Observable<Object> {
@@ -122,15 +156,15 @@ export class FileService {
     });
   }
 
-  renderFile(fileName: string, token: string): Observable<Blob> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-    return this.httpClient.get(`${this.baseURL}/${fileName}`, {
-      headers,
-      responseType: 'blob',
-    });
-  }
+  // renderFile(fileName: string, token: string): Observable<Blob> {
+  //   const headers = new HttpHeaders({
+  //     Authorization: `Bearer ${token}`,
+  //   });
+  //   return this.httpClient.get(`${this.baseURL}/${fileName}`, {
+  //     headers,
+  //     responseType: 'blob',
+  //   });
+  // }
 
   deleteTag(fileId: String, tagId: number): Observable<Object> {
     return this.httpClient.delete(

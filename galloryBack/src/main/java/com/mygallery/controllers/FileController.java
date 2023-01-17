@@ -67,6 +67,7 @@ public class FileController {
 
     //Display file content
     @GetMapping("/display/{filename:.+}")
+    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = fileService.getFile(filename);
         String nameoffile = file.getFilename();
@@ -77,7 +78,9 @@ public class FileController {
     }
 
     //Download file
+
     @GetMapping("/download/{filename:.+}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Resource> download(@PathVariable String filename) {
         Resource file = fileService.getFile(filename);
         String nameoffile = file.getFilename();
@@ -88,19 +91,24 @@ public class FileController {
     }
 
 
+    /*
+     @GetMapping("/download/{filename:.+}")
+     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+         Resource file = fileService.getFile(filename);
 
+         FileDto fileDto= new FileDto();
 
-   /*
-    @GetMapping("/download/{filename:.+}")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
-        Resource file = fileService.getFile(filename);
+         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename()+"."+fileDto.getExtension()).body(file);
+     }
+ */
+    //Get all files
+    @GetMapping("/files")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN') or hasRole('USER')")
+    public FileResponse getAllFiles(@RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo, @RequestParam(value = "pageSize", defaultValue = PaginationConsts.DEFAULT_PAGE_SIZE, required = false) int pageSize, @RequestParam(value = "sortBy", defaultValue = PaginationConsts.DEFAULT_SORT_BY, required = false) String sortBy, @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION, required = false) String sortDir, @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
 
-        FileDto fileDto= new FileDto();
-
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename()+"."+fileDto.getExtension()).body(file);
+        return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir, keyword);
     }
-*/
 
     //find file by id
     @RequestMapping(value = "/files/{id}", method = RequestMethod.GET)
@@ -127,14 +135,11 @@ public class FileController {
     }
 
 
-    //Get all files
-    @GetMapping("/files")
-    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN') or hasRole('USER')")
-    public FileResponse getAllFiles(@RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo, @RequestParam(value = "pageSize", defaultValue = PaginationConsts.DEFAULT_PAGE_SIZE, required = false) int pageSize, @RequestParam(value = "sortBy", defaultValue = PaginationConsts.DEFAULT_SORT_BY, required = false) String sortBy, @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION, required = false) String sortDir, @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
-
-        return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir, keyword);
+    //Add tag to file
+    @PutMapping("/{fileId}/tags/{tagId}")
+    public void addTagToFile(@PathVariable String fileId, @PathVariable Long tagId) {
+        fileService.addTagToFile(fileId, tagId);
     }
-
 
     // get tags of file
 
@@ -157,6 +162,7 @@ public class FileController {
 
 
 
+
   /*  @PostMapping("/upload")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
@@ -169,13 +175,6 @@ public class FileController {
             return new ResponseEntity<>("Error uploading file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }*/
-
-
-    //Add tag to file
-    @PutMapping("/{fileId}/tags/{tagId}")
-    public void addTagToFile(@PathVariable String fileId, @PathVariable Long tagId) {
-        fileService.addTagToFile(fileId, tagId);
-    }
 
 
 }

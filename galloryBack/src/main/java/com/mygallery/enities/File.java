@@ -31,6 +31,9 @@ public class File {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "displayName")
+    private String displayName;
+
 
     @Column(name = "type")
     private String type;
@@ -46,6 +49,8 @@ public class File {
     @Column(name = "url")
     private String url;
 
+    @Column(name = "downloadUrl")
+    private String downloadUrl;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
             targetEntity = Folder.class, fetch = FetchType.LAZY)
@@ -70,6 +75,7 @@ public class File {
     public File(String id) {
         this.id = id;
     }
+
 
 
 }
