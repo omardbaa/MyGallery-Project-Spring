@@ -21,6 +21,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { LoginCompenentComponent } from './compenents/login-compenent/login-compenent.component';
 import { RegisterCompenentComponent } from './compenents/register-compenent/register-compenent.component';
 import { SearchComponent } from './compenents/search/search.component';
@@ -66,6 +68,7 @@ import { FolderListComponent } from './compenents/folder-list/folder-list.compon
     MatFormFieldModule,
     MatTableModule,
     MatCardModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

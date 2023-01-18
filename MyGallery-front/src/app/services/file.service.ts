@@ -113,7 +113,7 @@ export class FileService {
       );
   }
 
-  renderFile(name: string, extension: string): Observable<FileModule> {
+  renderFile(name: string, extension: string): Observable<Blob> {
     return this.httpClient
       .get(`${this.baseURL}/display/` + name + '.' + extension, {
         headers: {
@@ -124,10 +124,6 @@ export class FileService {
         responseType: 'blob',
       })
       .pipe(
-        tap((res) => {
-          const fileUrl = URL.createObjectURL(res);
-          window.open(fileUrl);
-        }),
         catchError((error) => {
           console.log(error);
           alert('Error while trying to display the file!');

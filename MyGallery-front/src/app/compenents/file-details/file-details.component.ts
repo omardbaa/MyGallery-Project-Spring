@@ -22,7 +22,6 @@ export class FileDetailsComponent implements OnInit {
   fileId!: string;
   tagId!: number;
   files: FileModule[] = [];
-  url = BASE_URL;
 
   id!: string;
   file: FileModule = new FileModule();

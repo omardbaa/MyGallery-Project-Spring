@@ -1,6 +1,7 @@
 package com.mygallery.controllers;
 
 
+import com.mygallery.dtos.FileDto;
 import com.mygallery.enities.File;
 import com.mygallery.enities.FileResponse;
 import com.mygallery.enities.PaginationConsts;
@@ -67,14 +68,15 @@ public class FileController {
 
     //Display file content
     @GetMapping("/display/{filename:.+}")
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = fileService.getFile(filename);
+        FileDto fileDto = new FileDto();
         String nameoffile = file.getFilename();
         String[] id = nameoffile.split("\\.");
         String[] types = fileRepository.getType(id[0]).split("/");
         MediaType contentType = new MediaType(types[0], types[1]);
-        return ResponseEntity.ok().contentType(contentType).header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename()).body(file);
+        return ResponseEntity.ok().contentType(contentType).header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileDto.getDisplayName()).body(file);
     }
 
     //Download file
@@ -83,25 +85,14 @@ public class FileController {
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Resource> download(@PathVariable String filename) {
         Resource file = fileService.getFile(filename);
-        String nameoffile = file.getFilename();
+        FileDto fileDto = new FileDto();
+       /* String nameoffile = file.getFilename();
         String[] id = nameoffile.split("\\.");
         String[] types = fileRepository.getType(id[0]).split("/");
-        MediaType contentType = new MediaType(types[0], types[1]);
-        return ResponseEntity.ok().contentType(contentType).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename()).body(file);
+        MediaType contentType = new MediaType(types[0], types[1]);*/
+        return ResponseEntity.ok()/*.contentType(contentType)*/.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDto.getDisplayName()).body(file);
     }
 
-
-    /*
-     @GetMapping("/download/{filename:.+}")
-     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
-         Resource file = fileService.getFile(filename);
-
-         FileDto fileDto= new FileDto();
-
-         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename()+"."+fileDto.getExtension()).body(file);
-     }
- */
     //Get all files
     @GetMapping("/files")
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN') or hasRole('USER')")

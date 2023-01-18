@@ -78,12 +78,10 @@
           <a
             class="document-body"
             style="margin: 25px; margin-left: 90px; color: white"
+            role="button"
+            (click)="fileDetails(file.id)"
           >
-            <i
-              [ngClass]="types[file.extension.toLowerCase()]?.icon"
-              role="button"
-              (click)="fileDetails(file.id)"
-            ></i>
+            <i [ngClass]="types[file.extension.toLowerCase()]?.icon"></i>
           </a>
 
           <div class="document-footer">
@@ -100,7 +98,7 @@
                 </button>
 
                 <a
-                  href="{{ file.downloadUrl }} "
+                  href="(click)='download(file.id, file.extension)'"
                   download="{{ file.name }}"
                   role="button"
                   target="_blank"
@@ -112,12 +110,9 @@
                   </i
                 ></a>
 
-                <button (click)="download(file.id, file.extension)">
+                <!-- <button (click)="download(file.id, file.extension)">
                   Download File
-                </button>
-                <button (click)="readFile(file.id, file.extension)">
-                  raed File
-                </button>
+                </button> -->
               </div>
             </div>
           </div>
