@@ -12,7 +12,6 @@ import com.mygallery.repositories.FileRepository;
 import com.mygallery.repositories.FileTagRepository;
 import com.mygallery.repositories.FolderRepository;
 import com.mygallery.repositories.TagRepository;
-import com.mygallery.response.StorageException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -89,7 +88,7 @@ public class FileService {
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
-        String displayName= formFile.getId() + "." + extension;
+        String displayName = formFile.getId() + "." + extension;
         formFile.setDisplayName(displayName);
 
         String fileUrl = "http://localhost:8080/api/v1/file/display/" + formFile.getId() + "." + extension;
@@ -291,8 +290,6 @@ public class FileService {
         return files;
 
     }
-
-
 
 
     public void addTagToFile(String fileId, Long tagId) {

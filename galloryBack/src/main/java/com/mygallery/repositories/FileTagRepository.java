@@ -12,8 +12,9 @@ import java.util.List;
 public interface FileTagRepository extends JpaRepository<FileTag, Long> {
 
 
-
     FileTag findByFileAndTag(File file, Tag tag);
+
     List<FileTag> findByTag(Tag tag);
+
     List<FileTag> findByFile(File file);
 }

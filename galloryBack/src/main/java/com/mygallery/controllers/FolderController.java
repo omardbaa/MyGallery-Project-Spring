@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:8081" , maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:8081", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/v1/folder")
 public class FolderController {
@@ -151,10 +151,6 @@ public class FolderController {
         fileRepository.save(file);
         return file.getFolder();
     }
-
-
-
-
 
 
 }

@@ -25,8 +25,4 @@ public class JwtResponse {
     }
 
 
-
-
-
-
 }

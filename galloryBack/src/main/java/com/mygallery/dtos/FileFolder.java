@@ -12,5 +12,4 @@ public class FileFolder {
     private String fileId;
 
 
-
 }
