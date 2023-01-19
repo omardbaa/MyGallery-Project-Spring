@@ -121,7 +121,7 @@ public class FolderController {
     @PostMapping("/upload")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        return fileService.Upload(file);
+        return fileService.upload(file);
     }
 
 

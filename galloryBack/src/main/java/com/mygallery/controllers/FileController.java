@@ -62,7 +62,7 @@ public class FileController {
     @PostMapping("/upload")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        return fileService.Upload(file);
+        return fileService.upload(file);
     }
 
 
@@ -76,27 +76,33 @@ public class FileController {
         String[] id = nameoffile.split("\\.");
         String[] types = fileRepository.getType(id[0]).split("/");
         MediaType contentType = new MediaType(types[0], types[1]);
-        return ResponseEntity.ok().contentType(contentType).header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileDto.getDisplayName()).body(file);
+        return ResponseEntity.ok().contentType(contentType).header(HttpHeaders.CONTENT_DISPOSITION,
+                "inline; filename=\"" + fileDto.getDisplayName()).body(file);
     }
 
     //Download file
 
     @GetMapping("/download/{filename:.+}")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+  //  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Resource> download(@PathVariable String filename) {
         Resource file = fileService.getFile(filename);
         FileDto fileDto = new FileDto();
-       /* String nameoffile = file.getFilename();
-        String[] id = nameoffile.split("\\.");
-        String[] types = fileRepository.getType(id[0]).split("/");
-        MediaType contentType = new MediaType(types[0], types[1]);*/
-        return ResponseEntity.ok()/*.contentType(contentType)*/.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDto.getDisplayName()).body(file);
+        file.getFilename();
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename()).body(file);
     }
+
+
+
 
     //Get all files
     @GetMapping("/files")
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN') or hasRole('USER')")
-    public FileResponse getAllFiles(@RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER, required = false) int pageNo, @RequestParam(value = "pageSize", defaultValue = PaginationConsts.DEFAULT_PAGE_SIZE, required = false) int pageSize, @RequestParam(value = "sortBy", defaultValue = PaginationConsts.DEFAULT_SORT_BY, required = false) String sortBy, @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION, required = false) String sortDir, @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
+    public FileResponse getAllFiles(@RequestParam(value = "pageNo", defaultValue = PaginationConsts.DEFAULT_PAGE_NUMBER,
+            required = false) int pageNo, @RequestParam(value = "pageSize", defaultValue = PaginationConsts.DEFAULT_PAGE_SIZE,
+            required = false) int pageSize, @RequestParam(value = "sortBy", defaultValue = PaginationConsts.DEFAULT_SORT_BY,
+            required = false) String sortBy, @RequestParam(value = "sortDir", defaultValue = PaginationConsts.DEFAULT_SORT_DIRECTION,
+            required = false) String sortDir, @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
 
         return fileService.getAllFiles(pageNo, pageSize, sortBy, sortDir, keyword);
     }

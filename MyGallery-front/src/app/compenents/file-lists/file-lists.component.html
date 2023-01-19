@@ -98,7 +98,7 @@
                 </button>
 
                 <a
-                  href="(click)='download(file.id, file.extension)'"
+                  href="{{ file.downloadUrl }}"
                   download="{{ file.name }}"
                   role="button"
                   target="_blank"

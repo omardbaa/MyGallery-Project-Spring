@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -34,6 +35,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,7 +44,8 @@ public class FileService {
 
 
     //Create path to upload file in local storage
-    private final Path rootPath = Paths.get("uploads");
+  private final Path rootPath = Paths.get("uploads");
+
     @Autowired
     private final FileRepository fileRepository;
     @Autowired
@@ -61,21 +64,21 @@ public class FileService {
 
     //with this methode we can upload a file using MultipartFile interface
 
-    public File Upload(MultipartFile file) throws IOException {
+    public File upload(MultipartFile file) throws IOException {
 
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         File formFile = new File(fileName, file.getContentType(), file.getSize());
 
-        LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
         String extension = Optional.ofNullable(fileName).filter(f -> f.contains(".")).map(f -> f.substring(fileName.lastIndexOf(".") + 1)).get().toLowerCase();
 
-
+        LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
         try {
             if (Files.notExists(rootPath, linkOptions)) {
 
                 Files.createDirectory(rootPath);
+
 
             }
         } catch (IOException e) {
@@ -90,19 +93,26 @@ public class FileService {
         }
         String displayName = formFile.getId() + "." + extension;
         formFile.setDisplayName(displayName);
+String generalUrl = "http://localhost:8080/api/v1/file/";
+        String fileUrl =generalUrl+ "display/" + formFile.getId() + "." + extension;
 
-        String fileUrl = "http://localhost:8080/api/v1/file/display/" + formFile.getId() + "." + extension;
-
+        String fileUrlDowload =generalUrl+  "download/" + formFile.getName();
         formFile.setUrl(fileUrl);
-
-
-        String fileUrlDowload = "http://localhost:8080/api/v1/file/download/" + formFile.getId() + "." + extension;
-
         formFile.setDownloadUrl(fileUrlDowload);
         return fileRepository.save(formFile);
 
 
     }
+
+
+
+
+
+
+
+
+
+
 
 
     //Load a file by id
@@ -318,6 +328,7 @@ public class FileService {
         File file = fileRepository.findById(fileId).orElseThrow();
         return fileTagRepository.findByFile(file).stream().map(FileTag::getTag).collect(Collectors.toList());
     }
+
 
 
 }
