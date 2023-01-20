@@ -78,12 +78,10 @@
           <a
             class="document-body"
             style="margin: 25px; margin-left: 90px; color: white"
+            role="button"
+            (click)="fileDetails(file.id)"
           >
-            <i
-              [ngClass]="types[file.extension.toLowerCase()]?.icon"
-              role="button"
-              (click)="fileDetails(file.id)"
-            ></i>
+            <i [ngClass]="types[file.extension.toLowerCase()]?.icon"></i>
           </a>
 
           <div class="document-footer">
@@ -99,13 +97,22 @@
                   <mat-icon style="color: white">info</mat-icon>
                 </button>
 
-                <a href="{{ file.url }}" role="button" class="file-download"
+                <a
+                  href="{{ file.downloadUrl }}"
+                  download="{{ file.name }}"
+                  role="button"
+                  target="_blank"
+                  class="file-download"
                   ><i
                     class="fa fa-download"
                     style="margin-left: 20px; color: white"
                   >
                   </i
                 ></a>
+
+                <!-- <button (click)="download(file.id, file.extension)">
+                  Download File
+                </button> -->
               </div>
             </div>
           </div>

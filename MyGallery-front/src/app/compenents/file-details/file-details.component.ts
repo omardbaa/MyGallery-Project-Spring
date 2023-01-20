@@ -11,6 +11,9 @@ import { Tag } from 'src/app/modules/Tag/tag';
   styleUrls: ['./file-details.component.css'],
 })
 export class FileDetailsComponent implements OnInit {
+  tags: any = [];
+
+  iconHover = false;
   tagName!: string;
   constructor(
     private fileService: FileService,
@@ -19,11 +22,11 @@ export class FileDetailsComponent implements OnInit {
   fileId!: string;
   tagId!: number;
   files: FileModule[] = [];
-  url = BASE_URL;
 
   id!: string;
   file: FileModule = new FileModule();
   tag: Tag = new Tag();
+
   fileUrl!: string;
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
@@ -35,7 +38,6 @@ export class FileDetailsComponent implements OnInit {
     this.getTags();
   }
 
-  tags: any = [];
   private getTags() {
     this.fileService.getTags(this.id).subscribe((data) => {
       let allTags = [];
@@ -48,12 +50,20 @@ export class FileDetailsComponent implements OnInit {
       this.tags = allTags;
     });
   }
+  readFile(id: string, extension: string) {
+    this.fileService.renderFile(id, extension).subscribe();
+  }
 
+  filesOfTag(tagId: string) {
+    this.tagId;
+  }
   deleteTag(fileId: string, tagId: number) {
-    this.fileService.deleteTag(fileId, tagId).subscribe((data) => {
-      console.log(data);
-      this.getTags();
-    });
+    if (window.confirm('Are you sure you want to delete this tag?')) {
+      this.fileService.deleteTag(fileId, tagId).subscribe((data) => {
+        console.log(data);
+        this.getTags();
+      });
+    }
   }
 
   addTagToFile() {

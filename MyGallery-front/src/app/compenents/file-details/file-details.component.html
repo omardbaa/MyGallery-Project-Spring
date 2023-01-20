@@ -11,7 +11,7 @@
     <div style="margin-bottom: 25px; margin-top: 40%">
       <h1>Tags:</h1>
       <div *ngFor="let tag of tags" class="wraped">
-        <button class="bottun" onclick="">
+        <button class="bottun" (click)="filesOfTag(tag.id)">
           {{ tag.tagName }}
           <mat-icon
             role="button"
@@ -20,15 +20,6 @@
             >clear</mat-icon
           >
         </button>
-        <!-- <button class="bottun" onclick="">
-          {{ tag.tagName }}
-          <span
-            role="button"
-            (click)="deleteTag(file.id, tag.id)"
-            class="icon-container"
-            >X</span
-          >
-        </button> -->
       </div>
     </div>
 
@@ -57,6 +48,8 @@
   <div class="frame-body">
     <h1>File viewer</h1>
 
-    <embed [src]="file.url | safe" class="viewer" />
+    <iframe [src]="file.url | safe" class="viewer"> </iframe>
   </div>
 </div>
+
+<div></div>

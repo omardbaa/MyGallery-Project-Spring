@@ -13,10 +13,10 @@ export class FileModule {
   url!: string;
   size!: number;
   extension!: string;
-  description!: string;
   folder!: number[];
   tags!: string;
   fileUrl!: string;
+  displayName!: string;
 
   downloadUrl!: string;
 }

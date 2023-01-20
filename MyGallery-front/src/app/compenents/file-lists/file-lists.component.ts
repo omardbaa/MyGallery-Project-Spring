@@ -6,6 +6,8 @@ import { FileModule } from 'src/app/modules/file/file.module';
 import { PaginatedData } from 'src/app/modules/FilePage/PaginatedData';
 import { FileService } from 'src/app/services/file.service';
 import { SearchComponent } from '../search/search.component';
+import { catchError, of, tap } from 'rxjs';
+import * as saveAs from 'file-saver';
 
 @Component({
   selector: 'app-file-lists',
@@ -107,10 +109,20 @@ export class FileListsComponent implements OnInit {
   }
 
   deleteFile(id: string) {
-    this.fileSrvice.deleteFile(id).subscribe((data) => {
-      console.log(data);
-      this.getFiles();
-    });
+    if (window.confirm('Are you sure you want to delete this file?')) {
+      this.fileSrvice.deleteFile(id).subscribe((data) => {
+        console.log(data);
+        this.getFiles();
+      });
+    }
+  }
+
+  download(id: string, extension: string) {
+    this.fileSrvice.downloadFile(id, extension).subscribe();
+  }
+
+  readFile(id: string, extension: string) {
+    this.fileSrvice.renderFile(id, extension).subscribe();
   }
 
   selectFile(event: any): void {

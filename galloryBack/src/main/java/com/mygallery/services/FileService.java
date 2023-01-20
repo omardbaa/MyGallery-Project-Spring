@@ -12,7 +12,6 @@ import com.mygallery.repositories.FileRepository;
 import com.mygallery.repositories.FileTagRepository;
 import com.mygallery.repositories.FolderRepository;
 import com.mygallery.repositories.TagRepository;
-import com.mygallery.response.StorageException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -27,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -35,6 +35,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,7 +44,8 @@ public class FileService {
 
 
     //Create path to upload file in local storage
-    private final Path rootPath = Paths.get("uploads");
+  private final Path rootPath = Paths.get("uploads");
+
     @Autowired
     private final FileRepository fileRepository;
     @Autowired
@@ -62,21 +64,21 @@ public class FileService {
 
     //with this methode we can upload a file using MultipartFile interface
 
-    public File Upload(MultipartFile file) throws IOException {
+    public File upload(MultipartFile file) throws IOException {
 
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         File formFile = new File(fileName, file.getContentType(), file.getSize());
 
-        LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 
         String extension = Optional.ofNullable(fileName).filter(f -> f.contains(".")).map(f -> f.substring(fileName.lastIndexOf(".") + 1)).get().toLowerCase();
 
-
+        LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
         try {
             if (Files.notExists(rootPath, linkOptions)) {
 
                 Files.createDirectory(rootPath);
+
 
             }
         } catch (IOException e) {
@@ -89,14 +91,28 @@ public class FileService {
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
+        String displayName = formFile.getId() + "." + extension;
+        formFile.setDisplayName(displayName);
+String generalUrl = "http://localhost:8080/api/v1/file/";
+        String fileUrl =generalUrl+ "display/" + formFile.getId() + "." + extension;
 
-        String fileUrl = "http://localhost:8080/api/v1/file/display/" + formFile.getId() + "." + extension;
-
+        String fileUrlDowload =generalUrl+  "download/" + formFile.getName();
         formFile.setUrl(fileUrl);
+        formFile.setDownloadUrl(fileUrlDowload);
         return fileRepository.save(formFile);
 
 
     }
+
+
+
+
+
+
+
+
+
+
 
 
     //Load a file by id
@@ -244,6 +260,9 @@ public class FileService {
             String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile", fileDto.getId() + "." + fileDto.getExtension()).build().toString();
 
             fileDto.setUrl(url);
+            String downloadUrl = MvcUriComponentsBuilder.fromMethodName(FileController.class, "download", fileDto.getId() + "." + fileDto.getExtension()).build().toString();
+
+            fileDto.setDownloadUrl(downloadUrl);
 
 
         });
@@ -283,21 +302,6 @@ public class FileService {
     }
 
 
-    public void store(MultipartFile file) {
-        try {
-            File fildto = new File();
-            Files.copy(file.getInputStream(), this.rootPath.resolve(file.getOriginalFilename()));
-            String fileUrl = "http://localhost:8080/api/v1/file/" + file.getOriginalFilename();
-
-            fildto.setUrl(fileUrl);
-            fileRepository.save(fildto);
-        } catch (IOException e) {
-            throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
-        }
-
-    }
-
-
     public void addTagToFile(String fileId, Long tagId) {
         File file = fileRepository.findById(fileId).orElseThrow();
         Tag tag = tagRepository.findById(tagId).orElseThrow();
@@ -324,6 +328,7 @@ public class FileService {
         File file = fileRepository.findById(fileId).orElseThrow();
         return fileTagRepository.findByFile(file).stream().map(FileTag::getTag).collect(Collectors.toList());
     }
+
 
 
 }

@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:8081" , maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:8081", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/v1/folder")
 public class FolderController {
@@ -121,7 +121,7 @@ public class FolderController {
     @PostMapping("/upload")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public File uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        return fileService.Upload(file);
+        return fileService.upload(file);
     }
 
 
@@ -151,10 +151,6 @@ public class FolderController {
         fileRepository.save(file);
         return file.getFolder();
     }
-
-
-
-
 
 
 }

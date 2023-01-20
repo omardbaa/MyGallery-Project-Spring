@@ -17,8 +17,8 @@ public class FileDto {
     private String url;
     private String extension;
     private long size;
-    private String description;
-
+    private String downloadUrl;
+    private String displayName;
 
     private FolderDto Folder;
 
@@ -34,7 +34,7 @@ public class FileDto {
 
     }
 
-    public FileDto(String id, String name, String type, String url, long size, String extension,TagDto Tag ) {
+    public FileDto(String id, String name, String type, String url, long size, String extension, TagDto Tag) {
         this.id = id;
         this.name = name;
         this.type = type;

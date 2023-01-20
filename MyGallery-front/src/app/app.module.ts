@@ -16,10 +16,13 @@ import { CommonModule } from '@angular/common';
 import { FolderDetailsComponent } from './compenents/folder-details/folder-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { LoginCompenentComponent } from './compenents/login-compenent/login-compenent.component';
 import { RegisterCompenentComponent } from './compenents/register-compenent/register-compenent.component';
 import { SearchComponent } from './compenents/search/search.component';
@@ -64,6 +67,8 @@ import { FolderListComponent } from './compenents/folder-list/folder-list.compon
     MatNativeDateModule,
     MatFormFieldModule,
     MatTableModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

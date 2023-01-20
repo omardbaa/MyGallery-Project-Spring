@@ -95,10 +95,12 @@ export class FolderDetailsComponent {
   }
 
   deleteFile(fileId: string, folderId: number) {
-    this.folderService.deleteFile(fileId, folderId).subscribe((data) => {
-      console.log(data);
-      this.getFiles();
-    });
+    if (window.confirm('Are you sure you want to delete this file?')) {
+      this.folderService.deleteFile(fileId, folderId).subscribe((data) => {
+        console.log(data);
+        this.getFiles();
+      });
+    }
   }
 
   fileDetails(id: string) {

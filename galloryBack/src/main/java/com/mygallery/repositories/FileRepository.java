@@ -1,8 +1,6 @@
 package com.mygallery.repositories;
 
-import com.mygallery.dtos.FileTag;
 import com.mygallery.enities.File;
-import com.mygallery.enities.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -40,8 +38,6 @@ public interface FileRepository extends JpaRepository<File, String> {
 
     @Query(value = "SELECT * FROM files WHERE name LIKE %?1%" + " OR extension LIKE %?1%" + " OR type LIKE %?1%" + " OR CONCAT(size, '') LIKE %?1% ", nativeQuery = true)
     Page<File> findAll(Pageable pageable, String keyword);
-
-
 
 
 }
