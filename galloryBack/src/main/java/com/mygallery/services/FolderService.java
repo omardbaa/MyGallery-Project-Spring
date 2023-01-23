@@ -4,6 +4,8 @@ package com.mygallery.services;
 import com.mygallery.enities.Folder;
 import com.mygallery.repositories.FolderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +18,6 @@ public class FolderService {
     public FolderService(FolderRepository folderRepository) {
         this.folderRepository = folderRepository;
     }
-
 
     public void save(Folder folder) {
 

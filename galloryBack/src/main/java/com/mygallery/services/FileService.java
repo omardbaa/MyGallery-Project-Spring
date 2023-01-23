@@ -107,14 +107,6 @@ String generalUrl = "http://localhost:8080/api/v1/file/";
 
 
 
-
-
-
-
-
-
-
-
     //Load a file by id
 
     public Resource getFile(String id) {
